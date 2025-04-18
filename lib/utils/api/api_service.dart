@@ -40,7 +40,7 @@ class ApiService {
           request.files.add(await http.MultipartFile.fromPath(
             entry.key,
             entry.value.path,
-            contentType: MediaType('application', 'octet-stream'),
+            // contentType: MediaType('application', 'octet-stream'),
           ));
         }
 

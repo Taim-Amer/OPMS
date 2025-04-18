@@ -85,8 +85,8 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/icons/flags/
-    - assets/icons/
+    - assets/svg/
+    - assets/json/
 
   #----------------- LOCAL FONTS -----------------#
 

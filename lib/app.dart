@@ -1,6 +1,7 @@
-import 'package:opms/localization/translations.dart';
+import 'package:opms/dependencies/global_bindings.dart';
+import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/helpers/helper_functions.dart';
-import 'package:opms/utils/router/app_router.dart';
+import 'package:opms/utils/localization/translations.dart';
 import 'package:opms/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,13 +24,13 @@ class Opms extends StatelessWidget {
         theme: TAppTheme.lightTheme,
         darkTheme: TAppTheme.darkTheme,
         // initialRoute: initialRoute,
-        getPages: AppRoutes.routes,
+        // getPages: AppRoutes.routes,
         translations: TAppTranslations(),
         locale: const Locale('en'),
         fallbackLocale: const Locale('en'),
-        // initialBinding: GeneralBindings(),
+        initialBinding: GlobalBindings(),
         // home: const LocationMap(),
-        // home: SigninScreen(),
+        home: Container(color: TColors.redColor,),
       ),
     );
   }

@@ -1,5 +1,4 @@
-
-import 'package:opms/localization/keys.dart';
+import 'package:opms/utils/localization/keys.dart';
 
 class TValidator {
 
