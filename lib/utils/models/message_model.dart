@@ -12,6 +12,7 @@ class MessageModel {
   Map<String, dynamic> toJson() => {
         "message": message,
       };
+
   @override
   String toString() => message;
 }
