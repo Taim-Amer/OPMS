@@ -9,7 +9,7 @@ Future<void> main() async{
 
   Get.testMode = true;
 
-  await TCacheHelper.init();
+  await CacheHelper.init();
 
   runApp(const Opms());
 }

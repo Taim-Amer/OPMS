@@ -1,7 +1,7 @@
 import 'package:opms/utils/localization/keys.dart';
 
-class TValidator {
-  TValidator._();
+class Validator {
+  Validator._();
 
   static String? validateEmptyText(String? fieldName, String? value){
     if(value == null || value.isEmpty){

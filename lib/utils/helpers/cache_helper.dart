@@ -1,7 +1,7 @@
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class TCacheHelper {
+class CacheHelper {
   static SharedPreferences? sharedPreferences;
 
   static Future<void> init() async {

@@ -17,11 +17,11 @@ class THeader extends StatelessWidget implements PreferredSizeWidget{
       ),
       padding: const EdgeInsets.symmetric(horizontal: TSizes.md, vertical: TSizes.sm),
       child: AppBar(
-        leading: !THelperFunctions.isDesktopScreen(context) ? IconButton(
+        leading: !HelperFunctions.isDesktopScreen(context) ? IconButton(
           onPressed: () => scaffoldKey?.currentState?.openDrawer(),
           icon: const Icon(Icons.menu),
         ) : null,
-        title: THelperFunctions.isDesktopScreen(context) ? SizedBox(
+        title: HelperFunctions.isDesktopScreen(context) ? SizedBox(
           width: 400,
           child: TextFormField(
             decoration: const InputDecoration(
@@ -31,7 +31,7 @@ class THeader extends StatelessWidget implements PreferredSizeWidget{
           ),
         ) : null,
         actions: [
-          if(!THelperFunctions.isDesktopScreen(context))IconButton(
+          if(!HelperFunctions.isDesktopScreen(context))IconButton(
             onPressed: () {},
             icon: const Icon(Icons.search),
           )

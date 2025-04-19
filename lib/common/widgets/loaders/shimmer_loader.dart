@@ -16,7 +16,7 @@ class ShimmerLoader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = THelperFunctions.isDarkMode(context);
+    final dark = HelperFunctions.isDarkMode(context);
     return Shimmer.fromColors(
       baseColor: dark ? TColors.dark : Colors.grey[300]!,
       highlightColor: dark ? TColors.dark.withOpacity(.9) : Colors.grey[100]!,

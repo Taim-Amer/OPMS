@@ -5,8 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:opms/utils/constants/sizes.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class THelperFunctions {
-  THelperFunctions._();
+class HelperFunctions {
+  HelperFunctions._();
 
   static String truncateText(String text, int maxLength){
     if(text.length < maxLength) {

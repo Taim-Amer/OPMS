@@ -6,10 +6,10 @@ import 'package:opms/utils/constants/keys.dart';
 import 'package:opms/utils/helpers/cache_helper.dart';
 import 'data_state.dart';
 
-class TApiService {
+class ApiService {
   final Dio _dio;
 
-  TApiService(this._dio);
+  ApiService(this._dio);
 
   Future<DataState<T>> getData<T>({
     required String endPoint,
@@ -190,11 +190,11 @@ class TApiService {
 
   Map<String, dynamic> _getHeaders() {
     return {
-      'Authorization': 'Bearer ${TCacheHelper.getData(key: TKeys.token)}',
+      'Authorization': 'Bearer ${CacheHelper.getData(key: TKeys.token)}',
       "Accept": "application/json",
       "Content-Type": "application/json; charset=UTF-8",
-      if (TCacheHelper.getData(key: TKeys.language) != null)
-        'lang': TCacheHelper.getData(key: TKeys.language) == 0 ? 'ar' : 'en',
+      if (CacheHelper.getData(key: TKeys.language) != null)
+        'lang': CacheHelper.getData(key: TKeys.language) == 0 ? 'ar' : 'en',
     };
   }
 
@@ -227,7 +227,7 @@ class TApiService {
         final object = fromJson(response.data);
         return DataSuccess(object as T);
       } else if (response.statusCode == HttpStatus.unauthorized) {
-        TCacheHelper.removeData(key: TKeys.token);
+        CacheHelper.removeData(key: TKeys.token);
         // Add navigation logic here if needed
       }
     }

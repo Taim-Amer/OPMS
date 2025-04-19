@@ -14,8 +14,8 @@ import 'package:opms/utils/theme/custom_themes/text_field_theme.dart';
 import 'package:opms/utils/theme/custom_themes/text_theme.dart';
 import 'package:flutter/material.dart';
 
-class TAppTheme {
-  TAppTheme._();
+class AppTheme {
+  AppTheme._();
 
   static ThemeData lightTheme = ThemeData(
     primaryColorLight: TColors.buttonPrimary,

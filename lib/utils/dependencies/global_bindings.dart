@@ -6,6 +6,6 @@ class GlobalBindings extends Bindings{
   @override
   void dependencies() {
     Get.lazyPut<Dio>(() => Dio(), fenix: true);
-    Get.lazyPut<TApiService>(() => TApiService(Get.find<Dio>()), fenix: true);
+    Get.lazyPut<ApiService>(() => ApiService(Get.find<Dio>()), fenix: true);
   }
 }

@@ -1,7 +1,7 @@
 import 'package:opms/utils/constants/text_strings.dart';
 import 'package:get/get.dart';
 
-class TAppTranslations extends Translations {
+class AppTranslations extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
     'en': {
