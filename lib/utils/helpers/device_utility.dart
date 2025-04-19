@@ -31,14 +31,6 @@ class TDeviceUtils  {
     SystemChrome.setEnabledSystemUIMode(enable ? SystemUiMode.immersiveSticky : SystemUiMode.edgeToEdge);
   }
 
-  static double getScreenHeight() {
-    return MediaQuery.of(Get.context!).size.height;
-  }
-
-  static double getScreenWidth() {
-    return MediaQuery.of(Get.context!).size.width;
-  }
-
   static double getPixelRatio() {
     return MediaQuery.of(Get.context!).devicePixelRatio;
   }
@@ -89,8 +81,9 @@ class TDeviceUtils  {
   static Future<bool> hasInternetConnection() async {
     try {
       final result = await InternetAddress.lookup("example.com");
+      print(result[0].rawAddress.isNotEmpty);
       return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
-    }on SocketException catch(_){
+    } on SocketException catch (_) {
       return false;
     }
   }
@@ -102,12 +95,4 @@ class TDeviceUtils  {
   static bool isAndroid() {
     return Platform.isAndroid;
   }
-
-  // static void launchUrl(String url) async {
-  //   if(await canLaunchUrlString(url)){
-  //     await launchUrlString(url);
-  //   } else {
-  //     throw "Could not launch $url";
-  //   }
-  // }
 }
