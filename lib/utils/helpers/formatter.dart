@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 
 class TFormatter {
+  TFormatter._();
 
   static String formatDate(String? dateString) {
     final date = dateString != null ? DateTime.parse(dateString) : DateTime.now();

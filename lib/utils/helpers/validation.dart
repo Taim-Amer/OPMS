@@ -1,6 +1,7 @@
 import 'package:opms/utils/localization/keys.dart';
 
 class TValidator {
+  TValidator._();
 
   static String? validateEmptyText(String? fieldName, String? value){
     if(value == null || value.isEmpty){
@@ -14,7 +15,7 @@ class TValidator {
       return TranslationKey.kEmailInvalid;
     }
 
-    final emailRegExp = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    final emailRegExp = RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
 
     if(!emailRegExp.hasMatch(value)){
       return TranslationKey.kEmailInvalid;
@@ -52,5 +53,27 @@ class TValidator {
     }
 
     return null;
+  }
+
+  static String? minimumValidator(String? val, {required int minimum}) {
+    if ((val ?? '').length < minimum) {
+      return 'This field must at least $minimum';
+    } else {
+      return null;
+    }
+  }
+
+  static String? exactlyValidator(String? val, int length) {
+    if ((val ?? '').length != length) {
+      return 'This field must exactly $length';
+    } else {
+      return null;
+    }
+  }
+
+  static String formatPhoneNumberUI(String phone) {
+    String countryCode = phone.substring(0, 4);
+    String phoneNumber = phone.substring(4, phone.length);
+    return '($countryCode) $phoneNumber';
   }
 }
