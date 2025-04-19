@@ -37,6 +37,7 @@ dependencies:
   cached_network_image: ^3.4.1
   flutter_staggered_animations: ^1.1.1
   dartz: ^0.10.1
+  url_launcher: any
 
   # Icons
   iconsax: ^0.0.8
@@ -47,7 +48,6 @@ dependencies:
   get: ^4.6.6
   get_it: ^8.0.1
 
-  # Product Specific
   carousel_slider: ^5.0.0
   readmore: ^3.0.0
   flutter_rating_bar: ^4.0.1

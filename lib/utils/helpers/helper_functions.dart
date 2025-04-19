@@ -1,23 +1,37 @@
+import 'dart:io';
 import 'package:opms/utils/constants/enums.dart';
-import 'package:opms/utils/helpers/logger.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:opms/utils/constants/enums.dart';
 import 'package:opms/utils/constants/sizes.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class THelperFunctions {
-
-  static void navigateToScreen(BuildContext context, Widget screen) {
-    Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
-  }
 
   static String truncateText(String text, int maxLength){
     if(text.length < maxLength) {
       return text;
     }else{
       return '${text.substring(0, maxLength)} ... .';
+    }
+  }
+
+  static String timeAgo(String timestamp) {
+    DateTime dateTime = DateTime.parse(timestamp).toUtc();
+    Duration difference = DateTime.now().toUtc().difference(dateTime).abs();
+
+    if (difference.inMinutes < 1) {
+      return 'now';
+    } else if (difference.inMinutes == 1) {
+      return 'minute ago';
+    } else if (difference.inMinutes < 60) {
+      return "${difference.inMinutes} minutes ago";
+    } else if (difference.inHours < 24) {
+      return "${difference.inHours} hours ago";
+    } else if (difference.inDays < 7) {
+      return "${difference.inDays} days ago";
+    } else {
+      return DateFormat('yyyy-MM-dd').format(dateTime);
     }
   }
 
@@ -68,5 +82,23 @@ class THelperFunctions {
 
   static bool isMobileScreen(BuildContext context){
     return MediaQuery.of(context).size.width < TSizes.tabletScreenSize;
+  }
+
+  static void visitUrl(String url) async {
+    if(await canLaunchUrlString(url)){
+      await launchUrlString(url);
+    } else {
+      throw "Could not launch $url";
+    }
+  }
+
+  static Future<bool> hasInternetConnection() async {
+    try {
+      final result = await InternetAddress.lookup("example.com");
+      print(result[0].rawAddress.isNotEmpty);
+      return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
+    } on SocketException catch (_) {
+      return false;
+    }
   }
 }
