@@ -18,9 +18,9 @@ class TAnimationLoaderWidget extends StatelessWidget {
       child: Column(
         children: [
           Lottie.asset(animation, width: MediaQuery.of(context).size.width * .8),
-          const SizedBox(height: TSizes.defaultSpace),
+          const SizedBox(height: Sizes.defaultSpace),
           Text(text, style: Theme.of(context).textTheme.bodyMedium, textAlign: TextAlign.center),
-          const SizedBox(height: TSizes.defaultSpace),
+          const SizedBox(height: Sizes.defaultSpace),
           showAction ? SizedBox(
             width: 250,
             child: OutlinedButton(

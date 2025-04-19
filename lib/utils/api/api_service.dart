@@ -18,7 +18,7 @@ class ApiService {
   }) async {
     try {
       final response = await _dio.get(
-        TApiConstants.baseUrl + endPoint,
+        ApiConstants.baseUrl + endPoint,
         options: Options(
           headers: _getHeaders(),
         ),
@@ -37,7 +37,7 @@ class ApiService {
   }) async {
     try {
       final response = await _dio.post(
-        TApiConstants.baseUrl + endPoint,
+        ApiConstants.baseUrl + endPoint,
         options: Options(
           headers: _getHeaders(),
         ),
@@ -56,7 +56,7 @@ class ApiService {
   }) async {
     try {
       final response = await _dio.delete(
-        TApiConstants.baseUrl + endPoint,
+        ApiConstants.baseUrl + endPoint,
         options: Options(
           headers: _getHeaders(),
         ),
@@ -75,7 +75,7 @@ class ApiService {
   }) async {
     try {
       final response = await _dio.put(
-        TApiConstants.baseUrl + endPoint,
+        ApiConstants.baseUrl + endPoint,
         options: Options(
           headers: _getHeaders(),
         ),
@@ -93,7 +93,7 @@ class ApiService {
   }) async {
     try {
       final response = await _dio.post(
-        TApiConstants.baseUrl + endPoint,
+        ApiConstants.baseUrl + endPoint,
         options: Options(
           headers: _getHeaders(),
         ),
@@ -119,7 +119,7 @@ class ApiService {
       });
 
       final response = await _dio.post(
-        TApiConstants.baseUrl + endPoint,
+        ApiConstants.baseUrl + endPoint,
         options: Options(
           headers: _getMultipartHeaders(),
         ),
@@ -147,7 +147,7 @@ class ApiService {
       }
 
       final response = await _dio.post(
-        TApiConstants.baseUrl + endPoint,
+        ApiConstants.baseUrl + endPoint,
         options: Options(
           headers: _getMultipartHeaders(),
         ),
@@ -176,7 +176,7 @@ class ApiService {
       }
 
       final response = await _dio.post(
-        TApiConstants.baseUrl + endPoint,
+        ApiConstants.baseUrl + endPoint,
         options: Options(
           headers: _getMultipartHeaders(),
         ),
@@ -190,11 +190,11 @@ class ApiService {
 
   Map<String, dynamic> _getHeaders() {
     return {
-      'Authorization': 'Bearer ${CacheHelper.getData(key: TKeys.token)}',
+      'Authorization': 'Bearer ${CacheHelper.getData(key: Keys.token)}',
       "Accept": "application/json",
       "Content-Type": "application/json; charset=UTF-8",
-      if (CacheHelper.getData(key: TKeys.language) != null)
-        'lang': CacheHelper.getData(key: TKeys.language) == 0 ? 'ar' : 'en',
+      if (CacheHelper.getData(key: Keys.language) != null)
+        'lang': CacheHelper.getData(key: Keys.language) == 0 ? 'ar' : 'en',
     };
   }
 
@@ -227,7 +227,7 @@ class ApiService {
         final object = fromJson(response.data);
         return DataSuccess(object as T);
       } else if (response.statusCode == HttpStatus.unauthorized) {
-        CacheHelper.removeData(key: TKeys.token);
+        CacheHelper.removeData(key: Keys.token);
         // Add navigation logic here if needed
       }
     }

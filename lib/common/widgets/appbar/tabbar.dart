@@ -15,7 +15,7 @@ class TTabBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: TSizes.defaultSpace.w),
+      padding: EdgeInsets.symmetric(horizontal: Sizes.defaultSpace.w),
       child: Material(
         color: dark ? Colors.black : TColors.white,
         child: TabBar(

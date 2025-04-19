@@ -8,7 +8,7 @@ class TDottedContainer extends StatelessWidget {
     super.key,
     this.width,
     this.height,
-    this.radius = TSizes.cardRadiusLg,
+    this.radius = Sizes.cardRadiusLg,
     this.child,
     this.borderColor = TColors.borderPrimary,
     this.backgroundColor = Colors.transparent,

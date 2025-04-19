@@ -12,9 +12,9 @@ class TResponsiveWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (_, constraints) {
-        if(constraints.maxWidth >= TSizes.desktopScreenSize){
+        if(constraints.maxWidth >= Sizes.desktopScreenSize){
           return desktop;
-        } else if(constraints.maxWidth < TSizes.desktopScreenSize && constraints.maxWidth >= TSizes.tabletScreenSize){
+        } else if(constraints.maxWidth < Sizes.desktopScreenSize && constraints.maxWidth >= Sizes.tabletScreenSize){
           return tablet;
         } else {
           return mobile;

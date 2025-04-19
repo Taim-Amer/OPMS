@@ -1,5 +1,5 @@
-class TArabicTexts {
-  TArabicTexts._();
+class ArabicTexts {
+  ArabicTexts._();
 
   // Validation
   static String get phoneValidation => 'رقم الهاتف مطلوب';
@@ -9,8 +9,8 @@ class TArabicTexts {
 
 }
 
-class TEnglishTexts {
-  TEnglishTexts._();
+class EnglishTexts {
+  EnglishTexts._();
 
   // Validation
   static String get phoneValidation => 'Phone number is required';

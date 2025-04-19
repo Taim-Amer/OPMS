@@ -1,5 +1,5 @@
-class TApiConstants {
-  TApiConstants._();
+class ApiConstants {
+  ApiConstants._();
 
   static const String serverUrl = "https://menaexpr.technoplus.dev";
   static const String imagesUrl = "$serverUrl/storage";

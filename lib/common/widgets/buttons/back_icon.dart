@@ -15,7 +15,7 @@ class BackIcon extends StatelessWidget {
     final dark = HelperFunctions.isDarkMode(context);
     return TCircularIcon(
       icon: Icons.arrow_back_ios_new_outlined,
-      size: TSizes.iconSm,
+      size: Sizes.iconSm,
       backgroundColor: Colors.transparent,
       color: dark ? TColors.lightGrey : const Color(0xFF383838),
       onPressed: function ?? () => Get.back(),

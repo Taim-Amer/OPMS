@@ -36,8 +36,8 @@ class TGridLayout extends StatelessWidget {
         padding: EdgeInsets.zero,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          mainAxisSpacing: TSizes.spaceBtwItems.h,
-          crossAxisSpacing: TSizes.spaceBtwItems.w,
+          mainAxisSpacing: Sizes.spaceBtwItems.h,
+          crossAxisSpacing: Sizes.spaceBtwItems.w,
           mainAxisExtent: mainAxisExtent,
           childAspectRatio: childAspectRatio ?? 1,
         ),

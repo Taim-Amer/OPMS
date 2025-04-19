@@ -1,5 +1,5 @@
-class TKeys {
-  TKeys._();
+class Keys {
+  Keys._();
 
   static const String token = 'token';
   static const String language = 'language';

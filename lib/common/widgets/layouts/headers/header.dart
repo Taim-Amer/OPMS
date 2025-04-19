@@ -15,7 +15,7 @@ class THeader extends StatelessWidget implements PreferredSizeWidget{
         color: TColors.white,
         border: Border(bottom: BorderSide(color: TColors.grey, width: 1))
       ),
-      padding: const EdgeInsets.symmetric(horizontal: TSizes.md, vertical: TSizes.sm),
+      padding: const EdgeInsets.symmetric(horizontal: Sizes.md, vertical: Sizes.sm),
       child: AppBar(
         leading: !HelperFunctions.isDesktopScreen(context) ? IconButton(
           onPressed: () => scaffoldKey?.currentState?.openDrawer(),

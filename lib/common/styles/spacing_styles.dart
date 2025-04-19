@@ -4,10 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TSpacingStyle {
   static EdgeInsetsGeometry paddingWithAppBarHeight = EdgeInsets.only(
-    top: TSizes.appBarHeight.h,
-    left: TSizes.defaultSpace.w,
-    bottom: TSizes.defaultSpace.w,
-    right: TSizes.defaultSpace.w,
+    top: Sizes.appBarHeight.h,
+    left: Sizes.defaultSpace.w,
+    bottom: Sizes.defaultSpace.w,
+    right: Sizes.defaultSpace.w,
   );
 }
 

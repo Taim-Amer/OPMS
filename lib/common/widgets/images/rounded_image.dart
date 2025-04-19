@@ -21,7 +21,7 @@ class TRoundedImage extends StatelessWidget {
     this.fit = BoxFit.cover,
     this.backgroundColor = TColors.light,
     this.isNetworkImage = false,
-    this.borderRadius = TSizes.md,
+    this.borderRadius = Sizes.md,
     this.heroTag = '',
     this.isImageClickable = false,
     this.useHero = true,

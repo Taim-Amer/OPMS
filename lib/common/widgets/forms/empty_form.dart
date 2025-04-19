@@ -26,7 +26,7 @@ class TEmptyForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: TSizes.secondaryPaddingSpace),
+      padding: const EdgeInsets.symmetric(horizontal: Sizes.secondaryPaddingSpace),
       child: Expanded(
         child: Center(
           child: SingleChildScrollView(
@@ -45,7 +45,7 @@ class TEmptyForm extends StatelessWidget {
                     style: Theme.of(context).textTheme.headlineMedium,
                     textAlign: TextAlign.center),
                 if (showButton) ...[
-                  TSizes.spaceBtwSections.verticalSpace,
+                  Sizes.spaceBtwSections.verticalSpace,
                   SizedBox(
                     width: double.infinity,
                     child: CustomButton(
