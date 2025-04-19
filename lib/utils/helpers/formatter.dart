@@ -25,7 +25,6 @@ class TFormatter {
     return phoneNumber;
   }
 
-
   static String internationalFormatPhoneNumber(String phoneNumber) {
     var digitsOnly = phoneNumber.replaceAll(RegExp(r'\D'), '');
 
