@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class Opms extends StatelessWidget {
-  const Opms({super.key});
+class OPMSSystem extends StatelessWidget {
+  const OPMSSystem({super.key});
 
   @override
   Widget build(BuildContext context) {

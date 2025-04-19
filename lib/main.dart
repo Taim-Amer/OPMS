@@ -11,5 +11,5 @@ Future<void> main() async{
 
   await CacheHelper.init();
 
-  runApp(const Opms());
+  runApp(const OPMSSystem());
 }
