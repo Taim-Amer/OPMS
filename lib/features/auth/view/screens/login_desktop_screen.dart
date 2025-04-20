@@ -54,7 +54,7 @@ class LoginDesktopScreen extends GetView<LoginController> {
                       LabeledTextFeild(
                         label: '',
                         controller: controller.emailController,
-                        hint: 'email',
+                        hint: 'Email Address',
                         prefix: const Icon(Iconsax.direct_right),
                         validator: (value) => Validator.validateEmail(value),
                       ),
@@ -62,9 +62,9 @@ class LoginDesktopScreen extends GetView<LoginController> {
                         label: '',
                         controller: controller.passwordController,
                         prefix: const Icon(Iconsax.lock),
-                        hint: 'password',
+                        hint: 'Security Code',
                         isPassword: true,
-                        validator: (value) => Validator.validatePassword(value),
+                        validator: (value) => Validator.validateEmptyText(value, 'Security Code'),
                       ),
                       (Sizes.spaceBtwItems * 2).verticalSpace,
                       GetBuilder<LoginController>(builder: (controller) => SizedBox(
