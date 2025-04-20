@@ -15,53 +15,45 @@ class MenuItem extends GetView<SidebarController> {
 
   final int index;
 
-  final List<String> titles = [
-    'Home',
-    'Departments',
-    'Units',
-    'Outcomes',
-    'Outputs',
-    'Indicators',
-    'Activities',
-    'Users',
-  ];
-
-  final List<String> routes = [
-    AppRoutes.kHome,
-    "1",
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-  ];
-
   @override
   Widget build(BuildContext context) {
     final dark = context.isDarkMode;
     return InkWell(
-      onTap: () => controller.changeActiveItem(routes[index]),
-      onHover: (hovering) => controller.changeHoverItem(hovering ? routes[index] : '') ,
+      onTap: () => controller.changeActiveItem(index),
+      onHover: (hovering) => controller.changeHoverItem(hovering ? index : -1),
       child: Obx(() => TRoundedContainer(
-        backgroundColor: (controller.isHovering(routes[index]) || controller.isActive(routes[index])) ? TColors.primary : Colors.transparent,
-        radius: Sizes.cardRadiusMd,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(Sizes.md),
-              child: controller.isHovering(routes[index]) ?
-              const TLoopRotation(child: Icon(Iconsax.status, color: TColors.white)) :
-              Icon(Iconsax.status, color: !controller.isActive(routes[index]) ? TColors.darkerGrey : TColors.white,),
+            backgroundColor:
+                (controller.isHovering(index) || controller.isActive(index))
+                    ? TColors.primary
+                    : Colors.transparent,
+            radius: Sizes.cardRadiusMd,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(Sizes.md),
+                  child: controller.isHovering(index)
+                      ? const TLoopRotation(
+                          child: Icon(Iconsax.status, color: TColors.white))
+                      : Icon(
+                          Iconsax.status,
+                          color: !controller.isActive(index)
+                              ? TColors.darkerGrey
+                              : TColors.white,
+                        ),
+                ),
+                TextWidget(
+                  text: controller.titles[index].s14w700,
+                  color:
+                      controller.isActive(index) || controller.isHovering(index)
+                          ? TColors.white
+                          : dark
+                              ? TColors.lightGrey
+                              : TColors.darkerGrey,
+                )
+              ],
             ),
-            TextWidget(
-              text: titles[index].s14w700,
-              color: controller.isActive(routes[index]) || controller.isHovering(routes[index]) ? TColors.white : dark ? TColors.lightGrey : TColors.darkerGrey,
-            )
-          ],
-        ),
-      )),
+          )),
     );
   }
 }

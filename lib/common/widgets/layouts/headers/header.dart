@@ -16,7 +16,7 @@ class THeader extends StatelessWidget implements PreferredSizeWidget{
     return Container(
       decoration: BoxDecoration(
         color: dark ? Colors.black : TColors.white,
-        border: const Border(bottom: BorderSide(color: TColors.grey, width: 1))
+        // border: const Border(bottom: BorderSide(color: TColors.grey, width: 1))
       ),
       padding: const EdgeInsets.symmetric(horizontal: Sizes.md, vertical: Sizes.sm),
       child: AppBar(
