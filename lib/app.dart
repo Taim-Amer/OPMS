@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'features/settings/controllers/theme_controller.dart';
+
 class OPMSSystem extends StatelessWidget {
   const OPMSSystem({super.key});
 
@@ -20,20 +22,26 @@ class OPMSSystem extends StatelessWidget {
     String? language = CacheHelper.getData(key: Keys.language);
     return ScreenUtilInit(
       designSize: Size(HelperFunctions.screenWidth(context), HelperFunctions.screenHeight(context)),
-      builder: (_, child) =>  GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        themeMode: ThemeMode.dark,
-        theme: AppTheme.lightTheme,
-        darkTheme: AppTheme.darkTheme,
-        initialRoute: AppRoutes.kLogin,
-        getPages: AppRoutes.routes,
-        // translations: AppTranslations(),
-        locale: const Locale('en'),
-        // locale: language == 'en' ? const Locale('en') : const Locale('ar'),
-        fallbackLocale: const Locale('en'),
-        initialBinding: GlobalBindings(),
-        // home: Container(color: TColors.redColor,),
-      ),
+      builder: (_, child){
+        int language = CacheHelper.getData(key: Keys.language) ?? 1;
+        return Obx(() {
+          final controller = Get.put<ThemeController>(ThemeController());
+          return GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            themeMode: controller.themeMode.value,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            initialRoute: AppRoutes.kLogin,
+            getPages: AppRoutes.routes,
+            // translations: AppTranslations(),
+            locale: const Locale('en'),
+            // locale: language == 'en' ? const Locale('en') : const Locale('ar'),
+            fallbackLocale: const Locale('en'),
+            initialBinding: GlobalBindings(),
+            // home: Container(color: TColors.redColor,),
+          );
+        });
+      },
     );
   }
 }

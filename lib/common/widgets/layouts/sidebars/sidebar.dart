@@ -22,7 +22,7 @@ class TSidebar extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: dark ? TColors.dark : TColors.white,
-          border: const Border(right: BorderSide(color: TColors.grey, width: 1))
+          // border: const Border(right: BorderSide(color: TColors.grey, width: 1))
         ),
         child: Padding(
           padding: const EdgeInsets.all(Sizes.defaultSpace),
