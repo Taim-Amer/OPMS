@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
 import 'package:opms/common/widgets/images/rounded_image.dart';
 import 'package:opms/common/widgets/layouts/lists/list_layout.dart';
-import 'package:opms/features/home/views/widgets/menu_item.dart';
+import 'package:opms/features/sidebar/views/widgets/menu_item.dart';
 import 'package:opms/utils/constants/assets.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/enums.dart';
@@ -23,6 +23,7 @@ class TSidebar extends StatelessWidget {
           color: dark ? TColors.dark : TColors.light,
           // border: const Border(right: BorderSide(color: TColors.grey, width: 1))
         ),
+
         child: Padding(
           padding: const EdgeInsets.all(Sizes.defaultSpace),
           child: Column(

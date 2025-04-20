@@ -9,7 +9,7 @@ class TListView extends StatelessWidget {
     required this.itemBuilder,
     required this.separatorBuilder,
     this.padding,
-    this.animationType = AnimationType.fadeIn,
+    this.animationType = AnimationType.none,
     this.shrink = false,
     this.isNeverScroll = false,
     this.physics,

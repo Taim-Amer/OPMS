@@ -31,6 +31,15 @@ class LoginMobileScreen extends GetView<LoginController> {
                 padding: const EdgeInsets.all((Sizes.spaceBtwSections * 2)),
                 backgroundColor: dark ? TColors.dark : TColors.white,
                 radius: Sizes.cardRadiusLg,
+                showShadow: true,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 10,
+                    spreadRadius: 1,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
                 child: Column(
                   children: [
                     SizedBox(

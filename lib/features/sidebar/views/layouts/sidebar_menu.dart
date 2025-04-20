@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:opms/common/widgets/layouts/templates/site_template.dart';
-import 'package:opms/features/home/controllers/sidebar_controller.dart';
+import 'package:opms/features/sidebar/controllers/sidebar_controller.dart';
 
 class SidebarMenu extends GetView<SidebarController> {
   const SidebarMenu({super.key});

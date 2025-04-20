@@ -5,13 +5,13 @@ import 'package:opms/common/animations/loop_rotation_animation.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
 import 'package:opms/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:opms/common/widgets/handlers/text_widget.dart';
-import 'package:opms/features/home/controllers/sidebar_controller.dart';
+import 'package:opms/features/sidebar/controllers/sidebar_controller.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/sizes.dart';
-import 'package:opms/utils/router/app_router.dart';
+
 
 class MenuItem extends GetView<SidebarController> {
-  MenuItem({super.key, required this.index});
+  const MenuItem({super.key, required this.index});
 
   final int index;
 

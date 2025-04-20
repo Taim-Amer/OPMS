@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:opms/features/departments/views/layouts/department_layout.dart';
 import 'package:opms/features/home/views/layouts/home_layout.dart';
 import 'package:opms/utils/helpers/device_utility.dart';
 import 'package:opms/utils/helpers/helper_functions.dart';
@@ -20,8 +21,8 @@ class SidebarController extends GetxController {
     'Users',
   ];
   final List<Widget> screens = [
-    Container(color: Colors.redAccent,),
-    Container(color: Colors.orangeAccent,),
+    const HomeLayout(),
+    const DepartmentLayout(),
     Container(color: Colors.black,),
     Container(color: Colors.redAccent,),
     Container(color: Colors.greenAccent,),

@@ -1,6 +1,6 @@
   import 'package:get/get.dart';
 import 'package:opms/features/auth/view/layouts/login_layout.dart';
-import 'package:opms/features/sidebar/sidebar_menu.dart';
+import 'package:opms/features/sidebar/views/layouts/sidebar_menu.dart';
 import 'package:opms/utils/dependencies/login_bindings.dart';
 
 class AppRoutes {

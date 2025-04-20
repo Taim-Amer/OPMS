@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:opms/common/responsive/responsive_design.dart';
 import 'package:opms/features/home/views/screens/home_desktop_screen.dart';
+import 'package:opms/features/home/views/screens/home_mobile_screen.dart';
 
 class HomeLayout extends StatelessWidget {
   const HomeLayout({super.key});
@@ -8,9 +9,9 @@ class HomeLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const TResponsiveWidget(
-      mobile: HomeDesktopScreen(),
+      mobile: HomeMobileScreen(),
       desktop: HomeDesktopScreen(),
-      tablet: HomeDesktopScreen(),
+      tablet: HomeMobileScreen(),
     );
   }
 }
