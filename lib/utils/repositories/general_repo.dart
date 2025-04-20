@@ -6,6 +6,7 @@ import 'package:opms/features/outcomes/models/outcomes_model.dart';
 import 'package:opms/features/outputs/models/outputs_model.dart';
 import 'package:opms/features/roles/models/roles_model.dart';
 import 'package:opms/features/units/models/units_model.dart';
+import 'package:opms/features/users/models/users_model.dart';
 import 'package:opms/utils/api/data_state.dart';
 import 'package:opms/utils/models/message_model.dart';
 
@@ -19,7 +20,7 @@ abstract class GeneralRepo {
   Future<DataState<MessageModel>> logout();
 
   //Users
-  Future<DataState<LoginModel>> getUsers(bool? registeredBy);
+  Future<DataState<UsersModel>> getUsers(String? registeredBy);
   Future<DataState<MessageModel>> insertUser({
     required String name,
     required String email,
@@ -117,7 +118,7 @@ abstract class GeneralRepo {
   });
 
   //Roles
-  Future<DataState<RolesModel>> getRoles(int? outputID);
+  Future<DataState<RolesModel>> getRoles();
   Future<DataState<MessageModel>> insertRole({required String name});
   Future<DataState<MessageModel>> updateRole({
     required int roleID,
