@@ -22,10 +22,10 @@ class LoginMobileScreen extends GetView<LoginController> {
     final dark = context.isDarkMode;
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(Sizes.secondaryPaddingSpace),
+        padding: const EdgeInsets.symmetric(horizontal: Sizes.secondaryPaddingSpace),
         child: Center(
           child: SizedBox(
-            width: 550.h,
+            width: 550,
             child: SingleChildScrollView(
               child: TRoundedContainer(
                 padding: const EdgeInsets.all((Sizes.spaceBtwSections * 2)),
@@ -59,6 +59,7 @@ class LoginMobileScreen extends GetView<LoginController> {
                           hint: 'Email Address',
                           prefix: const Icon(Iconsax.direct_right),
                           validator: (value) => Validator.validateEmail(value),
+                          keyboardType: TextInputType.emailAddress,
                         ),
                         LabeledTextFeild(
                           label: '',
@@ -66,7 +67,7 @@ class LoginMobileScreen extends GetView<LoginController> {
                           prefix: const Icon(Iconsax.lock),
                           hint: 'Security Code',
                           isPassword: true,
-                          validator: (value) => Validator.validateEmptyText(value, 'Security Code'),
+                          validator: (value) => Validator.minimumValidator(value, minimum: 6),
                         ),
                         (Sizes.spaceBtwItems * 2).verticalSpace,
                         GetBuilder<LoginController>(builder: (controller) => SizedBox(

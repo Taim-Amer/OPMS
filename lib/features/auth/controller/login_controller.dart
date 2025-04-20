@@ -7,6 +7,7 @@ import 'package:opms/utils/constants/keys.dart';
 import 'package:opms/utils/helpers/cache_helper.dart';
 import 'package:opms/utils/repositories/general_repo.dart';
 import 'package:opms/utils/repositories/general_repo_impl.dart';
+import 'package:opms/utils/router/app_router.dart';
 
 class LoginController extends GetxController{
   final GeneralRepo _repo = GeneralRepoImpl();
@@ -28,7 +29,7 @@ class LoginController extends GetxController{
       loginState = RequestState.success;
       CacheHelper.saveData(key: Keys.token, value: dataState.data!.data!.accessToken);
       showSnackBar(dataState.data!.message!, AlertState.success);
-      // Get.offAllNamed(AppRouter.kNavigationMenu);
+      Get.offAllNamed(AppRoutes.kHome);
       update();
     } else if (dataState is DataFailed) {
       loginState = RequestState.error;

@@ -22,7 +22,7 @@ class OPMSSystem extends StatelessWidget {
       designSize: Size(HelperFunctions.screenWidth(context), HelperFunctions.screenHeight(context)),
       builder: (_, child) =>  GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        themeMode: ThemeMode.light,
+        themeMode: ThemeMode.dark,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         initialRoute: AppRoutes.kLogin,
