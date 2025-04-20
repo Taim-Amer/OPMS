@@ -7,11 +7,14 @@ import 'package:opms/common/widgets/buttons/custom_button.dart';
 import 'package:opms/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:opms/common/widgets/fields/labeled_text_feild.dart';
 import 'package:opms/common/widgets/images/circular_image.dart';
+import 'package:opms/features/auth/controller/login_controller.dart';
 import 'package:opms/utils/constants/assets.dart';
 import 'package:opms/utils/constants/colors.dart';
+import 'package:opms/utils/constants/enums.dart';
 import 'package:opms/utils/constants/sizes.dart';
+import 'package:opms/utils/helpers/validation.dart';
 
-class LoginMobileScreen extends StatelessWidget {
+class LoginMobileScreen extends GetView<LoginController> {
   const LoginMobileScreen({super.key});
 
   @override
@@ -42,9 +45,9 @@ class LoginMobileScreen extends StatelessWidget {
                             height: 170,
                           ),
                           Sizes.spaceBtwSections.verticalSpace,
-                          'login title'.s17w700,
+                          'Welcome to the Red Crescent Management System'.s17w700,
                           Sizes.sm.verticalSpace,
-                          'Login Sub title'.s13w400,
+                          'Please sign in to access your dashboard and manage operations efficiently.'.s13w400,
                         ],
                       ),
                     ),
@@ -52,23 +55,29 @@ class LoginMobileScreen extends StatelessWidget {
                       children: [
                         LabeledTextFeild(
                           label: '',
-                          controller: TextEditingController(),
+                          controller: controller.emailController,
                           hint: 'email',
                           prefix: const Icon(Iconsax.direct_right),
+                          validator: (value) => Validator.validateEmail(value),
                         ),
                         LabeledTextFeild(
                           label: '',
-                          controller: TextEditingController(),
+                          controller: controller.passwordController,
                           prefix: const Icon(Iconsax.lock),
                           hint: 'password',
                           isPassword: true,
+                          validator: (value) => Validator.validatePassword(value),
                         ),
                         (Sizes.spaceBtwItems * 2).verticalSpace,
-                        SizedBox(
+                        GetBuilder<LoginController>(builder: (controller) => SizedBox(
                           height: 45.h,
                           width: double.infinity,
-                          child: const CustomButton(title: 'Login'),
-                        )
+                          child: CustomButton(
+                            title: 'Login',
+                            isLoading: controller.loginState == RequestState.loading,
+                            onTap: () => controller.login(),
+                          ),
+                        ))
                       ],
                     )
                   ],
