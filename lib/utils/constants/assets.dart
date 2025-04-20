@@ -1,11 +1,14 @@
 class SvgAssets {
   static const String _svgPath = 'assets/svg';
   static const String eye = '$_svgPath/eye.svg';
-  static const String eyeSlash = '$_svgPath/eye-slash.svg';}
+  static const String eyeSlash = '$_svgPath/eye-slash.svg';
+}
 
 class ImagesAssets {
   static const String _imagePath = 'assets/images';
-  static const String win = '$_imagePath/🎉.png';
+  static const String darkLogo = '$_imagePath/dark_logo.png';
+  static const String lightLogo = '$_imagePath/light_logo.png';
+  static const String logo = '$_imagePath/hilal_logo.png';
 }
 
 class JsonAssets {

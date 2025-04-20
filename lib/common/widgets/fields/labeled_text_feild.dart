@@ -116,10 +116,10 @@ class _LabeledTextFeildState extends State<LabeledTextFeild> {
               hintStyle: Theme.of(context)
                   .textTheme
                   .titleSmall!
-                  .copyWith(color: TColors.grey),
+                  .copyWith(color: const Color(0xFF707070)),
               hintTextDirection: widget.textDirection,
               filled: true,
-              fillColor: dark ? TColors.darkerGrey : TColors.white,
+              fillColor: dark ? TColors.darkerGrey : TColors.grey,
               hintText: widget.hint,
               counterText: '',
               border: OutlineInputBorder(

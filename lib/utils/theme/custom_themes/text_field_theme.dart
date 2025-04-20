@@ -8,6 +8,7 @@ class TTextFieldTheme {
     errorMaxLines: 3,
     prefixIconColor: const Color(0xFF707070),
     suffixIconColor: const Color(0xFF707070),
+    // fillColor: const Color(0xFFF5F5F5),
     fillColor: const Color(0xFFF5F5F5),
     filled: true,
     labelStyle: const TextStyle().copyWith(fontSize: 14, color: const Color(0xFF707070)),

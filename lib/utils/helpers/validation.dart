@@ -12,13 +12,13 @@ class Validator {
 
   static String? validateEmail(String? value) {
     if(value == null || value.isEmpty){
-      return TranslationKey.kEmailInvalid;
+      return 'Email is required';
     }
 
     final emailRegExp = RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
 
     if(!emailRegExp.hasMatch(value)){
-      return TranslationKey.kEmailInvalid;
+      return 'Invalid Email format';
     }
     return null;
   }

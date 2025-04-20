@@ -4,12 +4,23 @@ import 'package:dio/dio.dart';
 import 'package:opms/utils/constants/api_constants.dart';
 import 'package:opms/utils/constants/keys.dart';
 import 'package:opms/utils/helpers/cache_helper.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'data_state.dart';
 
 class ApiService {
   final Dio _dio;
 
-  ApiService(this._dio);
+  ApiService(this._dio) {
+    _dio.interceptors.add(PrettyDioLogger(
+      requestHeader: true,
+      requestBody: true,
+      responseHeader: true,
+      responseBody: true,
+      error: true,
+      compact: true,
+      maxWidth: 90,
+    ));
+  }
 
   Future<DataState<T>> getData<T>({
     required String endPoint,
