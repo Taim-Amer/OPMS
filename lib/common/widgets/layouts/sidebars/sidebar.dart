@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
+import 'package:opms/common/widgets/handlers/text_widget.dart';
 import 'package:opms/common/widgets/images/rounded_image.dart';
 import 'package:opms/common/widgets/layouts/lists/list_layout.dart';
+import 'package:opms/features/sidebar/controllers/sidebar_controller.dart';
 import 'package:opms/features/sidebar/views/widgets/menu_item.dart';
 import 'package:opms/utils/constants/assets.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/enums.dart';
 import 'package:opms/utils/constants/sizes.dart';
 
-class TSidebar extends StatelessWidget {
+class TSidebar extends GetView<SidebarController> {
   const TSidebar({super.key});
 
   @override
@@ -21,32 +23,58 @@ class TSidebar extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: dark ? TColors.dark : TColors.light,
-          // border: const Border(right: BorderSide(color: TColors.grey, width: 1))
         ),
-
         child: Padding(
           padding: const EdgeInsets.all(Sizes.defaultSpace),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-
-              const TRoundedImage(imageUrl: ImagesAssets.logo, useHero: false, backgroundColor: Colors.transparent,),
-              Sizes.spaceBtwSections.verticalSpace,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
                 children: [
-                  'MENU'.s12w400,
+                  const TRoundedImage(
+                    imageUrl: ImagesAssets.logo,
+                    useHero: false,
+                    backgroundColor: Colors.transparent,
+                  ),
                   Sizes.spaceBtwSections.verticalSpace,
-                  TListView(
-                    itemCount: 8,
-                    animationType: AnimationType.slide,
-                    shrink: true,
-                    itemBuilder: (context, index) => MenuItem(index: index),
-                    separatorBuilder: (context, _) => Sizes.spaceBtwItems.verticalSpace,
-                  )
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      'MENU'.s12w400,
+                      Sizes.spaceBtwSections.verticalSpace,
+                      TListView(
+                        itemCount: 8,
+                        animationType: AnimationType.slide,
+                        shrink: true,
+                        itemBuilder: (context, index) => MenuItem(index: index),
+                        separatorBuilder: (context, _) => Sizes.spaceBtwItems.verticalSpace,
+                      ),
+                    ],
+                  ),
                 ],
-              )
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: () => controller.logout(),
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(color: TColors.primary),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)
+                    )
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(Sizes.sm),
+                    child: TextWidget(
+                      text: 'Logout'.s14w700,
+                      fontWeight: FontWeight.w700,
+                      color: TColors.primary,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

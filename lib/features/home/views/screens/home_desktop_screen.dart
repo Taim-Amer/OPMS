@@ -19,6 +19,7 @@ class HomeDesktopScreen extends StatelessWidget {
 
     return TRoundedContainer(
       backgroundColor: dark ? TColors.deepBlack : Colors.white,
+      radius: 0,
       child: Padding(
         padding: const EdgeInsets.all(Sizes.secondaryPaddingSpace),
         child: Row(
@@ -63,12 +64,12 @@ class HomeDesktopScreen extends StatelessWidget {
               flex: 3,
               child: Column(
                 children: [
-                  TRoundedContainer(
+                  const TRoundedContainer(
                     height: 500,
                     backgroundColor: Colors.orangeAccent,
                   ),
                   Sizes.spaceBtwSections.verticalSpace,
-                  Column(
+                  const Column(
                     children: [
                       DepartmentItem(),
                       DepartmentItem(),
@@ -76,7 +77,6 @@ class HomeDesktopScreen extends StatelessWidget {
                       DepartmentItem(),
                     ],
                   )
-
                 ],
               ),
             )

@@ -16,7 +16,7 @@ class DepartmentItem extends StatelessWidget {
       // height: 70.h,
       showBorder: true,
       radius: 6,
-      borderColor: TColors.grey,
+      borderColor: dark ? TColors.grey.withOpacity(.3) : TColors.grey,
       padding: const EdgeInsets.all(Sizes.defaultSpace),
       backgroundColor: Colors.transparent,
       child: Center(child: Row(

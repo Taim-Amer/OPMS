@@ -1,12 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:opms/features/departments/views/layouts/department_layout.dart';
 import 'package:opms/features/home/views/layouts/home_layout.dart';
-import 'package:opms/utils/helpers/device_utility.dart';
+import 'package:opms/utils/constants/enums.dart';
+import 'package:opms/utils/constants/keys.dart';
+import 'package:opms/utils/helpers/cache_helper.dart';
 import 'package:opms/utils/helpers/helper_functions.dart';
+import 'package:opms/utils/repositories/general_repo.dart';
+import 'package:opms/utils/repositories/general_repo_impl.dart';
+import 'package:opms/utils/router/app_router.dart';
 
 class SidebarController extends GetxController {
+  final GeneralRepo _repo = GeneralRepoImpl();
   RxInt activeItem = 0.obs;
   RxInt hoverItem = (-1).obs;
 
@@ -47,5 +52,16 @@ class SidebarController extends GetxController {
       if (HelperFunctions.isMobileScreen(Get.context!)) Get.back();
       // Get.toNamed(index);
     }
+  }
+
+  Rx<RequestState> logoutState = RequestState.begin.obs;
+  Future<void> logout() async {
+    logoutState.value = RequestState.loading;
+    // update();
+    await _repo.logout();
+    CacheHelper.removeData(key: Keys.token);
+    Get.offAllNamed(AppRoutes.kLogin);
+    logoutState.value = RequestState.begin;
+    // update();
   }
 }

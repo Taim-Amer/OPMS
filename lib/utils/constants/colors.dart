@@ -60,6 +60,7 @@ class TColors {
 
   // Neutral shades
   static const Color black = Color(0xFF232323);
+  static const Color black2 = Color(0xFF121212);
   static const Color deepBlack = Colors.black;
   static const Color darkerGrey = Color(0xFF4F4F4F);
   static const Color darkGrey = Color(0xFF939393);
