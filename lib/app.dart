@@ -1,8 +1,8 @@
-import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/keys.dart';
 import 'package:opms/utils/dependencies/global_bindings.dart';
 import 'package:opms/utils/helpers/cache_helper.dart';
 import 'package:opms/utils/helpers/helper_functions.dart';
+import 'package:opms/utils/helpers/logger.dart';
 import 'package:opms/utils/localization/translations.dart';
 import 'package:opms/utils/router/app_router.dart';
 import 'package:opms/utils/theme/theme.dart';
@@ -20,6 +20,8 @@ class OPMSSystem extends StatelessWidget {
     String? token = CacheHelper.getData(key: Keys.token);
     // String initialRoute = token != null ? AppRoutes.order : AppRoutes.signin;
     String? language = CacheHelper.getData(key: Keys.language);
+    // LoggerHelper.info(CacheHelper.getData(key: Keys.token));
+
     return ScreenUtilInit(
       designSize: Size(HelperFunctions.screenWidth(context), HelperFunctions.screenHeight(context)),
       builder: (_, child){
@@ -33,7 +35,7 @@ class OPMSSystem extends StatelessWidget {
             darkTheme: AppTheme.darkTheme,
             initialRoute: AppRoutes.kLogin,
             getPages: AppRoutes.routes,
-            // translations: AppTranslations(),
+            translations: AppTranslations(),
             locale: const Locale('en'),
             // locale: language == 'en' ? const Locale('en') : const Locale('ar'),
             fallbackLocale: const Locale('en'),

@@ -58,6 +58,7 @@ class LoginDesktopScreen extends GetView<LoginController> {
                       ],
                     ),
                   ),
+                  Sizes.spaceBtwSections.verticalSpace,
                   Column(
                     children: [
                       LabeledTextFeild(
@@ -67,6 +68,7 @@ class LoginDesktopScreen extends GetView<LoginController> {
                         prefix: const Icon(Iconsax.direct_right),
                         validator: (value) => Validator.validateEmail(value),
                       ),
+                      Sizes.spaceBtwItems.verticalSpace,
                       LabeledTextFeild(
                         label: '',
                         controller: controller.passwordController,
@@ -75,7 +77,7 @@ class LoginDesktopScreen extends GetView<LoginController> {
                         isPassword: true,
                         validator: (value) => Validator.validateEmptyText(value, 'Security Code'),
                       ),
-                      (Sizes.spaceBtwItems * 2).verticalSpace,
+                      Sizes.spaceBtwItems.verticalSpace,
                       GetBuilder<LoginController>(builder: (controller) => SizedBox(
                         height: 45.h,
                         width: double.infinity,

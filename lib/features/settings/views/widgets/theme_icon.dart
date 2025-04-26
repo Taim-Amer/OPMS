@@ -21,7 +21,7 @@ class ThemeIcon extends StatelessWidget {
           icon: dark ? Icons.sunny : Icons.nightlight_outlined,
           // size: TConsts.iconLg,
           color: dark ? Colors.yellowAccent : Colors.blue,
-          backgroundColor: dark ? Colors.black : TColors.white,
+          backgroundColor: dark ? TColors.dark : TColors.white,
           // width: 28.w,
           // height: 28.h,
           radius: 100.r,

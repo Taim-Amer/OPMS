@@ -25,6 +25,10 @@ class Formatter {
     return phoneNumber;
   }
 
+  static String getFormattedDate(DateTime date, {String format = 'dd MMM yyyy'}){
+    return DateFormat(format).format(date);
+  }
+
   static String internationalFormatPhoneNumber(String phoneNumber) {
     var digitsOnly = phoneNumber.replaceAll(RegExp(r'\D'), '');
 

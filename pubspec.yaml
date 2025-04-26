@@ -39,6 +39,8 @@ dependencies:
   dartz: ^0.10.1
   url_launcher: any
   data_table_2: ^2.6.0
+  skeletonizer: ^1.4.3
+
 
   # Icons
   iconsax: ^0.0.8

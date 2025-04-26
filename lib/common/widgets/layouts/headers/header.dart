@@ -15,14 +15,15 @@ class THeader extends StatelessWidget implements PreferredSizeWidget{
     final dark = context.isDarkMode;
     return Container(
       decoration: BoxDecoration(
-        color: dark ? Colors.black : TColors.white,
+        color: dark ? TColors.black2 : TColors.white,
         // border: const Border(bottom: BorderSide(color: TColors.grey, width: 1))
       ),
       padding: const EdgeInsets.symmetric(horizontal: Sizes.md, vertical: Sizes.sm),
       child: AppBar(
+        iconTheme: IconThemeData(color: dark ? TColors.light : TColors.dark),
         leading: !HelperFunctions.isDesktopScreen(context) ? IconButton(
           onPressed: () => scaffoldKey?.currentState?.openDrawer(),
-          icon: const Icon(Icons.menu),
+          icon: Icon(Icons.menu, color: dark ? TColors.light : TColors.black2,),
         ) : null,
         title: HelperFunctions.isDesktopScreen(context) ? SizedBox(
           width: 400,

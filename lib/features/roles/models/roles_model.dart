@@ -1,3 +1,5 @@
+import 'package:skeletonizer/skeletonizer.dart';
+
 class RolesModel {
   bool? status;
   List<Data>? data;
@@ -10,10 +12,16 @@ class RolesModel {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
     message = json['message'];
+  }
+
+  static RolesModel get skeleton{
+    return RolesModel(
+      data: List.generate(20, (_) => Data.skeleton)
+    );
   }
 }
 
@@ -32,5 +40,12 @@ class Data {
     guardName = json['guard_name'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+  }
+
+  static Data get skeleton {
+    return Data(
+      name: BoneMock.fullName,
+      guardName: BoneMock.fullName
+    );
   }
 }

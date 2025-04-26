@@ -11,16 +11,18 @@ import 'package:opms/utils/constants/sizes.dart';
 
 
 class MenuItem extends GetView<SidebarController> {
-  const MenuItem({super.key, required this.index});
+  const MenuItem({super.key, required this.index, required this.clickableSidebar});
 
   final int index;
+  final bool clickableSidebar;
 
   @override
   Widget build(BuildContext context) {
     final dark = context.isDarkMode;
     return InkWell(
-      onTap: () => controller.changeActiveItem(index),
-      onHover: (hovering) => controller.changeHoverItem(hovering ? index : -1),
+      mouseCursor: clickableSidebar ? SystemMouseCursors.click : SystemMouseCursors.forbidden,
+      onTap: clickableSidebar ? () => controller.changeActiveItem(index) : (){},
+      onHover: clickableSidebar ? (hovering) => controller.changeHoverItem(hovering ? index : -1) : (hovering){},
       child: Obx(() => TRoundedContainer(
             backgroundColor:
                 (controller.isHovering(index) || controller.isActive(index))

@@ -1,3 +1,5 @@
+import 'package:skeletonizer/skeletonizer.dart';
+
 class OutcomesModel {
   bool? status;
   List<Data>? data;
@@ -14,6 +16,12 @@ class OutcomesModel {
       });
     }
     message = json['message'];
+  }
+
+  static OutcomesModel get skeleton{
+    return OutcomesModel(
+      data: List.generate(20, (_) => Data.skeleton)
+    );
   }
 }
 
@@ -40,5 +48,12 @@ class Data {
     code = json['code'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+  }
+
+  static Data get skeleton{
+    return Data(
+      name: BoneMock.fullName,
+      code: BoneMock.fullName,
+    );
   }
 }

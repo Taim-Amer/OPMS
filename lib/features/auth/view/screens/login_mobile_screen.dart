@@ -60,6 +60,7 @@ class LoginMobileScreen extends GetView<LoginController> {
                         ],
                       ),
                     ),
+                    Sizes.spaceBtwSections.verticalSpace,
                     Column(
                       children: [
                         LabeledTextFeild(
@@ -70,6 +71,7 @@ class LoginMobileScreen extends GetView<LoginController> {
                           validator: (value) => Validator.validateEmail(value),
                           keyboardType: TextInputType.emailAddress,
                         ),
+                        Sizes.spaceBtwItems.verticalSpace,
                         LabeledTextFeild(
                           label: '',
                           controller: controller.passwordController,
@@ -78,7 +80,7 @@ class LoginMobileScreen extends GetView<LoginController> {
                           isPassword: true,
                           validator: (value) => Validator.minimumValidator(value, minimum: 6),
                         ),
-                        (Sizes.spaceBtwItems * 2).verticalSpace,
+                        Sizes.spaceBtwItems.verticalSpace,
                         GetBuilder<LoginController>(builder: (controller) => SizedBox(
                           height: 45.h,
                           width: double.infinity,

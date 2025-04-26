@@ -49,7 +49,7 @@ class AppTheme {
     primaryColor: TColors.primary,
     textTheme: TTextTheme.darkTextTheme,
     chipTheme: TChipTheme.darkChipTheme(false),
-    scaffoldBackgroundColor: Colors.black,
+    scaffoldBackgroundColor: TColors.black2,
     appBarTheme: TAppBarTheme.darkAppBarTheme,
     textButtonTheme: TTextButtonTheme.darkTextButtonTheme,
     checkboxTheme: TCheckboxTheme.darkCheckboxTheme,

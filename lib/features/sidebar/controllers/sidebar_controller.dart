@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:opms/features/departments/views/layouts/department_layout.dart';
 import 'package:opms/features/home/views/layouts/home_layout.dart';
+import 'package:opms/features/indicators/views/layouts/indicators_layout.dart';
+import 'package:opms/features/outcomes/views/layouts/outcome_layout.dart';
+import 'package:opms/features/outputs/views/layouts/outputs_layout.dart';
+import 'package:opms/features/roles/views/layouts/roles_layout.dart';
 import 'package:opms/utils/constants/enums.dart';
 import 'package:opms/utils/constants/keys.dart';
 import 'package:opms/utils/helpers/cache_helper.dart';
@@ -29,11 +33,11 @@ class SidebarController extends GetxController {
     const HomeLayout(),
     const DepartmentLayout(),
     Container(color: Colors.black,),
-    Container(color: Colors.redAccent,),
-    Container(color: Colors.greenAccent,),
-    Container(color: Colors.purple,),
+    const OutcomeLayout(),
+    const OutputsLayout(),
+    const IndicatorLayout(),
     Container(color: Colors.brown,),
-    Container(color: Colors.yellow,),
+    const RolesLayout(),
   ];
 
   void changeActiveItem(int index) => activeItem.value = index;
@@ -57,11 +61,9 @@ class SidebarController extends GetxController {
   Rx<RequestState> logoutState = RequestState.begin.obs;
   Future<void> logout() async {
     logoutState.value = RequestState.loading;
-    // update();
     await _repo.logout();
     CacheHelper.removeData(key: Keys.token);
     Get.offAllNamed(AppRoutes.kLogin);
     logoutState.value = RequestState.begin;
-    // update();
   }
 }

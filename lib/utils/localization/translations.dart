@@ -5,16 +5,16 @@ class AppTranslations extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
     'en': {
-      'phoneValidation': ArabicTexts.phoneValidation,
-      'emptyValidation': ArabicTexts.emptyValidation,
-      'emailValidation': ArabicTexts.emailValidation,
-      'emailInvalid': ArabicTexts.emailInvalid,
-    },
-    'ar': {
       'phoneValidation': EnglishTexts.phoneValidation,
       'emptyValidation': EnglishTexts.emptyValidation,
       'emailValidation': EnglishTexts.emailValidation,
       'emailInvalid': EnglishTexts.emailInvalid,
+    },
+    'ar': {
+      'phoneValidation': ArabicTexts.phoneValidation,
+      'emptyValidation': ArabicTexts.emptyValidation,
+      'emailValidation': ArabicTexts.emailValidation,
+      'emailInvalid': ArabicTexts.emailInvalid,
     },
   };
 }

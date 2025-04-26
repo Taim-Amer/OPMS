@@ -30,6 +30,8 @@ class LabeledTextFeild extends StatefulWidget {
     this.textInputAction,
     this.onFieldSubmitted,
     this.prefix,
+    this.fillColor,
+    this.showLabel = false
   });
 
   final Widget? prefix;
@@ -52,6 +54,8 @@ class LabeledTextFeild extends StatefulWidget {
   final FocusNode? nextFocusNode;
   final TextInputAction? textInputAction;
   final Function(String)? onFieldSubmitted;
+  final Color? fillColor;
+  final bool? showLabel;
 
   @override
   State<LabeledTextFeild> createState() => _LabeledTextFeildState();
@@ -65,7 +69,7 @@ class _LabeledTextFeildState extends State<LabeledTextFeild> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
+        widget.showLabel ?? false ? Row(
           children: [
             TFadeSlideAnimation(
               child: Text(
@@ -82,8 +86,8 @@ class _LabeledTextFeildState extends State<LabeledTextFeild> {
                   style: const TextStyle(color: TColors.grey)),
             ],
           ],
-        ),
-        9.verticalSpace,
+        ) : const SizedBox(),
+        widget.showLabel ?? false ? 9.verticalSpace : const SizedBox(),
         Theme(
           data: Theme.of(context).copyWith(
             textSelectionTheme: TextSelectionThemeData(
@@ -125,7 +129,7 @@ class _LabeledTextFeildState extends State<LabeledTextFeild> {
                     .copyWith(color: const Color(0xFF707070)),
                 hintTextDirection: widget.textDirection,
                 filled: true,
-                fillColor: dark ? TColors.darkerGrey : TColors.grey,
+                fillColor: widget.fillColor ?? (dark ? TColors.darkerGrey : TColors.grey),
                 hintText: widget.hint,
                 counterText: '',
                 border: OutlineInputBorder(

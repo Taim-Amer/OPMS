@@ -9,6 +9,8 @@ class ImagesAssets {
   static const String darkLogo = '$_imagePath/dark_logo.png';
   static const String lightLogo = '$_imagePath/light_logo.png';
   static const String logo = '$_imagePath/hilal_logo.png';
+  static const String add = '$_imagePath/addIcn.png';
+  static const String edit = '$_imagePath/icons8-edit-text-file-50.png';
 }
 
 class JsonAssets {

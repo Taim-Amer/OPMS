@@ -14,6 +14,7 @@ class TGridLayout extends StatelessWidget {
     this.animationType = AnimationType.none,
     this.shrink = false,
     this.isNeverScroll = false,
+    this.crossCount = 2,
   });
 
   final int itemCount;
@@ -23,6 +24,7 @@ class TGridLayout extends StatelessWidget {
   final AnimationType animationType;
   final bool shrink;
   final bool isNeverScroll;
+  final int crossCount;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class TGridLayout extends StatelessWidget {
         itemCount: itemCount,
         padding: EdgeInsets.zero,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+          crossAxisCount: crossCount,
           mainAxisSpacing: Sizes.spaceBtwItems.h,
           crossAxisSpacing: Sizes.spaceBtwItems.w,
           mainAxisExtent: mainAxisExtent,

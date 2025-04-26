@@ -60,7 +60,7 @@ class GeneralRepoImpl implements GeneralRepo{
     return await _apiService.getData(
       endPoint: ApiConstants.outcomes,
       queryParameters: {
-        'unit_id' : unitID
+        if(unitID != null)'unit_id' : unitID
       },
       fromJson: OutcomesModel.fromJson,
     );
@@ -71,7 +71,7 @@ class GeneralRepoImpl implements GeneralRepo{
     return await _apiService.getData(
       endPoint: ApiConstants.outputs,
       queryParameters: {
-        'outcome_id' : outcomeID
+        if(outcomeID != null) 'outcome_id' : outcomeID
       },
       fromJson: OutputsModel.fromJson,
     );
@@ -142,7 +142,7 @@ class GeneralRepoImpl implements GeneralRepo{
   }
 
   @override
-  Future<DataState<MessageModel>> insertOutcome({required int unitID, required String name, required int code}) async {
+  Future<DataState<MessageModel>> insertOutcome({required int unitID, required String name, required String code}) async {
     return await _apiService.postData(
       endPoint: ApiConstants.outcomes,
       data: {
@@ -155,7 +155,7 @@ class GeneralRepoImpl implements GeneralRepo{
   }
 
   @override
-  Future<DataState<MessageModel>> insertOutput({required int outcomeID, required String name, required int code}) async {
+  Future<DataState<MessageModel>> insertOutput({required int outcomeID, required String name, required String code}) async {
     return await _apiService.postData(
       endPoint: ApiConstants.outputs,
       data: {
@@ -264,7 +264,7 @@ class GeneralRepoImpl implements GeneralRepo{
   }
 
   @override
-  Future<DataState<MessageModel>> updateOutcome({required int unitID, required int departmentID, String? name, int? code}) async{
+  Future<DataState<MessageModel>> updateOutcome({required int unitID, required int departmentID, String? name, String? code}) async{
     return await _apiService.putData(
       endPoint: '${ApiConstants.outcomes}/$departmentID',
       data: {
@@ -277,7 +277,7 @@ class GeneralRepoImpl implements GeneralRepo{
   }
 
   @override
-  Future<DataState<MessageModel>> updateOutput({required int outcomeID, required int departmentID, String? name, int? code}) async{
+  Future<DataState<MessageModel>> updateOutput({required int outcomeID, required int departmentID, String? name, String? code}) async{
     return await _apiService.putData(
       endPoint: '${ApiConstants.outputs}/$departmentID',
       data: {

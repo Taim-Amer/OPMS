@@ -1,5 +1,6 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/sizes.dart';
 
@@ -29,9 +30,10 @@ class TPaginatedDataTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dark = context.isDarkMode;
     return Container(
       decoration: BoxDecoration(
-        color: TColors.white,
+        color: dark ? TColors.dark : TColors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -46,7 +48,7 @@ class TPaginatedDataTable extends StatelessWidget {
         height: tableHeight,
         child: Theme(
           data: Theme.of(context).copyWith(
-            cardTheme: const CardTheme(color: TColors.white, elevation: 0),
+            cardTheme: CardTheme(color: dark ? TColors.dark: TColors.white, elevation: 0),
           ),
           child: PaginatedDataTable2(
             columnSpacing: 16,

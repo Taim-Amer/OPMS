@@ -25,7 +25,7 @@ class TRoundedImage extends StatelessWidget {
     this.borderRadius = Sizes.md,
     this.heroTag = '',
     this.isImageClickable = false,
-    this.useHero = true,
+    this.useHero = false,
   });
 
   final double? width, height;

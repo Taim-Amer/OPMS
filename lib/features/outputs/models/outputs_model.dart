@@ -1,3 +1,5 @@
+import 'package:skeletonizer/skeletonizer.dart';
+
 class OutputsModel {
   bool? status;
   List<Data>? data;
@@ -15,6 +17,10 @@ class OutputsModel {
     }
     message = json['message'];
   }
+
+  static OutputsModel get skeleton {
+    return OutputsModel(data: List.generate(20, (_) => Data.skeleton));
+  }
 }
 
 class Data {
@@ -27,11 +33,11 @@ class Data {
 
   Data(
       {this.id,
-        this.outcomeId,
-        this.name,
-        this.code,
-        this.createdAt,
-        this.updatedAt});
+      this.outcomeId,
+      this.name,
+      this.code,
+      this.createdAt,
+      this.updatedAt});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -40,5 +46,9 @@ class Data {
     code = json['code'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+  }
+
+  static Data get skeleton {
+    return Data(code: BoneMock.fullName, name: BoneMock.fullName);
   }
 }

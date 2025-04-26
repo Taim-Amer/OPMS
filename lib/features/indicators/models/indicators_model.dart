@@ -1,3 +1,5 @@
+import 'package:skeletonizer/skeletonizer.dart';
+
 class IndicatorsModel {
   bool? status;
   List<Data>? data;
@@ -14,6 +16,12 @@ class IndicatorsModel {
       });
     }
     message = json['message'];
+  }
+
+  static IndicatorsModel get skeleton{
+    return IndicatorsModel(
+      data: List.generate(20, (_) => Data.skeleton)
+    );
   }
 }
 
@@ -37,5 +45,11 @@ class Data {
     description = json['description'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+  }
+
+  static Data get skeleton{
+    return Data(
+      description: BoneMock.fullName,
+    );
   }
 }

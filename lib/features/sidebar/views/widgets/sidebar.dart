@@ -13,7 +13,9 @@ import 'package:opms/utils/constants/enums.dart';
 import 'package:opms/utils/constants/sizes.dart';
 
 class TSidebar extends GetView<SidebarController> {
-  const TSidebar({super.key});
+  const TSidebar({super.key, required this.clickableSidebar});
+
+  final bool clickableSidebar;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,7 @@ class TSidebar extends GetView<SidebarController> {
                         itemCount: 8,
                         animationType: AnimationType.slide,
                         shrink: true,
-                        itemBuilder: (context, index) => MenuItem(index: index),
+                        itemBuilder: (context, index) => MenuItem(index: index, clickableSidebar: clickableSidebar),
                         separatorBuilder: (context, _) => Sizes.spaceBtwItems.verticalSpace,
                       ),
                     ],

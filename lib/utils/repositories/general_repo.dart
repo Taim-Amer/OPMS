@@ -68,13 +68,13 @@ abstract class GeneralRepo {
   Future<DataState<MessageModel>> insertOutcome({
     required int unitID,
     required String name,
-    required int code,
+    required String code,
   });
   Future<DataState<MessageModel>> updateOutcome({
     required int unitID,
     required int departmentID,
     String? name,
-    int? code,
+    String? code,
   });
 
   //Outputs
@@ -82,13 +82,13 @@ abstract class GeneralRepo {
   Future<DataState<MessageModel>> insertOutput({
     required int outcomeID,
     required String name,
-    required int code,
+    required String code,
   });
   Future<DataState<MessageModel>> updateOutput({
     required int outcomeID,
     required int departmentID,
     String? name,
-    int? code,
+    String? code,
   });
 
   //Indicators
