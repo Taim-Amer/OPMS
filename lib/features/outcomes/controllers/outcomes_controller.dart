@@ -40,6 +40,12 @@ class OutcomesController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void onClose() {
+    Get.delete<OutcomesController>(); // حذف الـ Controller عند إغلاق الصفحة
+    super.onClose();
+  }
+
   Future<void> getOutcomes({int? unitID}) async {
     getOutcomesState = RequestState.loading;
     update();
@@ -87,14 +93,13 @@ class OutcomesController extends GetxController {
     update();
     final dataState = await _repo.updateOutcome(
       name: updateOutcomeController.text.toString(),
-      unitID: 1,
-      departmentID: 1,
+      outcomeID: outcomeID,
       code: updateCodeController.text.toString()
     );
     if (dataState is DataSuccess) {
       updateOutcomesState = RequestState.success;
       updateOutcomeController.clear();
-      // print('Trying to close dialog...');
+      updateCodeController.clear();
       showSnackBar(dataState.data!.message, AlertState.success);
       getOutcomes();
       update();

@@ -58,7 +58,7 @@ abstract class GeneralRepo {
   });
   Future<DataState<MessageModel>> updateUnit({
     required int unitID,
-    required int departmentID,
+    // required int departmentID,
     String? name,
     int? code,
   });
@@ -71,8 +71,8 @@ abstract class GeneralRepo {
     required String code,
   });
   Future<DataState<MessageModel>> updateOutcome({
-    required int unitID,
-    required int departmentID,
+    required int outcomeID,
+    // required int departmentID,
     String? name,
     String? code,
   });
@@ -85,8 +85,8 @@ abstract class GeneralRepo {
     required String code,
   });
   Future<DataState<MessageModel>> updateOutput({
-    required int outcomeID,
-    required int departmentID,
+    // required int outcomeID,
+    required int outputID,
     String? name,
     String? code,
   });
@@ -98,8 +98,8 @@ abstract class GeneralRepo {
     required String name,
   });
   Future<DataState<MessageModel>> updateIndicator({
-    required int outputID,
-    required int departmentID,
+    // required int outputID,
+    required int indicatorID,
     String? name,
   });
 
@@ -111,8 +111,8 @@ abstract class GeneralRepo {
     required int code,
   });
   Future<DataState<MessageModel>> updateActivity({
-    required int outputID,
-    required int departmentID,
+    // required int outputID,
+    required int activityID,
     String? name,
     int? code,
   });

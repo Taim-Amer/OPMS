@@ -42,7 +42,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     outputId = json['output_id'];
-    description = json['description'];
+    description = json['name'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }

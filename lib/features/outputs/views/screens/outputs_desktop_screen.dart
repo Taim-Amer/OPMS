@@ -36,13 +36,10 @@ class OutputsDesktopScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              GestureDetector(
-                onTap: () => Get.find<OutcomesController>().getOutcomes(),
-                child: TextWidget(
-                  text: 'Outputs'.s17w700,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 24,
-                ),
+              TextWidget(
+                text: 'Outputs'.s17w700,
+                fontWeight: FontWeight.w700,
+                fontSize: 24,
               ),
               Sizes.spaceBtwSections.verticalSpace,
               Row(

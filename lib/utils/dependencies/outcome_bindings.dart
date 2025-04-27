@@ -5,5 +5,6 @@ class OutcomeBindings extends Bindings{
   @override
   void dependencies() {
     Get.create<OutcomesController>(() => OutcomesController());
+    // Get.put<OutcomesController>(OutcomesController());
   }
 }

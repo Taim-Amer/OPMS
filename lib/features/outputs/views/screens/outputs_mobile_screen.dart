@@ -37,13 +37,10 @@ class OutputsMobileScreen extends StatelessWidget {
                     padding: EdgeInsets.all(Sizes.secondaryPaddingSpace.w),
                   ),
                   Sizes.spaceBtwSections.verticalSpace,
-                  GestureDetector(
-                    onTap: () => Get.find<OutputsController>().getOutputs(),
-                    child: TextWidget(
-                      text: 'Outputs'.s17w700,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 24,
-                    ),
+                  TextWidget(
+                    text: 'Outputs'.s17w700,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24,
                   ),
                   const SizedBox(height: Sizes.spaceBtwSections),
                   GetBuilder<OutputsController>(

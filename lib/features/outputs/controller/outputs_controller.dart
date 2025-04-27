@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
 import 'package:opms/common/widgets/alerts/snackbar.dart';
 import 'package:opms/features/outputs/models/outputs_model.dart';
+import 'package:opms/features/outputs/views/widgets/update_output_dialog.dart';
 import 'package:opms/utils/api/data_state.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/enums.dart';
 import 'package:opms/utils/helpers/formatter.dart';
+import 'package:opms/utils/helpers/logger.dart';
 import 'package:opms/utils/repositories/general_repo.dart';
 import 'package:opms/utils/repositories/general_repo_impl.dart';
 import 'package:data_table_2/data_table_2.dart';
@@ -23,6 +26,7 @@ class OutputsController extends GetxController {
   final outputCodeController = TextEditingController();
   final updateOutputController = TextEditingController();
   final updateCodeController = TextEditingController();
+
   var formKey = GlobalKey<FormState>();
   var updateFormKey = GlobalKey<FormState>();
 
@@ -34,15 +38,22 @@ class OutputsController extends GetxController {
 
   @override
   void onInit() {
-    outcomeID = Get.arguments?['OutcomeID'] as int?;
+    outcomeID = Get.arguments?['outcomeID'] as int?;
+    LoggerHelper.error(outcomeID.toString());
     if (outcomeID != null) {
-      dataSource = OutputsDataTableSource(outputModel.data ?? []);
+      dataSource = OutputsDataTableSource(outputModel.data ?? [], outcomeID: outcomeID);
       getOutputs(outcomeID: outcomeID);
     } else {
-      dataSource = OutputsDataTableSource(outputModel.data ?? []);
+      dataSource = OutputsDataTableSource(outputModel.data ?? [], outcomeID: outcomeID);
       getOutputs();
     }
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    Get.delete<OutputsController>();
+    super.onClose();
   }
 
 
@@ -57,7 +68,7 @@ class OutputsController extends GetxController {
       if (outputModel.data?.isEmpty ?? true) {
         getOutputsState = RequestState.empty;
       } else {
-        dataSource = OutputsDataTableSource(outputModel.data!);
+        dataSource = OutputsDataTableSource(outputModel.data!, outcomeID: outcomeID);
         getOutputsState = RequestState.success;
       }
       update();
@@ -80,8 +91,9 @@ class OutputsController extends GetxController {
     if (dataState is DataSuccess) {
       insertOutputsState = RequestState.success;
       outputNameController.clear();
+      outputCodeController.clear();
       showSnackBar(dataState.data!.message, AlertState.success);
-      getOutputs();
+      getOutputs(outcomeID: outcomeID!);
       update();
     } else if (dataState is DataFailed) {
       insertOutputsState = RequestState.error;
@@ -96,13 +108,14 @@ class OutputsController extends GetxController {
     update();
     final dataState = await _repo.updateOutput(
         name: updateOutputController.text.toString(),
-        outcomeID: 1,
-        departmentID: 1,
+        // outcomeID: outcomeID!,
+        outputID: outputID,
         code: updateCodeController.text.toString()
     );
     if (dataState is DataSuccess) {
       updateOutputsState = RequestState.success;
       updateOutputController.clear();
+      updateCodeController.clear();
       showSnackBar(dataState.data!.message, AlertState.success);
       getOutputs();
       update();
@@ -117,8 +130,9 @@ class OutputsController extends GetxController {
 
 class OutputsDataTableSource extends DataTableSource {
   final List<Data> output;
+  final int? outcomeID;
 
-  OutputsDataTableSource(this.output);
+  OutputsDataTableSource(this.output, {this.outcomeID});
 
   @override
   DataRow2 getRow(int index) {
@@ -133,9 +147,9 @@ class OutputsDataTableSource extends DataTableSource {
           Row(
             children: [
               IconButton(
-                icon: const Icon(Icons.edit, color: Colors.blue),
+                icon: const Icon(Icons.edit, color:Colors.blue),
                 tooltip: 'Edit',
-                onPressed: (){},
+                onPressed:  () => Get.dialog(UpdateOutputDialog(outputID: item.id!,)) ,
               ),
               IconButton(
                 icon: const Icon(Icons.grid_view_rounded, color: TColors.primary),

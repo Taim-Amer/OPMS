@@ -26,7 +26,7 @@ class MenuItem extends GetView<SidebarController> {
       child: Obx(() => TRoundedContainer(
             backgroundColor:
                 (controller.isHovering(index) || controller.isActive(index))
-                    ? TColors.primary
+                    ? clickableSidebar ? TColors.primary : TColors.darkerGrey.withOpacity(.5)
                     : Colors.transparent,
             radius: Sizes.cardRadiusMd,
             child: Row(

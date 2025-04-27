@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,17 +18,19 @@ class TPaginatedDataTable extends StatelessWidget {
     this.dataRowHeight = 50,
     this.tableHeight = 760,
     this.minWidth = 1000,
+    this.isEmpty = false,
   });
 
   final bool sortAscending;
   final int? sortColumnIndex;
   final int rowsPerPage;
-  final DataTableSource source;
+  final DataTableSource? source;
   final List<DataColumn> columns;
   final Function(int)? onPageChanged;
   final double dataRowHeight;
   final double tableHeight;
   final double? minWidth;
+  final bool isEmpty;
 
   @override
   Widget build(BuildContext context) {
@@ -101,10 +105,24 @@ class TPaginatedDataTable extends StatelessWidget {
             isVerticalScrollBarVisible: true,
 
             columns: columns,
-            source: source,
+            source: isEmpty ? EmptyDataSource() : source ?? EmptyDataSource(),
           ),
         ),
       ),
     );
   }
+}
+
+class EmptyDataSource extends DataTableSource {
+  @override
+  int get rowCount => 0;
+
+  @override
+  DataRow? getRow(int index) => null;
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get selectedRowCount => 0;
 }

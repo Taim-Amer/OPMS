@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
 import 'package:opms/common/widgets/alerts/snackbar.dart';
 import 'package:opms/features/indicators/models/indicators_model.dart';
+import 'package:opms/features/indicators/views/widgets/update_indicator_dialog.dart';
 import 'package:opms/utils/api/data_state.dart';
+import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/enums.dart';
 import 'package:opms/utils/helpers/formatter.dart';
 import 'package:opms/utils/repositories/general_repo.dart';
@@ -17,7 +19,7 @@ class IndicatorsController extends GetxController {
   RequestState insertIndicatorsState = RequestState.begin;
   RequestState updateIndicatorsState = RequestState.begin;
 
-  final outputNameController = TextEditingController();
+  final indicatorNameController = TextEditingController();
   final updateNameController = TextEditingController();
 
   var formKey = GlobalKey<FormState>();
@@ -33,13 +35,19 @@ class IndicatorsController extends GetxController {
   void onInit() {
     outputID = Get.arguments?['outputID'] as int?;
     if (outputID != null) {
-      dataSource = IndicatorsDataTableSource(outputModel.data ?? []);
+      dataSource = IndicatorsDataTableSource(outputModel.data ?? [], outputID: outputID);
       getIndicators(outputID: outputID);
     } else {
-      dataSource = IndicatorsDataTableSource(outputModel.data ?? []);
+      dataSource = IndicatorsDataTableSource(outputModel.data ?? [], outputID: outputID);
       getIndicators();
     }
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    Get.delete<IndicatorsController>();
+    super.onClose();
   }
 
 
@@ -54,7 +62,7 @@ class IndicatorsController extends GetxController {
       if (outputModel.data?.isEmpty ?? true) {
         getIndicatorsState = RequestState.empty;
       } else {
-        dataSource = IndicatorsDataTableSource(outputModel.data!);
+        dataSource = IndicatorsDataTableSource(outputModel.data!, outputID: outputID);
         getIndicatorsState = RequestState.success;
       }
       update();
@@ -65,19 +73,19 @@ class IndicatorsController extends GetxController {
     }
   }
 
-  Future<void> insertOutput() async{
+  Future<void> insertIndicator() async{
     if (!formKey.currentState!.validate()) return;
     insertIndicatorsState = RequestState.loading;
     update();
     final dataState = await _repo.insertIndicator(
-      name: outputNameController.text.toString(),
+      name: indicatorNameController.text.toString(),
       outputID: outputID!,
     );
     if (dataState is DataSuccess) {
       insertIndicatorsState = RequestState.success;
-      outputNameController.clear();
+      indicatorNameController.clear();
       showSnackBar(dataState.data!.message, AlertState.success);
-      getIndicators();
+      getIndicators(outputID: outputID!);
       update();
     } else if (dataState is DataFailed) {
       insertIndicatorsState = RequestState.error;
@@ -86,14 +94,14 @@ class IndicatorsController extends GetxController {
     }
   }
 
-  Future<void> updateOutput({required int outputID}) async{
+  Future<void> updateIndicator({required int indicatorID}) async{
     if (!updateFormKey.currentState!.validate()) return;
     updateIndicatorsState = RequestState.loading;
     update();
     final dataState = await _repo.updateIndicator(
         name: updateNameController.text.toString(),
-        outputID: 1,
-        departmentID: 1,
+        // outputID: outputID!,
+        indicatorID: indicatorID,
     );
     if (dataState is DataSuccess) {
       updateIndicatorsState = RequestState.success;
@@ -112,8 +120,9 @@ class IndicatorsController extends GetxController {
 
 class IndicatorsDataTableSource extends DataTableSource {
   final List<Data> indicator;
+  final int? outputID;
 
-  IndicatorsDataTableSource(this.indicator);
+  IndicatorsDataTableSource(this.indicator, {this.outputID});
 
   @override
   DataRow2 getRow(int index) {
@@ -127,8 +136,13 @@ class IndicatorsDataTableSource extends DataTableSource {
           Row(
             children: [
               IconButton(
-                icon: const Icon(Icons.edit, color: Colors.blue),
+                icon: const Icon(Icons.edit, color:Colors.blue),
                 tooltip: 'Edit',
+                onPressed: () => Get.dialog(UpdateIndicatorDialog(indicatorID: item.id!)),
+              ),
+              IconButton(
+                icon: const Icon(Icons.grid_view_rounded, color: TColors.primary),
+                // tooltip: 'show indicators',
                 onPressed: (){},
               ),
             ],

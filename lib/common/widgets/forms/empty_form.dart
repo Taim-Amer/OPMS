@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:opms/common/animations/circular_motion_animation.dart';
+import 'package:opms/common/extensions/text_extensions.dart';
 import 'package:opms/common/widgets/buttons/custom_button.dart';
+import 'package:opms/common/widgets/images/rounded_image.dart';
 import 'package:opms/utils/constants/sizes.dart';
 
 class TEmptyForm extends StatelessWidget {
@@ -35,15 +37,17 @@ class TEmptyForm extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                TCircularMotionAnimation(child: SvgPicture.asset(image)),
+                TRoundedImage(
+                  imageUrl: image,
+                  useHero: false,
+                  isImageClickable: false,
+                  backgroundColor: Colors.transparent,
+                  isNetworkImage: false,
+                  width: 200.w,
+                  height: 200.h,
+                ),
                 23.verticalSpace,
-                Text(title,
-                    style: Theme.of(context).textTheme.headlineLarge,
-                    textAlign: TextAlign.center),
-                12.verticalSpace,
-                Text(subTitle,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                    textAlign: TextAlign.center),
+                title.s17w700,
                 if (showButton) ...[
                   Sizes.spaceBtwSections.verticalSpace,
                   SizedBox(

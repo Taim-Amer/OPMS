@@ -6,8 +6,7 @@ import 'package:opms/common/widgets/custom_shapes/containers/rounded_container.d
 import 'package:opms/common/widgets/data_table/paginated_data_table.dart';
 import 'package:opms/common/widgets/layouts/templates/site_template.dart';
 import 'package:opms/features/indicators/controllers/indicators_controller.dart';
-import 'package:opms/features/outcomes/controllers/outcomes_controller.dart';
-import 'package:opms/features/outputs/views/widgets/insert_output_container.dart';
+import 'package:opms/features/indicators/views/widgets/insert_indicator_container.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/enums.dart';
 import 'package:opms/utils/constants/sizes.dart';
@@ -36,13 +35,10 @@ class IndicatorsDesktopScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              GestureDetector(
-                onTap: () => Get.find<OutcomesController>().getOutcomes(),
-                child: TextWidget(
-                  text: 'Indicators'.s17w700,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 24,
-                ),
+              TextWidget(
+                text: 'Indicators'.s17w700,
+                fontWeight: FontWeight.w700,
+                fontSize: 24,
               ),
               Sizes.spaceBtwSections.verticalSpace,
               Row(
@@ -73,7 +69,7 @@ class IndicatorsDesktopScreen extends StatelessWidget {
                   Sizes.spaceBtwSections.horizontalSpace,
                   fromAnother ? Expanded(
                     flex: HelperFunctions.isTabletScreen(context) ? 2 : 1,
-                    child: const InsertOutputContainer(),
+                    child: const InsertIndicatorContainer(),
                   ) : TRoundedContainer(
                     backgroundColor: dark ? TColors.dark : TColors.lightGrey,
                     height: !HelperFunctions.isMobileScreen(context) ? 650.h : null,

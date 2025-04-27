@@ -5,7 +5,7 @@ import 'package:opms/common/extensions/text_extensions.dart';
 import 'package:opms/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:opms/common/widgets/data_table/paginated_data_table.dart';
 import 'package:opms/features/indicators/controllers/indicators_controller.dart';
-import 'package:opms/features/outputs/views/widgets/insert_output_container.dart';
+import 'package:opms/features/indicators/views/widgets/insert_indicator_container.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/enums.dart';
 import 'package:opms/utils/constants/sizes.dart';
@@ -31,19 +31,16 @@ class IndicatorsMobileScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  fromAnother? const InsertOutputContainer() : TRoundedContainer(
+                  fromAnother? const InsertIndicatorContainer() : TRoundedContainer(
                     backgroundColor: dark ? TColors.dark : TColors.lightGrey,
                     // width: 400.w,
                     padding: EdgeInsets.all(Sizes.secondaryPaddingSpace.w),
                   ),
                   Sizes.spaceBtwSections.verticalSpace,
-                  GestureDetector(
-                    onTap: () => Get.find<IndicatorsController>().getIndicators(),
-                    child: TextWidget(
-                      text: 'Indicators'.s17w700,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 24,
-                    ),
+                  TextWidget(
+                    text: 'Indicators'.s17w700,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24,
                   ),
                   const SizedBox(height: Sizes.spaceBtwSections),
                   GetBuilder<IndicatorsController>(

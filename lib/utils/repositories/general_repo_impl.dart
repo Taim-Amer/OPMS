@@ -49,7 +49,7 @@ class GeneralRepoImpl implements GeneralRepo{
     return await _apiService.getData(
       endPoint: ApiConstants.indicators,
       queryParameters: {
-        'output_id' : outputID
+        if(outputID != null)'output_id' : outputID
       },
       fromJson: IndicatorsModel.fromJson,
     );
@@ -137,7 +137,7 @@ class GeneralRepoImpl implements GeneralRepo{
         'output_id' : outputID,
         'name' : name
       },
-      fromJson: IndicatorsModel.fromJson,
+      fromJson: MessageModel.fromJson,
     );
   }
 
@@ -227,11 +227,11 @@ class GeneralRepoImpl implements GeneralRepo{
   }
 
   @override
-  Future<DataState<MessageModel>> updateActivity({required int outputID, required int departmentID, String? name, int? code}) async{
+  Future<DataState<MessageModel>> updateActivity({required int activityID, String? name, int? code}) async{
     return await _apiService.putData(
-      endPoint: '${ApiConstants.activities}/$departmentID',
+      endPoint: '${ApiConstants.activities}/$activityID',
       data: {
-        'output_id' : outputID,
+        // 'output_id' : outputID,
         'name' : name,
         'code' : code,
       },
@@ -252,11 +252,11 @@ class GeneralRepoImpl implements GeneralRepo{
   }
 
   @override
-  Future<DataState<MessageModel>> updateIndicator({required int outputID, required int departmentID, String? name}) async{
+  Future<DataState<MessageModel>> updateIndicator({required int indicatorID, String? name}) async{
     return await _apiService.putData(
-      endPoint: '${ApiConstants.indicators}/$departmentID',
+      endPoint: '${ApiConstants.indicators}/$indicatorID',
       data: {
-        'output_id' : outputID,
+        // 'output_id' : outputID,
         'name' : name,
       },
       fromJson: MessageModel.fromJson,
@@ -264,11 +264,11 @@ class GeneralRepoImpl implements GeneralRepo{
   }
 
   @override
-  Future<DataState<MessageModel>> updateOutcome({required int unitID, required int departmentID, String? name, String? code}) async{
+  Future<DataState<MessageModel>> updateOutcome({required int outcomeID, String? name, String? code}) async{
     return await _apiService.putData(
-      endPoint: '${ApiConstants.outcomes}/$departmentID',
+      endPoint: '${ApiConstants.outcomes}/$outcomeID',
       data: {
-        'unit_id' : unitID,
+        // 'unit_id' : unitID,
         'name' : name,
         'code' : code,
       },
@@ -277,11 +277,11 @@ class GeneralRepoImpl implements GeneralRepo{
   }
 
   @override
-  Future<DataState<MessageModel>> updateOutput({required int outcomeID, required int departmentID, String? name, String? code}) async{
+  Future<DataState<MessageModel>> updateOutput({required int outputID, String? name, String? code}) async{
     return await _apiService.putData(
-      endPoint: '${ApiConstants.outputs}/$departmentID',
+      endPoint: '${ApiConstants.outputs}/$outputID',
       data: {
-        'outcome_id' : outcomeID,
+        // 'outcome_id' : outcomeID,
         'name' : name,
         'code' : code,
       },
@@ -301,11 +301,11 @@ class GeneralRepoImpl implements GeneralRepo{
   }
 
   @override
-  Future<DataState<MessageModel>> updateUnit({required int unitID, required int departmentID, String? name, int? code}) async{
+  Future<DataState<MessageModel>> updateUnit({required int unitID, String? name, int? code}) async{
     return await _apiService.putData(
       endPoint: '${ApiConstants.departments}/$unitID',
       data: {
-        'department_id' : departmentID,
+        // 'department_id' : departmentID,
         'name' : name,
         'code' : code,
       },

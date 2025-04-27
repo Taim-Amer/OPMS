@@ -11,6 +11,7 @@ class ImagesAssets {
   static const String logo = '$_imagePath/hilal_logo.png';
   static const String add = '$_imagePath/addIcn.png';
   static const String edit = '$_imagePath/icons8-edit-text-file-50.png';
+  static const String empty = '$_imagePath/icons8-empty-box-50.png';
 }
 
 class JsonAssets {

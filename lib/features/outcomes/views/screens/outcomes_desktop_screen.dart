@@ -35,13 +35,10 @@ class OutcomesDesktopScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              GestureDetector(
-                onTap: () => Get.find<OutcomesController>().getOutcomes(),
-                child: TextWidget(
-                  text: 'Outcomes'.s17w700,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 24,
-                ),
+              TextWidget(
+                text: 'Outcomes'.s17w700,
+                fontWeight: FontWeight.w700,
+                fontSize: 24,
               ),
               const SizedBox(height: Sizes.spaceBtwSections),
               Row(
