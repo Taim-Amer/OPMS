@@ -22,7 +22,7 @@ Color chooseSnackBarColor(AlertState state) {
   Color color;
   switch (state) {
     case AlertState.success:
-      color = Colors.blue;
+      color = Colors.green;
       break;
     case AlertState.error:
       color = TColors.redColor;

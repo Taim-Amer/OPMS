@@ -1,9 +1,13 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
+import 'package:get/get_core/get_core.dart' show Get;
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:opms/utils/constants/api_constants.dart';
 import 'package:opms/utils/constants/keys.dart';
 import 'package:opms/utils/helpers/cache_helper.dart';
+import 'package:opms/utils/helpers/logger_service.dart';
+import 'package:opms/utils/router/app_router.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'data_state.dart';
 
@@ -237,9 +241,21 @@ class ApiService {
       if (response.statusCode == HttpStatus.ok) {
         final object = fromJson(response.data);
         return DataSuccess(object as T);
-      } else if (response.statusCode == HttpStatus.unauthorized) {
-        CacheHelper.removeData(key: Keys.token);
-        // Add navigation logic here if needed
+      } else if (response.statusCode == HttpStatus.badRequest) {
+        if (response.data['message'] == "Unauthenticated.") {
+          LoggerService().logError("unauth moving to login");
+          CacheHelper.removeData(key: Keys.token);
+          Get.offAllNamed(AppRoutes.kLogin);
+        }
+        print("we are in the error  ${ response.data['message']}");
+
+        return DataFailed( Response(
+          data: 
+              response.data['message'] ??
+              'Unknown error',
+          statusCode: response.statusCode,
+          requestOptions: response.requestOptions ?? RequestOptions(),
+        ));
       }
     }
     return DataFailed(

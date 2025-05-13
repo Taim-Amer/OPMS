@@ -3,44 +3,44 @@ import 'package:opms/utils/localization/keys.dart';
 class Validator {
   Validator._();
 
-  static String? validateEmptyText(String? fieldName, String? value){
-    if(value == null || value.isEmpty){
+  static String? validateEmptyText(String? fieldName, String? value) {
+    if (value == null || value.isEmpty) {
       return '${TranslationKey.kEmptyValidation}$fieldName';
     }
     return null;
   }
 
   static String? validateEmail(String? value) {
-    if(value == null || value.isEmpty){
+    if (value == null || value.isEmpty) {
       return 'Email is required';
     }
 
     final emailRegExp = RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
 
-    if(!emailRegExp.hasMatch(value)){
+    if (!emailRegExp.hasMatch(value)) {
       return 'Invalid Email format';
     }
     return null;
   }
 
   static String? validatePassword(String? value) {
-    if(value == null || value.isEmpty){
-      return "Password is required" ;
+    if (value == null || value.isEmpty) {
+      return "Password is required";
     }
 
-    if(value.length < 6){
-      return "Password must be at least 6 characters long." ;
+    if (value.length < 6) {
+      return "Password must be at least 6 characters long.";
     }
 
-    if(!value.contains(RegExp(r'[A-Z]'))){
+    if (!value.contains(RegExp(r'[A-Z]'))) {
       return "Password must contain at least one uppercase letter.";
     }
 
-    if(!value.contains(RegExp(r'[0-9]'))){
+    if (!value.contains(RegExp(r'[0-9]'))) {
       return "Password must contain at least one number.";
     }
 
-    if(!value.contains(RegExp(r'[!@#$%^&*(),.?:{}|<>]'))){
+    if (!value.contains(RegExp(r'[!@#$%^&*(),.?:{}|<>]'))) {
       return "Password must contain at least one special character.";
     }
 
@@ -48,8 +48,8 @@ class Validator {
   }
 
   static String? validatePhoneNumber(String? value) {
-    if(value == null || value.isEmpty){
-      return TranslationKey.kPhoneValidation ;
+    if (value == null || value.isEmpty) {
+      return TranslationKey.kPhoneValidation;
     }
 
     return null;
@@ -75,5 +75,15 @@ class Validator {
     String countryCode = phone.substring(0, 4);
     String phoneNumber = phone.substring(4, phone.length);
     return '($countryCode) $phoneNumber';
+  }
+
+  static String? validateNumeric(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return "enters numbers only";
+    }
+    if (!RegExp(r'^\d+$').hasMatch(value.trim())) {
+      return "قم بادخال ارقام فقط";
+    }
+    return null;
   }
 }

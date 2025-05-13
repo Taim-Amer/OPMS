@@ -5,46 +5,86 @@ import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/sizes.dart';
 import 'package:opms/utils/helpers/helper_functions.dart';
 
-class THeader extends StatelessWidget implements PreferredSizeWidget{
-  const THeader({super.key, this.scaffoldKey});
-
+/// A responsive app header that lets you inject custom action widgets,
+/// and toggle its built-in search field via an external RxBool.
+// ignore: must_be_immutable
+class THeader extends StatelessWidget implements PreferredSizeWidget {
+  /// Key to open the drawer on mobile/desktop
   final GlobalKey<ScaffoldState>? scaffoldKey;
+
+  /// Extra action widgets to display after the built-in ones.
+  final List<Widget> actions;
+
+  /// Controls whether the search bar is visible.
+  bool? showSearchField;
+
+  THeader({
+    super.key,
+    this.scaffoldKey,
+    this.actions = const [],
+    this.showSearchField = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     final dark = context.isDarkMode;
-    return Container(
-      decoration: BoxDecoration(
-        color: dark ? Colors.black : TColors.white,
-        // border: const Border(bottom: BorderSide(color: TColors.grey, width: 1))
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: Sizes.md, vertical: Sizes.sm),
-      child: AppBar(
-        leading: !HelperFunctions.isDesktopScreen(context) ? IconButton(
-          onPressed: () => scaffoldKey?.currentState?.openDrawer(),
-          icon: const Icon(Icons.menu),
-        ) : null,
-        title: HelperFunctions.isDesktopScreen(context) ? SizedBox(
-          width: 400,
-          child: TextFormField(
-            decoration: const InputDecoration(
-              prefixIcon: Icon(Icons.search),
-              hintText: "Search anything ...."
-            ),
+    final isDesktop = HelperFunctions.isDesktopScreen(context);
+
+    // built-in search toggle icon
+    Widget searchToggle() => IconButton(
+          icon: Icon(
+            showSearchField! ? Icons.close_rounded : Icons.search_rounded,
+            color: dark ? Colors.white : Colors.black,
           ),
-        ) : null,
+          onPressed: () {},
+        );
+
+    return Container(
+      decoration: BoxDecoration(color: dark ? Colors.black : TColors.white),
+      padding: const EdgeInsets.symmetric(
+        horizontal: Sizes.md,
+        vertical: Sizes.sm,
+      ),
+      child: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: !isDesktop
+            ? IconButton(
+                onPressed: () => scaffoldKey?.currentState?.openDrawer(),
+                icon:
+                    Icon(Icons.menu, color: dark ? Colors.white : Colors.black),
+              )
+            : null,
+        // Show the search field whenever showSearchField == true
+        title: showSearchField!
+            ? SizedBox(
+                width: isDesktop ? 400 : double.infinity,
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.search,
+                        color: dark ? Colors.white54 : Colors.black54),
+                    hintText: "Search anything....",
+                    filled: true,
+                    fillColor: dark ? TColors.darkerGrey : TColors.grey,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(6),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                  style: TextStyle(color: dark ? Colors.white : Colors.black),
+                ),
+              )
+            : null,
         actions: [
+          ...actions,
           const ThemeIcon(),
-          if(!HelperFunctions.isDesktopScreen(context))IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search),
-          )
+          searchToggle(),
+          // any custom actions passed in:
         ],
       ),
     );
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(kToolbarHeight + 15);
 }

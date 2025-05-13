@@ -5,13 +5,12 @@ import 'package:opms/features/indicators/models/indicators_model.dart';
 import 'package:opms/features/outcomes/models/outcomes_model.dart';
 import 'package:opms/features/outputs/models/outputs_model.dart';
 import 'package:opms/features/roles/models/roles_model.dart';
-import 'package:opms/features/units/models/units_model.dart';
+import 'package:opms/features/projects/models/all_projects_model.dart';
 import 'package:opms/features/users/models/users_model.dart';
 import 'package:opms/utils/api/data_state.dart';
 import 'package:opms/utils/models/message_model.dart';
 
 abstract class GeneralRepo {
-
   //Auth
   Future<DataState<LoginModel>> login({
     required String email,
@@ -40,27 +39,27 @@ abstract class GeneralRepo {
   Future<DataState<DepartmentsModel>> getDepartments();
   Future<DataState<MessageModel>> insertDepartment({
     required String name,
-    required int code,
+    required String code,
   });
   Future<DataState<MessageModel>> updateDepartment({
     required int departmentID,
     String? name,
-    int? code,
+    String? code,
   });
 
   //Units
-  Future<DataState<UnitsModel>> getUnits(int? departmentID);
+  Future<DataState<ProjectsModel>> getUnits({int? departmentID});
   Future<DataState<MessageModel>> insertUnit({
     required int departmentID,
     required String name,
     required String type,
-    required int code,
+    required String code,
   });
   Future<DataState<MessageModel>> updateUnit({
     required int unitID,
     required int departmentID,
     String? name,
-    int? code,
+    String? code,
   });
 
   //Outcomes
@@ -104,7 +103,10 @@ abstract class GeneralRepo {
   });
 
   //Activities
-  Future<DataState<ActivitiesModel>> getActivities(int? outputID);
+  Future<DataState<ActivitiesModel>> getActivities({required bool paginate,
+       required  int pp,
+       required  int p,
+       required  String searchQuery});
   Future<DataState<MessageModel>> insertActivity({
     required int outputID,
     required String name,

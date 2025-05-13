@@ -9,7 +9,7 @@ import 'package:opms/utils/repositories/general_repo.dart';
 import 'package:opms/utils/repositories/general_repo_impl.dart';
 import 'package:opms/utils/router/app_router.dart';
 
-class LoginController extends GetxController{
+class LoginController extends GetxController {
   final GeneralRepo _repo = GeneralRepoImpl();
 
   final emailController = TextEditingController();
@@ -27,8 +27,10 @@ class LoginController extends GetxController{
     );
     if (dataState is DataSuccess) {
       loginState = RequestState.success;
-      CacheHelper.saveData(key: Keys.token, value: dataState.data!.data!.accessToken);
+      CacheHelper.saveData(
+          key: Keys.token, value: dataState.data!.data!.accessToken);
       showSnackBar(dataState.data!.message!, AlertState.success);
+
       Get.offAllNamed(AppRoutes.kSidebar);
       update();
     } else if (dataState is DataFailed) {

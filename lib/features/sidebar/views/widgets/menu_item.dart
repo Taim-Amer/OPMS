@@ -9,7 +9,6 @@ import 'package:opms/features/sidebar/controllers/sidebar_controller.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/sizes.dart';
 
-
 class MenuItem extends GetView<SidebarController> {
   const MenuItem({super.key, required this.index});
 

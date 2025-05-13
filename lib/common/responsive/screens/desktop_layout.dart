@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:opms/common/widgets/layouts/headers/header.dart';
 import 'package:opms/common/widgets/layouts/sidebars/sidebar.dart';
 
 class DesktopLayout extends StatelessWidget {
-  const DesktopLayout({super.key, this.body});
+  DesktopLayout({super.key, this.body, this.actions = const []});
 
   final Widget? body;
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+  final List<Widget> actions;
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +20,7 @@ class DesktopLayout extends StatelessWidget {
           Expanded(
             flex: 5,
             child: Column(
-              children: [
-                const THeader(),
-                Expanded(child: body ?? const SizedBox())
-              ],
+              children: [Expanded(child: body ?? const SizedBox())],
             ),
           )
         ],

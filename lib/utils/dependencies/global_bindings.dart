@@ -11,6 +11,5 @@ class GlobalBindings extends Bindings{
     Get.lazyPut<Dio>(() => Dio(), fenix: true);
     Get.lazyPut<ApiService>(() => ApiService(Get.find<Dio>()), fenix: true);
     Get.lazyPut<GeneralRepo>(() => GeneralRepoImpl(), fenix: true);
-    Get.put<SidebarController>(SidebarController());
   }
 }

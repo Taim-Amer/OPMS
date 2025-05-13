@@ -1,23 +1,23 @@
-class UnitsModel {
+class ProjectsModel {
   bool? status;
-  List<Data>? data;
+  List<Project>? data;
   String? message;
 
-  UnitsModel({this.status, this.data, this.message});
+  ProjectsModel({this.status, this.data, this.message});
 
-  UnitsModel.fromJson(Map<String, dynamic> json) {
+  ProjectsModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <Project>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(Project.fromJson(v));
       });
     }
     message = json['message'];
   }
 }
 
-class Data {
+class Project {
   int? id;
   int? departmentId;
   String? name;
@@ -25,17 +25,19 @@ class Data {
   String? code;
   String? createdAt;
   String? updatedAt;
+  int? departementID;
 
-  Data(
+  Project(
       {this.id,
-        this.departmentId,
-        this.name,
-        this.type,
-        this.code,
-        this.createdAt,
-        this.updatedAt});
+      this.departmentId,
+      this.name,
+      this.type,
+      this.code,
+      this.createdAt,
+      this.updatedAt,
+      this.departementID});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Project.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     departmentId = json['department_id'];
     name = json['name'];
@@ -43,5 +45,6 @@ class Data {
     code = json['code'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    departementID = json['department_id'];
   }
 }

@@ -5,7 +5,12 @@ import 'package:opms/common/responsive/screens/mobile_layout.dart';
 import 'package:opms/common/responsive/screens/tablet_layout.dart';
 
 class TSiteTemplate extends StatelessWidget {
-  const TSiteTemplate({super.key, this.desktop, this.tablet, this.mobile, this.useLayout = true});
+  const TSiteTemplate(
+      {super.key,
+      this.desktop,
+      this.tablet,
+      this.mobile,
+      this.useLayout = true});
 
   final Widget? desktop;
   final Widget? tablet;
@@ -15,9 +20,19 @@ class TSiteTemplate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TResponsiveWidget(
-      desktop: useLayout ? DesktopLayout(body: desktop) : desktop ?? const SizedBox(),
-      tablet: useLayout ? TabletLayout(body: tablet ?? desktop,) : tablet ?? desktop ?? const SizedBox(),
-      mobile: useLayout ? MobileLayout(body: mobile ?? desktop,) : mobile ?? desktop ?? const SizedBox(),
+      desktop: useLayout
+          ? DesktopLayout(body: desktop)
+          : desktop ?? const SizedBox(),
+      tablet: useLayout
+          ? TabletLayout(
+              body: tablet ?? desktop,
+            )
+          : tablet ?? desktop ?? const SizedBox(),
+      mobile: useLayout
+          ? MobileLayout(
+              body: mobile ?? desktop,
+            )
+          : mobile ?? desktop ?? const SizedBox(),
     );
   }
 }

@@ -6,7 +6,7 @@ import 'package:opms/common/widgets/buttons/custom_button.dart';
 import 'package:opms/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:opms/common/widgets/handlers/text_widget.dart';
 import 'package:opms/common/widgets/layouts/lists/list_layout.dart';
-import 'package:opms/features/home/views/widgets/department_item.dart';
+import 'package:opms/features/departments/views/widgets/department_item.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/sizes.dart';
 
@@ -47,14 +47,15 @@ class HomeDesktopScreen extends StatelessWidget {
                     ],
                   ),
                   Sizes.spaceBtwSections.verticalSpace,
-                  Expanded(
-                    child: TListView(
-                      itemCount: 12,
-                      // shrink: true,
-                      itemBuilder: (context, index) => const DepartmentItem(),
-                      separatorBuilder: (context, _) => Sizes.spaceBtwItems.verticalSpace,
-                    ),
-                  ),
+                  // Expanded(
+                  //   child: TListView(
+                  //     itemCount: 12,
+                  //     // shrink: true,
+                  //     itemBuilder: (context, index) => const DepartmentItem(department: null,),
+                  //     separatorBuilder: (context, _) =>
+                  //         Sizes.spaceBtwItems.verticalSpace,
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -70,13 +71,12 @@ class HomeDesktopScreen extends StatelessWidget {
                   Sizes.spaceBtwSections.verticalSpace,
                   Column(
                     children: [
-                      DepartmentItem(),
-                      DepartmentItem(),
-                      DepartmentItem(),
-                      DepartmentItem(),
+                      // DepartmentItem(),
+                      // DepartmentItem(),
+                      // DepartmentItem(),
+                      // DepartmentItem(),
                     ],
                   )
-
                 ],
               ),
             )

@@ -9,9 +9,9 @@ class SidebarMenu extends GetView<SidebarController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => TSiteTemplate(
-      tablet: controller.screens[controller.activeItem.value],
-      desktop: controller.screens[controller.activeItem.value],
-      mobile: controller.screens[controller.activeItem.value],
-    ));
+          tablet: controller.screens[controller.activeItem.value],
+          desktop: controller.screens[controller.activeItem.value],
+          mobile: controller.screens[controller.activeItem.value],
+        ));
   }
 }

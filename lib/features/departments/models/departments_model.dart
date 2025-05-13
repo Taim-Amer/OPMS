@@ -1,32 +1,32 @@
 class DepartmentsModel {
   bool? status;
-  List<Data>? data;
+  List<Department>? departments;
   String? message;
 
-  DepartmentsModel({this.status, this.data, this.message});
+  DepartmentsModel({this.status, this.departments, this.message});
 
   DepartmentsModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
-      data = <Data>[];
+      departments = <Department>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        departments!.add(Department.fromJson(v));
       });
     }
     message = json['message'];
   }
 }
 
-class Data {
+class Department {
   int? id;
   String? name;
   String? code;
   String? createdAt;
   String? updatedAt;
 
-  Data({this.id, this.name, this.code, this.createdAt, this.updatedAt});
+  Department({this.id, this.name, this.code, this.createdAt, this.updatedAt});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Department.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     code = json['code'];

@@ -6,7 +6,7 @@ import 'package:opms/common/widgets/buttons/custom_button.dart';
 import 'package:opms/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:opms/common/widgets/handlers/text_widget.dart';
 import 'package:opms/common/widgets/layouts/lists/list_layout.dart';
-import 'package:opms/features/home/views/widgets/department_item.dart';
+import 'package:opms/features/departments/views/widgets/department_item.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/sizes.dart';
 
@@ -47,13 +47,13 @@ class HomeMobileScreen extends StatelessWidget {
                 ],
               ),
               Sizes.spaceBtwSections.verticalSpace,
-              TListView(
-                itemCount: 12,
-                shrink: true,
-                physics: const NeverScrollableScrollPhysics(), // Scroll خارجي
-                itemBuilder: (context, index) => const DepartmentItem(),
-                separatorBuilder: (context, _) => Sizes.spaceBtwItems.verticalSpace,
-              ),
+              // TListView(
+              //   itemCount: 12,
+              //   shrink: true,
+              //   physics: const NeverScrollableScrollPhysics(), // Scroll خارجي
+              //   itemBuilder: (context, index) => const DepartmentItem(),
+              //   separatorBuilder: (context, _) => Sizes.spaceBtwItems.verticalSpace,
+              // ),
             ],
           ),
         ),
