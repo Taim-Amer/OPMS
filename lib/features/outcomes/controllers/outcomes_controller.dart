@@ -42,7 +42,7 @@ class OutcomesController extends GetxController {
 
   @override
   void onClose() {
-    Get.delete<OutcomesController>(); // حذف الـ Controller عند إغلاق الصفحة
+    Get.delete<OutcomesController>();
     super.onClose();
   }
 
@@ -54,7 +54,6 @@ class OutcomesController extends GetxController {
 
     if (dataState is DataSuccess) {
       outcomesModel = dataState.data!;
-      // getOutcomesState = outcomesModel.data?.isEmpty ?? true ? RequestState.empty : RequestState.success;
       if (outcomesModel.data?.isEmpty ?? true) {
         getOutcomesState = RequestState.empty;
       } else {
