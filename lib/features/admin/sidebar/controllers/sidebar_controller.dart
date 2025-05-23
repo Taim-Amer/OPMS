@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:opms/features/admin/activities/view/layout/activities_layout.dart';
+import 'package:opms/features/admin/app/controllers/breadcrumb_controller.dart';
 import 'package:opms/features/admin/departments/views/layouts/department_layout.dart';
 import 'package:opms/features/admin/indicators/views/layouts/indicators_layout.dart';
 import 'package:opms/features/admin/outcomes/views/layouts/outcome_layout.dart';
@@ -45,7 +46,7 @@ class SidebarController extends GetxController {
   ];
 
   final List<Function> onTap = [
-    (){},
+    () {},
     () => Get.find<ProjectsController>().getProjects(),
     (){},
     (){},
@@ -66,10 +67,8 @@ class SidebarController extends GetxController {
 
   void menuOnTap(int index) {
     if (!isActive(index)) {
-      // sideBarSwitch(index);
       changeActiveItem(index);
       if (HelperFunctions.isMobileScreen(Get.context!)) Get.back();
-      // Get.toNamed(index);
     }
   }
 

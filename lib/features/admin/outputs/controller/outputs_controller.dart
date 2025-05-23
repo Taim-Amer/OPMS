@@ -153,7 +153,7 @@ class OutputsDataTableSource extends DataTableSource {
           IconButton(
             icon: const Icon(Icons.grid_view_rounded, color: TColors.primary),
             tooltip: 'show indicators',
-            onPressed: () => Get.toNamed(
+            onPressed: () => AppRoutes.toNamed(
                 AppRoutes.kIndicator,
                 arguments: {
                   'outputID' : item.id
@@ -165,7 +165,7 @@ class OutputsDataTableSource extends DataTableSource {
           IconButton(
           icon: const Icon(Icons.grid_view_rounded, color: Colors.orange),
           tooltip: 'show activities',
-          onPressed: () => Get.toNamed(
+          onPressed: () => AppRoutes.toNamed(
               AppRoutes.kActivities,
               arguments: {
                 'outputID' : item.id

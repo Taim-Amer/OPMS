@@ -32,7 +32,7 @@ class ProjectItem extends StatelessWidget {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () => Get.toNamed(
+        onTap: () => AppRoutes.toNamed(
           AppRoutes.kOutcome,
           arguments: {
             'unitID' : project.id

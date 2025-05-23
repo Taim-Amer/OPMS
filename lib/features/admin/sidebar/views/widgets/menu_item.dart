@@ -5,6 +5,7 @@ import 'package:opms/common/animations/loop_rotation_animation.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
 import 'package:opms/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:opms/common/widgets/handlers/text_widget.dart';
+import 'package:opms/features/admin/app/controllers/breadcrumb_controller.dart';
 import 'package:opms/features/admin/sidebar/controllers/sidebar_controller.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/sizes.dart';
@@ -22,6 +23,7 @@ class MenuItem extends GetView<SidebarController> {
     return InkWell(
       mouseCursor: clickableSidebar ? SystemMouseCursors.click : SystemMouseCursors.forbidden,
       onTap: clickableSidebar ? () {
+        Get.find<BreadcrumbController>().setTitle(title: controller.titles[index]);
         controller.changeActiveItem(index);
         controller.onTap[index]();
       } : (){},

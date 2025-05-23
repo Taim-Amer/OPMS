@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
 import 'package:opms/common/widgets/alerts/snackbar.dart';
@@ -8,7 +7,6 @@ import 'package:opms/features/admin/outcomes/views/widgets/update_outcome_dialog
 import 'package:opms/utils/api/data_state.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/enums.dart';
-import 'package:opms/utils/constants/sizes.dart';
 import 'package:opms/utils/helpers/formatter.dart';
 import 'package:opms/utils/repositories/general_repo.dart';
 import 'package:opms/utils/repositories/general_repo_impl.dart';
@@ -135,25 +133,22 @@ class OutcomesDataTableSource extends DataTableSource {
         DataCell(Formatter.formatDate(item.createdAt).s17w400),
         DataCell(Formatter.formatDate(item.updatedAt).s17w400),
         DataCell(
-          Row(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.edit, color: Colors.blue),
-                tooltip: 'Edit',
-                onPressed: () => Get.dialog(UpdateOutcomeDialog(outcomeID: item.id!)),
-              ),
-              Sizes.sm.horizontalSpace,
-              IconButton(
-                icon: const Icon(Icons.grid_view_rounded, color: TColors.primary),
-                tooltip: 'Show Outputs',
-                onPressed: () => Get.toNamed(
-                  AppRoutes.kOutputs,
-                  arguments: {
-                    'outcomeID' : item.id,
-                  },
-                ),
-              ),
-            ],
+          IconButton(
+            icon: const Icon(Icons.edit, color: Colors.blue),
+            tooltip: 'Edit',
+            onPressed: () => Get.dialog(UpdateOutcomeDialog(outcomeID: item.id!)),
+          ),
+        ),
+        DataCell(
+          IconButton(
+            icon: const Icon(Icons.grid_view_rounded, color: TColors.primary),
+            tooltip: 'Show Outputs',
+            onPressed: () => AppRoutes.toNamed(
+              AppRoutes.kOutputs,
+              arguments: {
+                'outcomeID' : item.id,
+              },
+            ),
           ),
         ),
       ],

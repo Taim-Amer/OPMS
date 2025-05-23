@@ -52,7 +52,8 @@ class OutcomesMobileScreen extends StatelessWidget {
                             DataColumn(label: TextWidget(text: 'Code'.s14w700, color: TColors.white)),
                             DataColumn(label: TextWidget(text: 'Created'.s14w700, color: TColors.white)),
                             DataColumn(label: TextWidget(text: 'Updated'.s14w700, color: TColors.white)),
-                            DataColumn(label: TextWidget(text: 'Actions'.s14w700, color: TColors.white)),
+                            DataColumn(label: TextWidget(text: 'Edit'.s14w700, color: TColors.white)),
+                            DataColumn(label: TextWidget(text: 'Outputs'.s14w700, color: TColors.white)),
                           ],
                         ),
                       );
