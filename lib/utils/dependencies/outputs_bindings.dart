@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:opms/features/outputs/controller/outputs_controller.dart';
+import 'package:opms/features/admin/outputs/controller/outputs_controller.dart';
 
 class OutputsBindings extends Bindings{
   @override

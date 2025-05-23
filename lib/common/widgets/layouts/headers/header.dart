@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:opms/features/settings/views/widgets/theme_icon.dart';
+import 'package:opms/features/admin/settings/views/widgets/theme_icon.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/sizes.dart';
 import 'package:opms/utils/helpers/helper_functions.dart';

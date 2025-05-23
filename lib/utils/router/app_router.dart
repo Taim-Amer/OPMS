@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import 'package:opms/features/activities/view/layout/activities_layout.dart';
-import 'package:opms/features/auth/view/layouts/login_layout.dart';
-import 'package:opms/features/indicators/views/layouts/indicators_layout.dart';
-import 'package:opms/features/outcomes/views/layouts/outcome_layout.dart';
-import 'package:opms/features/outputs/views/layouts/outputs_layout.dart';
-import 'package:opms/features/sidebar/views/layouts/sidebar_menu.dart';
+import 'package:opms/features/admin/activities/view/layout/activities_layout.dart';
+import 'package:opms/features/admin/auth/view/layouts/login_layout.dart';
+import 'package:opms/features/admin/indicators/views/layouts/indicators_layout.dart';
+import 'package:opms/features/admin/outcomes/views/layouts/outcome_layout.dart';
+import 'package:opms/features/admin/outputs/views/layouts/outputs_layout.dart';
+import 'package:opms/features/admin/sidebar/views/layouts/sidebar_menu.dart';
 import 'package:opms/utils/dependencies/activities_bindings.dart';
 import 'package:opms/utils/dependencies/indicators_bindings.dart';
 import 'package:opms/utils/dependencies/login_bindings.dart';

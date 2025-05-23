@@ -1,3 +1,4 @@
+import 'package:opms/features/admin/settings/controllers/theme_controller.dart';
 import 'package:opms/utils/constants/keys.dart';
 import 'package:opms/utils/dependencies/global_bindings.dart';
 import 'package:opms/utils/helpers/cache_helper.dart';
@@ -9,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'features/settings/controllers/theme_controller.dart';
 
 class OPMSSystem extends StatelessWidget {
   const OPMSSystem({super.key});

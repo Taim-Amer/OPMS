@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:opms/common/widgets/layouts/headers/header.dart';
-import 'package:opms/features/sidebar/views/widgets/sidebar.dart';
+import 'package:opms/features/admin/sidebar/views/widgets/sidebar.dart';
 
 class TabletLayout extends StatelessWidget {
   TabletLayout({super.key, this.body, required this.clickableSidebar});

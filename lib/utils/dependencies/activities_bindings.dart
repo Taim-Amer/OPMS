@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:opms/features/activities/controller/activities_controller.dart';
+import 'package:opms/features/admin/activities/controller/activities_controller.dart';
 
 class ActivitiesBindings extends Bindings{
   @override

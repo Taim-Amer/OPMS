@@ -1,12 +1,12 @@
-import 'package:opms/features/activities/models/activities_model.dart';
-import 'package:opms/features/auth/models/login_model.dart';
-import 'package:opms/features/departments/models/departments_model.dart';
-import 'package:opms/features/indicators/models/indicators_model.dart';
-import 'package:opms/features/outcomes/models/outcomes_model.dart';
-import 'package:opms/features/outputs/models/outputs_model.dart';
-import 'package:opms/features/roles/models/roles_model.dart';
-import 'package:opms/features/projects/models/all_projects_model.dart';
-import 'package:opms/features/users/models/users_model.dart';
+import 'package:opms/features/admin/activities/models/activities_model.dart';
+import 'package:opms/features/admin/auth/models/login_model.dart';
+import 'package:opms/features/admin/departments/models/departments_model.dart';
+import 'package:opms/features/admin/indicators/models/indicators_model.dart';
+import 'package:opms/features/admin/outcomes/models/outcomes_model.dart';
+import 'package:opms/features/admin/outputs/models/outputs_model.dart';
+import 'package:opms/features/admin/roles/models/roles_model.dart';
+import 'package:opms/features/admin/projects/models/all_projects_model.dart';
+import 'package:opms/features/admin/users/models/users_model.dart';
 import 'package:opms/utils/api/data_state.dart';
 import 'package:opms/utils/models/message_model.dart';
 

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
-import 'package:opms/features/sidebar/controllers/sidebar_controller.dart';
+import 'package:opms/features/admin/sidebar/controllers/sidebar_controller.dart';
 import 'package:opms/utils/api/api_service.dart';
 import 'package:opms/utils/repositories/general_repo.dart';
 import 'package:opms/utils/repositories/general_repo_impl.dart';
