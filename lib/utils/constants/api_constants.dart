@@ -5,7 +5,7 @@ class ApiConstants {
   static const String imagesUrl = "$serverUrl/storage";
   static const String baseUrl = "$serverUrl/api/";
 
-  //Auth
+  //Auth & Structure
   static const String login = "login";
   static const String logout = "logout";
   static const String users = "users";
@@ -18,4 +18,14 @@ class ApiConstants {
   static const String roles = "roles";
   static const String userRole = 'user_roles';
 
+  //Budget
+  static const String reliefAssistance = 'relief_assistance_item';
+  static const String runningCost = 'running_costs';
+  static const String fieldVisits = 'field_visits';
+  static const String equipments = 'equipments';
+  static const String salaries = 'salaries';
+  static const String trainingDescriptions = 'training_descriptions';
+  static const String trainingSubDescriptions = 'training_sub_descriptions';
+  static const String trainings = 'trainings';
+  static const String trainingCosts = 'training_costs';
 }

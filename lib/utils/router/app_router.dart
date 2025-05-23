@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:opms/features/admin/activities/view/layout/activities_layout.dart';
 import 'package:opms/features/admin/app/controllers/breadcrumb_controller.dart';
 import 'package:opms/features/admin/auth/view/layouts/login_layout.dart';
+import 'package:opms/features/admin/budget/views/layouts/budget_layout.dart';
 import 'package:opms/features/admin/departments/views/layouts/department_layout.dart';
 import 'package:opms/features/admin/indicators/views/layouts/indicators_layout.dart';
 import 'package:opms/features/admin/outcomes/views/layouts/outcome_layout.dart';
@@ -9,6 +10,7 @@ import 'package:opms/features/admin/outputs/views/layouts/outputs_layout.dart';
 import 'package:opms/features/admin/projects/view/layouts/projects_layout.dart';
 import 'package:opms/features/admin/sidebar/views/layouts/sidebar_menu.dart';
 import 'package:opms/utils/dependencies/activities_bindings.dart';
+import 'package:opms/utils/dependencies/budget_bindings.dart';
 import 'package:opms/utils/dependencies/indicators_bindings.dart';
 import 'package:opms/utils/dependencies/login_bindings.dart';
 import 'package:opms/utils/dependencies/outcome_bindings.dart';
@@ -26,6 +28,7 @@ class AppRoutes {
   static const kActivities = '/kActivities';
   static const kDepartments = '/kDepartments';
   static const kProjects = '/kProjects';
+  static const kBudget = '/kBudget';
 
   static List<GetPage> routes = [
     GetPage(
@@ -67,6 +70,11 @@ class AppRoutes {
         name: kActivities,
         page: () => const ActivitiesLayout(fromAnother: true),
         binding: ActivitiesBindings(),
+        transition: Transition.noTransition),
+    GetPage(
+        name: kBudget,
+        page: () => const BudgetLayout(),
+        binding: BudgetBindings(),
         transition: Transition.noTransition),
   ];
 

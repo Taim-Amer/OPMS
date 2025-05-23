@@ -47,6 +47,12 @@ class DepartmentItem extends StatelessWidget {
           backgroundColor: dark ? TColors.dark : TColors.grey,
           child: Row(
             children: [
+              const Icon(
+                Icons.account_tree_outlined,
+                color: codePillText,
+                size: 32,
+              ),
+              SizedBox(width: 16.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,6 +90,17 @@ class DepartmentItem extends StatelessWidget {
                         ),
                       ],
                     ),
+                    SizedBox(height: 6.h),
+                    TextWidget(
+                      text: 'This represents a department section.'.s14w400,
+                      fontSize: 12,
+                      color: dark ? TColors.light : TColors.dark,
+                    ),
+                    TextWidget(
+                      text: 'Department ID: ${department.id ?? 'N/A'}'.s14w400,
+                      fontSize: 12,
+                      color: dark ? TColors.light : TColors.dark,
+                    ),
                   ],
                 ),
               ),
@@ -110,3 +127,5 @@ class DepartmentItem extends StatelessWidget {
     });
   }
 }
+
+

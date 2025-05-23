@@ -67,21 +67,21 @@ class DepartmentsDesktopScreen extends GetView<DepartmentsController> {
                   children: [
                     Expanded(
                       flex: HelperFunctions.isTabletScreen(context) ? 2 : 3,
-                      child: Skeletonizer(
-                        enabled: controller.getDepartmentsRequestStatus.value == RequestState.loading,
-                        child: StaggeredGrid.count(
-                          crossAxisCount: HelperFunctions.isTabletScreen(context) ? controller.showProjects.value ? 2 : 4 :controller.showProjects.value ? 4 : 5,
-                          mainAxisSpacing: 12,
-                          crossAxisSpacing: 12,
-                          // axisDirection: AxisDirection.right,
-                          children: List.generate(
-                            controller.departmentsModel.value.departments?.length ?? 0,
-                                (index) => StaggeredGridTile.count(
-                              crossAxisCellCount: 1,
-                              mainAxisCellCount: index.isEven ? .6 : .8,
-                              // mainAxisCellCount: 1 ,
-                              child: TSlideAnimation(
-                                beginOffset: Offset(0, index.isEven ? 1 : -1),
+                      child: StaggeredGrid.count(
+                        crossAxisCount: HelperFunctions.isTabletScreen(context) ? controller.showProjects.value ? 1 : 3 :controller.showProjects.value ? 4 : 5,
+                        mainAxisSpacing: 12,
+                        crossAxisSpacing: 12,
+                        // axisDirection: AxisDirection.right,
+                        children: List.generate(
+                          controller.departmentsModel.value.departments?.length ?? 0,
+                              (index) => StaggeredGridTile.count(
+                            crossAxisCellCount: 1,
+                            mainAxisCellCount: index.isEven ? .8 : 1,
+                            // mainAxisCellCount: 1 ,
+                            child: TSlideAnimation(
+                              beginOffset: Offset(0, index.isEven ? 1 : -1),
+                              child: Skeletonizer(
+                                enabled: controller.getDepartmentsRequestStatus.value == RequestState.loading,
                                 child: DepartmentItem(
                                   department: controller.departmentsModel.value.departments![index],
                                   onTap: () {

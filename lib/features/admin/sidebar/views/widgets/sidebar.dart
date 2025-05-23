@@ -34,10 +34,15 @@ class TSidebar extends GetView<SidebarController> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const TRoundedImage(
-                    imageUrl: ImagesAssets.logo,
-                    useHero: false,
-                    backgroundColor: Colors.transparent,
+                  Sizes.spaceBtwSections.verticalSpace,
+                  Center(
+                    child: TRoundedImage(
+                      imageUrl: dark ? ImagesAssets.darkLogo : ImagesAssets.lightLogo,
+                      useHero: false,
+                      width: 190,
+                      height: 190,
+                      backgroundColor: Colors.transparent,
+                    ),
                   ),
                   Sizes.spaceBtwSections.verticalSpace,
                   Column(
@@ -47,7 +52,7 @@ class TSidebar extends GetView<SidebarController> {
                       'MENU'.s12w400,
                       Sizes.spaceBtwSections.verticalSpace,
                       TListView(
-                        itemCount: 7,
+                        itemCount: 8,
                         animationType: AnimationType.slide,
                         shrink: true,
                         itemBuilder: (context, index) => MenuItem(index: index, clickableSidebar: clickableSidebar),
@@ -57,12 +62,12 @@ class TSidebar extends GetView<SidebarController> {
                   ),
                 ],
               ),
-              SizedBox(
+              clickableSidebar ? SizedBox(
                 width: double.infinity,
                 child: OutlinedButton(
                   onPressed: () => controller.logout(),
                   style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: TColors.primary),
+                      side: BorderSide(color: clickableSidebar ? TColors.primary : TColors.darkerGrey),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12)
                       )
@@ -76,7 +81,7 @@ class TSidebar extends GetView<SidebarController> {
                     ),
                   ),
                 ),
-              ),
+              ) : const SizedBox(),
             ],
           ),
         ),

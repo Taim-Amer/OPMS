@@ -27,14 +27,17 @@ class LoginController extends GetxController {
     );
     if (dataState is DataSuccess) {
       loginState = RequestState.success;
+      emailController.clear();
+      passwordController.clear();
       CacheHelper.saveData(
           key: Keys.token, value: dataState.data!.data!.accessToken);
       showSnackBar(dataState.data!.message!, AlertState.success);
-
       Get.offAllNamed(AppRoutes.kSidebar);
       update();
     } else if (dataState is DataFailed) {
       loginState = RequestState.error;
+      emailController.clear();
+      passwordController.clear();
       update();
       showSnackBar(dataState.error!.data.toString(), AlertState.error);
     }

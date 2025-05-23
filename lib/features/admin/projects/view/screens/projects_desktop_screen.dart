@@ -51,43 +51,43 @@ class ProjectsDesktopScreen extends GetView<ProjectsController> {
                   children: [
                     Expanded(
                       flex: 3,
-                      child: Obx(() => Skeletonizer(
-                        enabled: controller.getAllProjectsRequestStatus.value == RequestState.loading,
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: TGridLayout(
-                                // animationType: AnimationType.slide,
-                                crossCount: HelperFunctions.isTabletScreen(context) ? 1 : 3,
-                                mainAxisExtent: 130,
-                                itemCount: controller.allProjectsModel.value.data?.length ?? 0,
-                                itemBuilder: (context, index) => TSlideAnimation(
-                                  beginOffset: Offset(index.isEven ? -1 : 1, 0),
+                      child: Obx(() => Column(
+                        children: [
+                          Expanded(
+                            child: TGridLayout(
+                              // animationType: AnimationType.slide,
+                              crossCount: HelperFunctions.isTabletScreen(context) ? 1 : 3,
+                              mainAxisExtent: 130,
+                              itemCount: controller.allProjectsModel.value.data?.length ?? 0,
+                              itemBuilder: (context, index) => TSlideAnimation(
+                                beginOffset: Offset(index.isEven ? -1 : 1, 0),
+                                child: Skeletonizer(
+                                  enabled: controller.getAllProjectsRequestStatus.value == RequestState.loading,
                                   child: ProjectItem(
                                     project: controller.allProjectsModel.value.data![index],
                                   ),
                                 ),
                               ),
                             ),
-                            Obx(() => TPaginationControls(
-                              totalItemCount: controller.allProjectsModel.value.meta?.total ?? 0,
-                              currentPage: controller.currentPage.value,
-                              totalPages: controller.totalPages.value,
-                              perPage: controller.perPage.value,
-                              perPageOptions: const [5, 10, 20, 50],
-                              onPrevious: () {
-                                controller.getProjects(page: controller.currentPage.value - 1);
-                              },
-                              onNext: () {
-                                controller.getProjects(page: controller.currentPage.value + 1);
-                              },
-                              onPerPageChanged: (newPerPage) {
-                                controller.perPage.value = newPerPage;
-                                controller.getProjects(page: 1, perPageOverride: newPerPage); // إعادة التحميل من أول صفحة
-                              },
-                            )),
-                          ],
-                        ),
+                          ),
+                          Obx(() => TPaginationControls(
+                            totalItemCount: controller.allProjectsModel.value.meta?.total ?? 0,
+                            currentPage: controller.currentPage.value,
+                            totalPages: controller.totalPages.value,
+                            perPage: controller.perPage.value,
+                            perPageOptions: const [5, 10, 20, 50],
+                            onPrevious: () {
+                              controller.getProjects(page: controller.currentPage.value - 1);
+                            },
+                            onNext: () {
+                              controller.getProjects(page: controller.currentPage.value + 1);
+                            },
+                            onPerPageChanged: (newPerPage) {
+                              controller.perPage.value = newPerPage;
+                              controller.getProjects(page: 1, perPageOverride: newPerPage); // إعادة التحميل من أول صفحة
+                            },
+                          )),
+                        ],
                       )),
                     ),
                     Sizes.spaceBtwSections.horizontalSpace,

@@ -110,7 +110,7 @@ class _InsertRecordDialogState extends State<InsertRecordDialog> {
           borderRadius: BorderRadius.circular(12.r),
         ),
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: 600.w),
+          constraints: BoxConstraints(maxWidth: 400.w),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,

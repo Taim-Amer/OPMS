@@ -1,5 +1,8 @@
 import 'package:opms/features/admin/activities/models/activities_model.dart';
 import 'package:opms/features/admin/auth/models/login_model.dart';
+import 'package:opms/features/admin/budget/models/relief_assistance_model.dart';
+import 'package:opms/features/admin/budget/models/running_cost_model.dart';
+import 'package:opms/features/admin/budget/models/salaries_model.dart';
 import 'package:opms/features/admin/departments/models/departments_model.dart';
 import 'package:opms/features/admin/indicators/models/indicators_model.dart';
 import 'package:opms/features/admin/outcomes/models/outcomes_model.dart';
@@ -136,4 +139,24 @@ abstract class GeneralRepo {
     required List<int> departmentIDs,
     required List<int> unitsIDs,
   });
+
+  //Budget
+  Future<DataState<ReliefAssistanceModel>> getReliefAssistance();
+  Future<DataState<MessageModel>> insertReliefAssistance({
+    required String type,
+    required String description,
+    required String unitCost,
+    required String date,
+  });
+
+  Future<DataState<MessageModel>> updateReliefAssistance({
+    required int id,
+    required String type,
+    required String description,
+    required String unitCost,
+    required String date,
+  });
+
+  Future<DataState<SalariesModel>> getSalaries();
+  Future<DataState<RunningCostModel>> getRunningCost();
 }

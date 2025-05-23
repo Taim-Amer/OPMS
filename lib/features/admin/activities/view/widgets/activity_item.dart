@@ -8,6 +8,7 @@ import 'package:opms/features/admin/activities/models/activities_model.dart';
 import 'package:opms/features/admin/activities/view/widgets/edit_activity_dialog.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/sizes.dart';
+import 'package:opms/utils/helpers/formatter.dart';
 
 class ActivityItem extends StatelessWidget {
   const ActivityItem({super.key, required this.activity});
@@ -20,7 +21,7 @@ class ActivityItem extends StatelessWidget {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: (){},
+        onTap: () {},
         child: TRoundedContainer(
           showBorder: true,
           radius: 12.r,
@@ -64,8 +65,27 @@ class ActivityItem extends StatelessWidget {
                             color: Colors.orange,
                           ),
                         ),
+                        16.horizontalSpace,
+                        const Icon(
+                          true == true ? Icons.check_circle : Icons.cancel,
+                          size: 18,
+                          color: true == true ? Colors.green : Colors.red,
+                        ),
+                        4.horizontalSpace,
+                        TextWidget(
+                          text: (true == true ? 'Active' : 'Inactive').s14w400,
+                          fontSize: 12,
+                        ),
                       ],
                     ),
+                    SizedBox(height: 8.h),
+
+                    if (activity.createdAt != null)
+                      TextWidget(
+                        text: 'Created at: ${Formatter.getFormattedDate(activity.createdAt!)}'.s14w400,
+                        fontSize: 11,
+                        color: dark ? TColors.light : TColors.dark,
+                      ),
                   ],
                 ),
               ),
@@ -77,7 +97,6 @@ class ActivityItem extends StatelessWidget {
                       code: activity.code ?? '',
                       id: activity.id ?? 0,
                     ),
-                    // Container()
                   );
                 },
                 child: const MouseRegion(
@@ -96,3 +115,4 @@ class ActivityItem extends StatelessWidget {
     );
   }
 }
+

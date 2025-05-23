@@ -22,7 +22,7 @@ class DepartmentsModel {
     return DepartmentsModel(
       departments: List.generate(20, (_) => Department(
         code: BoneMock.name,
-        name: BoneMock.fullName
+        name: BoneMock.name
       ))
     );
   }

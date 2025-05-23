@@ -34,55 +34,54 @@ class ProjectsMobileScreen extends GetView<ProjectsController> {
             final projects = controller.allProjectsModel.value.data ?? [];
             final isLoading = controller.getAllProjectsRequestStatus.value == RequestState.loading;
 
-            return Skeletonizer(
-              enabled: isLoading,
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextWidget(
-                      text: 'Projects & Units'.s16w700,
-                      fontSize: 20,
-                    ),
-                    Sizes.spaceBtwSections.verticalSpace,
-                    if (projects.isEmpty && !isLoading)
-                      const Center(child: Text('No projects found'))
-                    else
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: projects.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 12.0),
-                            child: ProjectItem(project: projects[index]),
-                          );
-                        },
-                      ),
-                    Sizes.spaceBtwSections.verticalSpace,
-                    TPaginationControls(
-                      totalItemCount: controller.allProjectsModel.value.meta?.total ?? 0,
-                      currentPage: controller.currentPage.value,
-                      totalPages: controller.totalPages.value,
-                      perPage: controller.perPage.value,
-                      perPageOptions: const [5, 10, 20, 50],
-                      onPrevious: () {
-                        controller.getProjects(page: controller.currentPage.value - 1);
-                      },
-                      onNext: () {
-                        controller.getProjects(page: controller.currentPage.value + 1);
-                      },
-                      onPerPageChanged: (newPerPage) {
-                        controller.perPage.value = newPerPage;
-                        controller.getProjects(page: 1, perPageOverride: newPerPage);
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  TextWidget(
+                    text: 'Projects & Units'.s16w700,
+                    fontSize: 20,
+                  ),
+                  Sizes.spaceBtwSections.verticalSpace,
+                  if (projects.isEmpty && !isLoading)
+                    const Center(child: Text('No projects found'))
+                  else
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: projects.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 12.0),
+                          child: Skeletonizer(
+                              enabled: isLoading,
+                              child: ProjectItem(project: projects[index])),
+                        );
                       },
                     ),
-                    if (fromAnother) ...[
-                      Sizes.spaceBtwSections.verticalSpace,
-                      InsertOutputContainer(enable: fromAnother,),
-                    ],
+                  Sizes.spaceBtwSections.verticalSpace,
+                  TPaginationControls(
+                    totalItemCount: controller.allProjectsModel.value.meta?.total ?? 0,
+                    currentPage: controller.currentPage.value,
+                    totalPages: controller.totalPages.value,
+                    perPage: controller.perPage.value,
+                    perPageOptions: const [5, 10, 20, 50],
+                    onPrevious: () {
+                      controller.getProjects(page: controller.currentPage.value - 1);
+                    },
+                    onNext: () {
+                      controller.getProjects(page: controller.currentPage.value + 1);
+                    },
+                    onPerPageChanged: (newPerPage) {
+                      controller.perPage.value = newPerPage;
+                      controller.getProjects(page: 1, perPageOverride: newPerPage);
+                    },
+                  ),
+                  if (fromAnother) ...[
+                    Sizes.spaceBtwSections.verticalSpace,
+                    InsertOutputContainer(enable: fromAnother,),
                   ],
-                ),
+                ],
               ),
             );
           }),

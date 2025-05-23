@@ -52,43 +52,43 @@ class ActivitiesDesktopScreen extends GetView<ActivitiesController> {
                     Expanded(
                       flex: 3,
                       child: GetBuilder<ActivitiesController>(
-                        builder: (controller) => Skeletonizer(
-                          enabled: controller.getActivitiesStatus == RequestState.loading,
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: TGridLayout(
-                                  // animationType: AnimationType.slide,
-                                  crossCount: HelperFunctions.isTabletScreen(context) || HelperFunctions.isMobileScreen(context) ? 1 : 3,
-                                  mainAxisExtent: 150,
-                                  itemCount: controller.activitiesModel.data?.length ?? 0,
-                                  itemBuilder: (context, index) => TSlideAnimation(
-                                    beginOffset: Offset(index.isEven ? -1 : 1, 0),
+                        builder: (controller) => Column(
+                          children: [
+                            Expanded(
+                              child: TGridLayout(
+                                // animationType: AnimationType.slide,
+                                crossCount: HelperFunctions.isTabletScreen(context) || HelperFunctions.isMobileScreen(context) ? 1 : 3,
+                                mainAxisExtent: 150,
+                                itemCount: controller.activitiesModel.data?.length ?? 0,
+                                itemBuilder: (context, index) => TSlideAnimation(
+                                  beginOffset: Offset(index.isEven ? -1 : 1, 0),
+                                  child: Skeletonizer(
+                                    enabled: controller.getActivitiesStatus == RequestState.loading,
                                     child: ActivityItem(
                                       activity: controller.activitiesModel.data![index],
                                     ),
                                   ),
                                 ),
                               ),
-                              TPaginationControls(
-                                totalItemCount: controller.activitiesModel.meta?.total ?? 0,
-                                currentPage: controller.currentPage,
-                                totalPages: controller.totalPages,
-                                perPage: controller.perPage,
-                                perPageOptions: const [5, 10, 20, 50],
-                                onPrevious: () {
-                                  controller.getActivities(page: controller.currentPage - 1);
-                                },
-                                onNext: () {
-                                  controller.getActivities(page: controller.currentPage + 1);
-                                },
-                                onPerPageChanged: (newPerPage) {
-                                  controller.perPage = newPerPage;
-                                  controller.getActivities(page: 1, perPageOverride: newPerPage);
-                                },
-                              ),
-                            ],
-                          ),
+                            ),
+                            TPaginationControls(
+                              totalItemCount: controller.activitiesModel.meta?.total ?? 0,
+                              currentPage: controller.currentPage,
+                              totalPages: controller.totalPages,
+                              perPage: controller.perPage,
+                              perPageOptions: const [5, 10, 20, 50],
+                              onPrevious: () {
+                                controller.getActivities(page: controller.currentPage - 1);
+                              },
+                              onNext: () {
+                                controller.getActivities(page: controller.currentPage + 1);
+                              },
+                              onPerPageChanged: (newPerPage) {
+                                controller.perPage = newPerPage;
+                                controller.getActivities(page: 1, perPageOverride: newPerPage);
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     ),

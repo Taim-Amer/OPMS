@@ -42,8 +42,8 @@ class Project {
   String? name;
   String? type;
   String? code;
-  String? createdAt;
-  String? updatedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
   int? departementID;
 
   Project(
@@ -62,8 +62,8 @@ class Project {
     name = json['name'];
     type = json['type'];
     code = json['code'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
+    createdAt = json['created_at'] != null ? DateTime.tryParse(json['created_at']): null;
+    updatedAt = json['updated_at'] != null ? DateTime.tryParse(json['updated_at']) : null;
     departementID = json['department_id'];
   }
 }

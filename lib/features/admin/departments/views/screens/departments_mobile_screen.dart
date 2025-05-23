@@ -42,33 +42,33 @@ class DepartmentsMobileScreen extends GetView<DepartmentsController> {
           final departments = controller.departmentsModel.value.departments ?? [];
           final selectedId = controller.selectedDepartmentID.value;
 
-          return Skeletonizer(
-            enabled: controller.getDepartmentsRequestStatus.value == RequestState.loading,
-            child: ListView.separated(
-              itemCount: departments.length,
-              separatorBuilder: (context, _) => Sizes.spaceBtwItems.verticalSpace,
-              itemBuilder: (context, index) {
-                final department = departments[index];
-                final isExpanded = selectedId == department.id;
+          return ListView.separated(
+            itemCount: departments.length,
+            separatorBuilder: (context, _) => Sizes.spaceBtwItems.verticalSpace,
+            itemBuilder: (context, index) {
+              final department = departments[index];
+              final isExpanded = selectedId == department.id;
 
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    DepartmentItem(
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Skeletonizer(
+                    enabled: controller.getDepartmentsRequestStatus.value == RequestState.loading,
+                    child: DepartmentItem(
                       department: department,
                       onTap: () {
                         controller.toggleShowProjects(departmentID: department.id!);
                       },
                     ),
-                    if (isExpanded) ...[
-                      const SizedBox(height: 12),
-                      const ProjectsList(),
-                      const SizedBox(height: 24),
-                    ],
+                  ),
+                  if (isExpanded) ...[
+                    const SizedBox(height: 12),
+                    const ProjectsList(),
+                    const SizedBox(height: 24),
                   ],
-                );
-              },
-            ),
+                ],
+              );
+            },
           );
         }),
       ),

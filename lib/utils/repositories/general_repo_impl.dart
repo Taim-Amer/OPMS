@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
 import 'package:opms/features/admin/activities/models/activities_model.dart';
 import 'package:opms/features/admin/auth/models/login_model.dart';
+import 'package:opms/features/admin/budget/models/relief_assistance_model.dart';
+import 'package:opms/features/admin/budget/models/running_cost_model.dart';
+import 'package:opms/features/admin/budget/models/salaries_model.dart';
 import 'package:opms/features/admin/departments/models/departments_model.dart';
 import 'package:opms/features/admin/indicators/models/indicators_model.dart';
 import 'package:opms/features/admin/outcomes/models/outcomes_model.dart';
@@ -42,8 +45,8 @@ class GeneralRepoImpl implements GeneralRepo {
         "paginate": paginate,
         "per_page": perPage,
         "page": page,
-        if(outputID != null)'output_id' : outputID,
-        if(isReserved != null)'is_reserved' : isReserved
+        if (outputID != null) 'output_id': outputID,
+        if (isReserved != null) 'is_reserved': isReserved
         // "search": searchQuery,
       },
       endPoint: ApiConstants.activities,
@@ -93,13 +96,12 @@ class GeneralRepoImpl implements GeneralRepo {
   }
 
   @override
-  Future<DataState<ProjectsModel>> getUnits({
-    int? departmentID,
-    int page = 1,
-    int perPage = 10,
-    String? search,
-    required bool paginate
-  }) async {
+  Future<DataState<ProjectsModel>> getUnits(
+      {int? departmentID,
+      int page = 1,
+      int perPage = 10,
+      String? search,
+      required bool paginate}) async {
     return await _apiService.getData(
       endPoint: ApiConstants.units,
       queryParameters: {
@@ -107,7 +109,7 @@ class GeneralRepoImpl implements GeneralRepo {
         'page': page,
         'per_page': perPage,
         if (search != null && search.isNotEmpty) 'search': search,
-        if(departmentID != null)'department_id': departmentID,
+        if (departmentID != null) 'department_id': departmentID,
       },
       fromJson: ProjectsModel.fromJson,
     );
@@ -124,7 +126,9 @@ class GeneralRepoImpl implements GeneralRepo {
 
   @override
   Future<DataState<MessageModel>> insertActivity(
-      {required int outputID, required String name, required String code}) async {
+      {required int outputID,
+      required String name,
+      required String code}) async {
     return await _apiService.postData(
       endPoint: ApiConstants.activities,
       data: {'output_id': outputID, 'name': name, 'code': code},
@@ -365,6 +369,69 @@ class GeneralRepoImpl implements GeneralRepo {
         'code': code,
       },
       fromJson: MessageModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<ReliefAssistanceModel>> getReliefAssistance() async {
+    return await _apiService.getData(
+      endPoint: ApiConstants.reliefAssistance,
+      fromJson: ReliefAssistanceModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<MessageModel>> updateReliefAssistance({
+    required int id,
+    required String type,
+    required String description,
+    required String unitCost,
+    required String date,
+  }) async {
+    return await _apiService.putData(
+      endPoint: '${ApiConstants.reliefAssistance}/$id',
+      data: {
+        'type': type,
+        'description': description,
+        'unit_cost': unitCost,
+        'date': date
+      },
+      fromJson: MessageModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<MessageModel>> insertReliefAssistance({
+    required String type,
+    required String description,
+    required String unitCost,
+    required String date,
+  }) async {
+    return await _apiService.postData(
+      endPoint: ApiConstants.reliefAssistance,
+      data: {
+        'type': type,
+        'description': description,
+        'unit_cost': unitCost,
+        'date': date
+      },
+      fromJson: MessageModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<SalariesModel>> getSalaries() async {
+    return await _apiService.getData(
+      endPoint: ApiConstants.salaries,
+      fromJson: SalariesModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<RunningCostModel>> getRunningCost() async{
+    return await _apiService.getData(
+      endPoint: ApiConstants.runningCost,
+      fromJson: RunningCostModel.fromJson,
     );
   }
 }

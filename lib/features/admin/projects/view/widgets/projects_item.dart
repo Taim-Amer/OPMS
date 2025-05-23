@@ -9,6 +9,7 @@ import 'package:opms/features/admin/projects/controller/projects_controller.dart
 import 'package:opms/features/admin/projects/models/all_projects_model.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/sizes.dart';
+import 'package:opms/utils/helpers/formatter.dart';
 import 'package:opms/utils/router/app_router.dart';
 
 class ProjectItem extends StatelessWidget {
@@ -29,31 +30,30 @@ class ProjectItem extends StatelessWidget {
     final codePillBg = Colors.blueAccent.withOpacity(0.2);
     const codePillText = Colors.blueAccent;
 
+    final createdAt = project.createdAt != null
+        ? 'Created at: ${Formatter.getFormattedDate(project.createdAt!)}'
+        : null;
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () => AppRoutes.toNamed(
           AppRoutes.kOutcome,
-          arguments: {
-            'unitID' : project.id
-          }
+          arguments: {'unitID': project.id},
         ),
         child: TRoundedContainer(
           padding: const EdgeInsets.all(Sizes.defaultSpace),
           backgroundColor: dark ? TColors.dark : TColors.grey,
           showBorder: true,
-          // width: double.infinity,
           borderColor: dark ? TColors.darkBorder : TColors.lightBorder,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                // mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Project type circle
                   Container(
                     width: 50.w,
                     height: 50.w,
@@ -71,14 +71,14 @@ class ProjectItem extends StatelessWidget {
                   SizedBox(width: 12.w),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       TextWidget(
                         text: project.name!.s16w700,
                         fontWeight: FontWeight.w400,
                         softWrap: true,
+                        fontSize: 18,
                       ),
-                      // SizedBox(height: 8.h),
+                      SizedBox(height: 4.h),
                       Row(
                         children: [
                           TextWidget(
@@ -98,23 +98,30 @@ class ProjectItem extends StatelessWidget {
                             ),
                             child: TextWidget(
                               text: project.code!.s17w400,
-                              fontSize: 16,
+                              fontSize: 14,
                               color: codePillText,
                             ),
                           ),
                         ],
                       ),
+                      if (createdAt != null) ...[
+                        SizedBox(height: 6.h),
+                        TextWidget(
+                          text: createdAt.s14w400,
+                          fontSize: 11,
+                          color: dark ? TColors.light : TColors.dark,
+                        ),
+                      ],
                     ],
                   ),
                 ],
               ),
-
+              // Edit button
               IconButton(
-                onPressed: (){
+                onPressed: () {
                   final controller = ProjectsController.instance;
                   controller.projectName.text = project.name ?? '';
 
-                  // extract the substring after the last comma (or use whole code if no comma)
                   final fullCode = project.code ?? '';
                   final codeNumber = fullCode.contains('.')
                       ? fullCode.split('.').last.trim()
@@ -158,10 +165,10 @@ class ProjectItem extends StatelessWidget {
                   );
                 },
                 icon: const Icon(
-                Icons.edit_rounded,
-                size: 24,
-                color: Colors.blueAccent,
-              ),
+                  Icons.edit_rounded,
+                  size: 24,
+                  color: Colors.blueAccent,
+                ),
               ),
             ],
           ),
@@ -170,3 +177,4 @@ class ProjectItem extends StatelessWidget {
     );
   }
 }
+
