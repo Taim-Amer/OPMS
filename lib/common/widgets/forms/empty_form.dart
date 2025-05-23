@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:opms/common/animations/circular_motion_animation.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
 import 'package:opms/common/widgets/buttons/custom_button.dart';
 import 'package:opms/common/widgets/images/rounded_image.dart';

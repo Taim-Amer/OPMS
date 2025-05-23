@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:opms/common/animations/slide_animation.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
 import 'package:opms/common/widgets/buttons/custom_button.dart';

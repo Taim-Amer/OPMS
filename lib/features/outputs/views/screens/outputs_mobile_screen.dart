@@ -31,11 +31,7 @@ class OutputsMobileScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  fromAnother? const InsertOutputContainer() : TRoundedContainer(
-                    backgroundColor: dark ? TColors.dark : TColors.lightGrey,
-                    // width: 400.w,
-                    padding: EdgeInsets.all(Sizes.secondaryPaddingSpace.w),
-                  ),
+                  InsertOutputContainer(enable: fromAnother,),
                   Sizes.spaceBtwSections.verticalSpace,
                   TextWidget(
                     text: 'Outputs'.s17w700,

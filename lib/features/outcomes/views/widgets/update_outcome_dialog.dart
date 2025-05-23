@@ -1,6 +1,5 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:opms/common/animations/slide_animation.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
 import 'package:opms/common/widgets/buttons/custom_button.dart';
@@ -8,7 +7,6 @@ import 'package:opms/common/widgets/custom_shapes/containers/rounded_container.d
 import 'package:opms/common/widgets/fields/labeled_text_feild.dart';
 import 'package:opms/common/widgets/images/rounded_image.dart';
 import 'package:opms/features/outcomes/controllers/outcomes_controller.dart';
-import 'package:opms/features/roles/controllers/roles_controller.dart';
 import 'package:opms/utils/constants/assets.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/enums.dart';

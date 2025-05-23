@@ -46,6 +46,7 @@ class RolesDesktopScreen extends StatelessWidget {
                 builder: (controller) => Skeletonizer(
                   enabled: controller.getRolesState == RequestState.loading,
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         flex: HelperFunctions.isTabletScreen(context) ? 2 : 3,

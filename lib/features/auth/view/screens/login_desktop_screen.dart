@@ -54,7 +54,7 @@ class LoginDesktopScreen extends GetView<LoginController> {
                         Sizes.spaceBtwSections.verticalSpace,
                         'Welcome to the Red Crescent Management System'.s17w700,
                         Sizes.sm.verticalSpace,
-                        'Please sign in to access your dashboard and manage operations efficiently.'.s13w400,
+                        'Please sign in to access your dashboard and manage operations efficiently.'.s17w400,
                       ],
                     ),
                   ),

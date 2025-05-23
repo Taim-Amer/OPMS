@@ -11,7 +11,7 @@ class TElevatedButtonTheme {
       backgroundColor: TColors.primary,
       disabledForegroundColor: Colors.grey,
       disabledBackgroundColor: Colors.grey,
-      side: BorderSide(color: TColors.primary),
+      side: const BorderSide(color: TColors.primary),
       textStyle: const TextStyle(
         fontSize: 16,
         color: Colors.white,
@@ -31,7 +31,7 @@ class TElevatedButtonTheme {
       backgroundColor: TColors.primary,
       disabledForegroundColor: Colors.grey,
       disabledBackgroundColor: Colors.grey,
-      side: BorderSide(color: TColors.primary),
+      side: const BorderSide(color: TColors.primary),
       textStyle: const TextStyle(
         fontSize: 16,
         color: Colors.white,

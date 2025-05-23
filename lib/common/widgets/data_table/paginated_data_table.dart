@@ -62,10 +62,10 @@ class TPaginatedDataTable extends StatelessWidget {
             dataRowHeight: dataRowHeight,
             rowsPerPage: rowsPerPage,
             showCheckboxColumn: true,
-            // headingTextStyle: Theme.of(context)
-            //     .textTheme
-            //     .titleMedium
-            //     ?.copyWith(fontWeight: FontWeight.bold, color: TColors.textPrimary),
+            headingTextStyle: Theme.of(context)
+                .textTheme
+                .titleMedium
+                ?.copyWith(fontWeight: FontWeight.bold, color: TColors.textPrimary),
             showFirstLastButtons: true,
             renderEmptyRowsInTheEnd: false,
             onRowsPerPageChanged: (noOfRows) {},
@@ -89,7 +89,7 @@ class TPaginatedDataTable extends StatelessWidget {
                     : const Icon(Icons.unfold_more, size: Sizes.iconMd, color: Colors.grey),
               );
             },
-
+            dataTextStyle: Theme.of(context).textTheme.headlineLarge,
             headingRowColor: WidgetStateProperty.resolveWith(
                     (state) => TColors.primary.withOpacity(0.9)),
             headingRowDecoration: BoxDecoration(

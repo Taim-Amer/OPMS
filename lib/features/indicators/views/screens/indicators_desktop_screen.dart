@@ -67,15 +67,10 @@ class IndicatorsDesktopScreen extends StatelessWidget {
                     ),
                   ),
                   Sizes.spaceBtwSections.horizontalSpace,
-                  fromAnother ? Expanded(
+                  Expanded(
                     flex: HelperFunctions.isTabletScreen(context) ? 2 : 1,
-                    child: const InsertIndicatorContainer(),
-                  ) : TRoundedContainer(
-                    backgroundColor: dark ? TColors.dark : TColors.lightGrey,
-                    height: !HelperFunctions.isMobileScreen(context) ? 650.h : null,
-                    width: 400.w,
-                    padding: EdgeInsets.all(Sizes.secondaryPaddingSpace.w),
-                  )
+                    child: InsertIndicatorContainer(enable: fromAnother,),
+                  ) 
                 ],
               ),
             ],

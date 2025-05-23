@@ -33,10 +33,18 @@ class OutcomesController extends GetxController {
 
   OutcomesDataTableSource? dataSource;
 
+  int? unitID;
+
   @override
   void onInit() {
-    dataSource = OutcomesDataTableSource(outcomesModel.data!);
-    getOutcomes();
+    unitID = Get.arguments?['unitID'] as int?;
+    if(unitID != null){
+      dataSource = OutcomesDataTableSource(outcomesModel.data ?? [], unitID: unitID);
+      getOutcomes(unitID: unitID);
+    } else{
+      dataSource = OutcomesDataTableSource(outcomesModel.data ?? [], unitID: unitID);
+      getOutcomes();
+    }
     super.onInit();
   }
 
@@ -57,7 +65,7 @@ class OutcomesController extends GetxController {
       if (outcomesModel.data?.isEmpty ?? true) {
         getOutcomesState = RequestState.empty;
       } else {
-        dataSource = OutcomesDataTableSource(outcomesModel.data!);
+        dataSource = OutcomesDataTableSource(outcomesModel.data!, unitID: unitID);
         getOutcomesState = RequestState.success;
       }
       update();
@@ -100,7 +108,7 @@ class OutcomesController extends GetxController {
       updateOutcomeController.clear();
       updateCodeController.clear();
       showSnackBar(dataState.data!.message, AlertState.success);
-      getOutcomes();
+      unitID == null ? getOutcomes() : getOutcomes(unitID: unitID);
       update();
     } else if (dataState is DataFailed) {
       updateOutcomesState = RequestState.error;
@@ -113,18 +121,19 @@ class OutcomesController extends GetxController {
 
 class OutcomesDataTableSource extends DataTableSource {
   final List<Data> outcomes;
+  final int? unitID;
 
-  OutcomesDataTableSource(this.outcomes);
+  OutcomesDataTableSource(this.outcomes, {this.unitID});
 
   @override
   DataRow2 getRow(int index) {
     final item = outcomes[index];
     return DataRow2(
       cells: [
-        DataCell(item.name?.s13w400 ?? const Text('')),
-        DataCell(item.code?.s13w400 ?? const Text('')),
-        DataCell(Formatter.formatDate(item.createdAt).s13w400),
-        DataCell(Formatter.formatDate(item.updatedAt).s13w400),
+        DataCell(item.name?.s17w400 ?? const Text('')),
+        DataCell(item.code?.s17w400 ?? const Text('')),
+        DataCell(Formatter.formatDate(item.createdAt).s17w400),
+        DataCell(Formatter.formatDate(item.updatedAt).s17w400),
         DataCell(
           Row(
             children: [

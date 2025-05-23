@@ -31,11 +31,7 @@ class IndicatorsMobileScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  fromAnother? const InsertIndicatorContainer() : TRoundedContainer(
-                    backgroundColor: dark ? TColors.dark : TColors.lightGrey,
-                    // width: 400.w,
-                    padding: EdgeInsets.all(Sizes.secondaryPaddingSpace.w),
-                  ),
+                  InsertIndicatorContainer(enable: fromAnother,),
                   Sizes.spaceBtwSections.verticalSpace,
                   TextWidget(
                     text: 'Indicators'.s17w700,

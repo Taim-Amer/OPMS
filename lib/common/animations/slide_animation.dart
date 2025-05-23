@@ -36,8 +36,8 @@ class _TSlideAnimationState extends State<TSlideAnimation>
 
   @override
   void dispose() {
+    _controller.dispose();
     super.dispose();
-    return _controller.dispose();
   }
 
   @override

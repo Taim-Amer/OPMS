@@ -13,12 +13,12 @@ class ThemeController extends GetxController{
     } else if (savedTheme == "dark") {
       themeMode.value = ThemeMode.dark;
     } else {
-      themeMode.value = ThemeMode.system;
+      themeMode.value = ThemeMode.light;
     }
     super.onInit();
   }
 
-  var themeMode = ThemeMode.system.obs;
+  var themeMode = ThemeMode.light.obs;
 
   ThemeData getTheme(ThemeMode themeMode){
     return themeMode == ThemeMode.light ? AppTheme.lightTheme : AppTheme.darkTheme;

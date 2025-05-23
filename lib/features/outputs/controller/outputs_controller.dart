@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
 import 'package:opms/common/widgets/alerts/snackbar.dart';
 import 'package:opms/features/outputs/models/outputs_model.dart';
@@ -117,7 +116,7 @@ class OutputsController extends GetxController {
       updateOutputController.clear();
       updateCodeController.clear();
       showSnackBar(dataState.data!.message, AlertState.success);
-      getOutputs();
+      outcomeID == null ? getOutputs() : getOutputs(outcomeID: outcomeID);
       update();
     } else if (dataState is DataFailed) {
       updateOutputsState = RequestState.error;
@@ -139,30 +138,40 @@ class OutputsDataTableSource extends DataTableSource {
     final item = output[index];
     return DataRow2(
       cells: [
-        DataCell(item.name?.s13w400 ?? const Text('')),
-        DataCell(item.code?.s13w400 ?? const Text('')),
-        DataCell(Formatter.formatDate(item.createdAt).s13w400),
-        DataCell(Formatter.formatDate(item.updatedAt).s13w400),
+        DataCell(item.name?.s17w400 ?? const Text('')),
+        DataCell(item.code?.s17w400 ?? const Text('')),
+        DataCell(Formatter.formatDate(item.createdAt).s17w400),
+        DataCell(Formatter.formatDate(item.updatedAt).s17w400),
         DataCell(
-          Row(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.edit, color:Colors.blue),
-                tooltip: 'Edit',
-                onPressed:  () => Get.dialog(UpdateOutputDialog(outputID: item.id!,)) ,
-              ),
-              IconButton(
-                icon: const Icon(Icons.grid_view_rounded, color: TColors.primary),
-                tooltip: 'show indicators',
-                onPressed: () => Get.toNamed(
-                  AppRoutes.kIndicator,
-                  arguments: {
-                    'outputID' : item.id
-                  }
-                ),
-              ),
-            ],
+          IconButton(
+            icon: const Icon(Icons.edit, color:Colors.blue),
+            tooltip: 'Edit',
+            onPressed:  () => Get.dialog(UpdateOutputDialog(outputID: item.id!,)) ,
           ),
+        ),
+        DataCell(
+          IconButton(
+            icon: const Icon(Icons.grid_view_rounded, color: TColors.primary),
+            tooltip: 'show indicators',
+            onPressed: () => Get.toNamed(
+                AppRoutes.kIndicator,
+                arguments: {
+                  'outputID' : item.id
+                }
+            ),
+          ),
+        ),
+        DataCell(
+          IconButton(
+          icon: const Icon(Icons.grid_view_rounded, color: Colors.orange),
+          tooltip: 'show activities',
+          onPressed: () => Get.toNamed(
+              AppRoutes.kActivities,
+              arguments: {
+                'outputID' : item.id
+              }
+          ),
+        ),
         ),
       ],
     );

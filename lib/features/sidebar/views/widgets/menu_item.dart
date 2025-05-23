@@ -21,41 +21,45 @@ class MenuItem extends GetView<SidebarController> {
     final dark = context.isDarkMode;
     return InkWell(
       mouseCursor: clickableSidebar ? SystemMouseCursors.click : SystemMouseCursors.forbidden,
-      onTap: clickableSidebar ? () => controller.changeActiveItem(index) : (){},
+      onTap: clickableSidebar ? () {
+        controller.changeActiveItem(index);
+        controller.onTap[index]();
+      } : (){},
       onHover: clickableSidebar ? (hovering) => controller.changeHoverItem(hovering ? index : -1) : (hovering){},
       child: Obx(() => TRoundedContainer(
-            backgroundColor:
-                (controller.isHovering(index) || controller.isActive(index))
-                    ? clickableSidebar ? TColors.primary : TColors.darkerGrey.withOpacity(.5)
-                    : Colors.transparent,
-            radius: Sizes.cardRadiusMd,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(Sizes.md),
-                  child: controller.isHovering(index)
-                      ? const TLoopRotation(
-                          child: Icon(Iconsax.status, color: TColors.white))
-                      : Icon(
-                          Iconsax.status,
-                          color: !controller.isActive(index)
-                              ? TColors.darkerGrey
-                              : TColors.white,
-                        ),
-                ),
-                TextWidget(
-                  text: controller.titles[index].s14w700,
-                  color:
-                      controller.isActive(index) || controller.isHovering(index)
-                          ? TColors.white
-                          : dark
-                              ? TColors.lightGrey
-                              : TColors.darkerGrey,
-                )
-              ],
+        backgroundColor:
+        (controller.isHovering(index) || controller.isActive(index))
+            ? clickableSidebar ? TColors.primary : TColors.darkerGrey.withOpacity(.5)
+            : Colors.transparent,
+        radius: Sizes.cardRadiusMd,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(Sizes.md),
+              child: controller.isHovering(index)
+                  ? const TLoopRotation(
+                  child: Icon(Iconsax.status, color: TColors.white))
+                  : Icon(
+                Iconsax.status,
+                color: !controller.isActive(index)
+                    ? TColors.darkerGrey
+                    : TColors.white,
+              ),
             ),
-          )),
+            TextWidget(
+              text: controller.titles[index].s16w400,
+              fontWeight: FontWeight.w600,
+              color:
+              controller.isActive(index) || controller.isHovering(index)
+                  ? TColors.white
+                  : dark
+                  ? TColors.lightGrey
+                  : TColors.darkerGrey,
+            )
+          ],
+        ),
+      )),
     );
   }
 }

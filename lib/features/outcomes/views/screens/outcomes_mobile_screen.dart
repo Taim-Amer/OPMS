@@ -31,11 +31,7 @@ class OutcomesMobileScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  fromAnother? const InsertOutcomeContainer() : TRoundedContainer(
-                    backgroundColor: dark ? TColors.dark : TColors.lightGrey,
-                    // width: 400.w,
-                    padding: EdgeInsets.all(Sizes.secondaryPaddingSpace.w),
-                  ),
+                  InsertOutcomeContainer(enable: fromAnother,),
                   Sizes.spaceBtwSections.verticalSpace,
                   TextWidget(
                     text: 'Outcomes'.s17w700,

@@ -2,7 +2,6 @@ import 'package:opms/utils/constants/keys.dart';
 import 'package:opms/utils/dependencies/global_bindings.dart';
 import 'package:opms/utils/helpers/cache_helper.dart';
 import 'package:opms/utils/helpers/helper_functions.dart';
-import 'package:opms/utils/helpers/logger.dart';
 import 'package:opms/utils/localization/translations.dart';
 import 'package:opms/utils/router/app_router.dart';
 import 'package:opms/utils/theme/theme.dart';

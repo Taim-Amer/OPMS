@@ -98,6 +98,10 @@ class _LabeledTextFeildState extends State<LabeledTextFeild> {
             controller: widget.controller,
             enableInteractiveSelection: false,
             cursorColor: TColors.primary,
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .copyWith(color: dark ? TColors.light : TColors.dark, fontWeight: FontWeight.w400),
             focusNode: widget.focusNode,
             textInputAction: widget.textInputAction,
             onFieldSubmitted: (value) {
@@ -125,7 +129,7 @@ class _LabeledTextFeildState extends State<LabeledTextFeild> {
                     const BoxConstraints(maxHeight: 20 + 16),
                 hintStyle: Theme.of(context)
                     .textTheme
-                    .titleSmall!
+                    .titleMedium!
                     .copyWith(color: const Color(0xFF707070)),
                 hintTextDirection: widget.textDirection,
                 filled: true,

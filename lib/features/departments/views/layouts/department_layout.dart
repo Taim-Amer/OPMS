@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:opms/common/responsive/responsive_design.dart';
 import 'package:opms/features/departments/views/screens/departments_desktop_screen.dart';
+import 'package:opms/features/departments/views/screens/departments_mobile_screen.dart';
 
 class DepartmentLayout extends StatelessWidget {
   const DepartmentLayout({super.key});
@@ -10,7 +11,7 @@ class DepartmentLayout extends StatelessWidget {
     return const TResponsiveWidget(
       desktop: DepartmentsDesktopScreen(),
       tablet: DepartmentsDesktopScreen(),
-      mobile: DepartmentsDesktopScreen(),
+      mobile: DepartmentsMobileScreen(),
     );
   }
 }

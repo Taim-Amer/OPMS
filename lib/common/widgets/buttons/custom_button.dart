@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:measure_size_builder/measure_size_builder.dart';
 import 'package:opms/common/widgets/handlers/wraper_widget.dart';
 import 'package:opms/common/widgets/loaders/custom_loading_widget.dart';
@@ -17,6 +18,7 @@ class CustomButton extends StatefulWidget {
   final void Function()? onTap;
   final bool isLoading;
   final double? height;
+  final MouseCursor cursor;
 
   const CustomButton({
     super.key,
@@ -29,6 +31,7 @@ class CustomButton extends StatefulWidget {
     this.isLoading = false,
     this.svgSize,
     this.padding,
+    this.cursor = SystemMouseCursors.click,
     this.height = 50,
   });
 
@@ -51,6 +54,7 @@ class _CustomButtonState extends State<CustomButton> {
 
   @override
   Widget build(BuildContext context) {
+    final dark = context.isDarkMode;
     return SizedBox(
       height: widget.height,
       child: WrapperWidget(
@@ -63,14 +67,14 @@ class _CustomButtonState extends State<CustomButton> {
         child: MeasureSizeBuilder(builder: (context, size) {
           height = size.height;
           return MouseRegion(
-            cursor: SystemMouseCursors.click,
+            cursor: widget.cursor,
             child: GestureDetector(
               onTap: widget.onTap,
               child: Container(
                 padding: widget.padding ?? EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(widget.radius ?? 12.r),
-                  color: widget.isColorsToggled ? TColors.white : widget.color,
+                  color: widget.isColorsToggled ? dark ? TColors.dark : TColors.white : widget.color,
                   border: widget.isColorsToggled ? Border.all(width: 1, color: widget.color) : null,
                 ),
                 child: widget.isLoading

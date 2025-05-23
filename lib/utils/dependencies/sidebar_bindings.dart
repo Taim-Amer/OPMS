@@ -3,19 +3,19 @@ import 'package:opms/features/indicators/controllers/indicators_controller.dart'
 import 'package:opms/features/outcomes/controllers/outcomes_controller.dart';
 import 'package:opms/features/outputs/controller/outputs_controller.dart';
 import 'package:opms/features/roles/controllers/roles_controller.dart';
+import 'package:opms/features/activities/controller/activities_controller.dart';
+import 'package:opms/features/departments/controller/departments_controller.dart';
+import 'package:opms/features/projects/controller/projects_controller.dart';
 
 class SidebarBindings extends Bindings{
   @override
   void dependencies() {
     Get.put<RolesController>(RolesController());
-    // Get.create(() => OutcomesController());
-    // Get.create(() => OutputsController());
-    // Get.create(() => IndicatorsController());
-    Get.lazyPut(() => OutcomesController(), fenix: true);
-    Get.lazyPut(() => OutputsController(), fenix: true);
-    Get.lazyPut(() => IndicatorsController(), fenix: true);
-    // Get.put<OutcomesController>(OutcomesController());
-    // Get.put<OutputsController>(OutputsController());
-    // Get.put<IndicatorsController>(IndicatorsController());
+    Get.lazyPut<OutcomesController>(() => OutcomesController(), fenix: true);
+    Get.lazyPut<OutputsController>(() => OutputsController(), fenix: true);
+    Get.lazyPut<IndicatorsController>(() => IndicatorsController(), fenix: true);
+    Get.lazyPut<DepartmentsController>(() => DepartmentsController(), fenix: true);
+    Get.lazyPut<ProjectsController>(() => ProjectsController(), fenix: true);
+    Get.lazyPut<ActivitiesController>(() => ActivitiesController(), fenix: true);
   }
 }

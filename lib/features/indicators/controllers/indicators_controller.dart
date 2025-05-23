@@ -6,7 +6,6 @@ import 'package:opms/common/widgets/alerts/snackbar.dart';
 import 'package:opms/features/indicators/models/indicators_model.dart';
 import 'package:opms/features/indicators/views/widgets/update_indicator_dialog.dart';
 import 'package:opms/utils/api/data_state.dart';
-import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/enums.dart';
 import 'package:opms/utils/helpers/formatter.dart';
 import 'package:opms/utils/repositories/general_repo.dart';
@@ -107,7 +106,7 @@ class IndicatorsController extends GetxController {
       updateIndicatorsState = RequestState.success;
       updateNameController.clear();
       showSnackBar(dataState.data!.message, AlertState.success);
-      getIndicators();
+      outputID == null ? getIndicators() : getIndicators(outputID: outputID);
       update();
     } else if (dataState is DataFailed) {
       updateIndicatorsState = RequestState.error;
@@ -129,23 +128,14 @@ class IndicatorsDataTableSource extends DataTableSource {
     final item = indicator[index];
     return DataRow2(
       cells: [
-        DataCell(item.description?.s13w400 ?? const Text('')),
-        DataCell(Formatter.formatDate(item.createdAt).s13w400),
-        DataCell(Formatter.formatDate(item.updatedAt).s13w400),
+        DataCell(item.description?.s17w400 ?? const Text('')),
+        DataCell(Formatter.formatDate(item.createdAt).s17w400),
+        DataCell(Formatter.formatDate(item.updatedAt).s17w400),
         DataCell(
-          Row(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.edit, color:Colors.blue),
-                tooltip: 'Edit',
-                onPressed: () => Get.dialog(UpdateIndicatorDialog(indicatorID: item.id!)),
-              ),
-              IconButton(
-                icon: const Icon(Icons.grid_view_rounded, color: TColors.primary),
-                // tooltip: 'show indicators',
-                onPressed: (){},
-              ),
-            ],
+          IconButton(
+            icon: const Icon(Icons.edit, color:Colors.blue),
+            tooltip: 'Edit',
+            onPressed: () => Get.dialog(UpdateIndicatorDialog(indicatorID: item.id!)),
           ),
         ),
       ],

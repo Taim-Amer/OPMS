@@ -2,8 +2,6 @@ import 'package:opms/utils/helpers/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:opms/app.dart';
 import 'package:get/get.dart';
-import 'package:opms/utils/helpers/logger.dart';
-import 'utils/constants/keys.dart';
 
 Future<void> main() async{
 

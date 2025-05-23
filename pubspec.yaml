@@ -34,13 +34,13 @@ dependencies:
   shimmer: ^3.0.0
   dotted_border: ^2.1.0
   percent_indicator: ^4.2.4
+  flutter_staggered_grid_view: ^0.7.0
   cached_network_image: ^3.4.1
   flutter_staggered_animations: ^1.1.1
   dartz: ^0.10.1
   url_launcher: any
   data_table_2: ^2.6.0
   skeletonizer: ^1.4.3
-
 
   # Icons
   iconsax: ^0.0.8
@@ -72,6 +72,7 @@ dependencies:
   # Files
   image_picker: ^1.1.2
   file_picker: ^8.1.4
+  animate_do: ^4.2.0
 
 
 #----------------- ./ PACKAGES END -----------------#

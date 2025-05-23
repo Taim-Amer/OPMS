@@ -47,7 +47,7 @@ class TSidebar extends GetView<SidebarController> {
                       'MENU'.s12w400,
                       Sizes.spaceBtwSections.verticalSpace,
                       TListView(
-                        itemCount: 8,
+                        itemCount: 7,
                         animationType: AnimationType.slide,
                         shrink: true,
                         itemBuilder: (context, index) => MenuItem(index: index, clickableSidebar: clickableSidebar),
@@ -62,10 +62,10 @@ class TSidebar extends GetView<SidebarController> {
                 child: OutlinedButton(
                   onPressed: () => controller.logout(),
                   style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: TColors.primary),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)
-                    )
+                      side: const BorderSide(color: TColors.primary),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12)
+                      )
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(Sizes.sm),

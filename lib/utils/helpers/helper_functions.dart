@@ -91,5 +91,4 @@ class HelperFunctions {
       throw "Could not launch $url";
     }
   }
-
 }

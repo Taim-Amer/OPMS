@@ -5,7 +5,6 @@ import 'package:opms/common/extensions/text_extensions.dart';
 import 'package:opms/common/widgets/custom_shapes/containers/rounded_container.dart';
 import 'package:opms/common/widgets/data_table/paginated_data_table.dart';
 import 'package:opms/common/widgets/layouts/templates/site_template.dart';
-import 'package:opms/features/outcomes/controllers/outcomes_controller.dart';
 import 'package:opms/features/outputs/controller/outputs_controller.dart';
 import 'package:opms/features/outputs/views/widgets/insert_output_container.dart';
 import 'package:opms/utils/constants/colors.dart';
@@ -61,7 +60,9 @@ class OutputsDesktopScreen extends StatelessWidget {
                               DataColumn(label: TextWidget(text: 'Code'.s14w700, color: TColors.white,)),
                               DataColumn(label: TextWidget(text: 'Created'.s14w700, color: TColors.white,)),
                               DataColumn(label: TextWidget(text: 'Updated'.s14w700, color: TColors.white,)),
-                              DataColumn(label: TextWidget(text: 'Actions'.s14w700, color: TColors.white)),
+                              DataColumn(label: TextWidget(text: 'Edit'.s14w700, color: TColors.white)),
+                              DataColumn(label: TextWidget(text: 'Indicators'.s14w700, color: TColors.white)),
+                              DataColumn(label: TextWidget(text: 'Activities'.s14w700, color: TColors.white)),
                             ],
                           ),
                         );
@@ -69,14 +70,9 @@ class OutputsDesktopScreen extends StatelessWidget {
                     ),
                   ),
                   Sizes.spaceBtwSections.horizontalSpace,
-                  fromAnother ? Expanded(
+                  Expanded(
                     flex: HelperFunctions.isTabletScreen(context) ? 2 : 1,
-                    child: const InsertOutputContainer(),
-                  ) : TRoundedContainer(
-                    backgroundColor: dark ? TColors.dark : TColors.lightGrey,
-                    height: !HelperFunctions.isMobileScreen(context) ? 650.h : null,
-                    width: 400.w,
-                    padding: EdgeInsets.all(Sizes.secondaryPaddingSpace.w),
+                    child: InsertOutputContainer(enable: fromAnother,),
                   )
                 ],
               ),

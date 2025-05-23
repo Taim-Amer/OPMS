@@ -71,12 +71,7 @@ class OutcomesDesktopScreen extends StatelessWidget {
                   Sizes.spaceBtwSections.horizontalSpace,
                   Expanded(
                     flex: HelperFunctions.isTabletScreen(context) ? 2 : 1,
-                    child: fromAnother ? const InsertOutcomeContainer() : TRoundedContainer(
-                      backgroundColor: dark ? TColors.dark : TColors.lightGrey,
-                      height: !HelperFunctions.isMobileScreen(context) ? 650.h : null,
-                      width: 400.w,
-                      padding: EdgeInsets.all(Sizes.secondaryPaddingSpace.w),
-                    ),
+                    child: InsertOutcomeContainer(enable: fromAnother,) ,
                   )
                 ],
               ),

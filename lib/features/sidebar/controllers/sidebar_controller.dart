@@ -1,10 +1,14 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:opms/features/activities/view/layout/activities_layout.dart';
 import 'package:opms/features/departments/views/layouts/department_layout.dart';
-import 'package:opms/features/home/views/layouts/home_layout.dart';
 import 'package:opms/features/indicators/views/layouts/indicators_layout.dart';
 import 'package:opms/features/outcomes/views/layouts/outcome_layout.dart';
 import 'package:opms/features/outputs/views/layouts/outputs_layout.dart';
+import 'package:opms/features/projects/controller/projects_controller.dart';
+import 'package:opms/features/projects/view/layouts/projects_layout.dart';
 import 'package:opms/features/roles/views/layouts/roles_layout.dart';
 import 'package:opms/utils/constants/enums.dart';
 import 'package:opms/utils/constants/keys.dart';
@@ -20,9 +24,9 @@ class SidebarController extends GetxController {
   RxInt hoverItem = (-1).obs;
 
   final List<String> titles = [
-    'Home',
+    // 'Home',
     'Departments',
-    'Units',
+    'Projects & Units',
     'Outcomes',
     'Outputs',
     'Indicators',
@@ -30,14 +34,24 @@ class SidebarController extends GetxController {
     'Users',
   ];
   final List<Widget> screens = [
-    const HomeLayout(),
+    // const HomeLayout(),
     const DepartmentLayout(),
-    Container(color: Colors.black,),
+    const ProjectsLayout(),
     const OutcomeLayout(),
     const OutputsLayout(),
     const IndicatorLayout(),
-    Container(color: Colors.brown,),
+    const ActivitiesLayout(),
     const RolesLayout(),
+  ];
+
+  final List<Function> onTap = [
+    (){},
+    () => Get.find<ProjectsController>().getProjects(),
+    (){},
+    (){},
+    (){},
+    (){},
+    (){},
   ];
 
   void changeActiveItem(int index) => activeItem.value = index;
@@ -52,6 +66,7 @@ class SidebarController extends GetxController {
 
   void menuOnTap(int index) {
     if (!isActive(index)) {
+      // sideBarSwitch(index);
       changeActiveItem(index);
       if (HelperFunctions.isMobileScreen(Get.context!)) Get.back();
       // Get.toNamed(index);

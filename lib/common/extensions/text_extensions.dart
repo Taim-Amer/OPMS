@@ -19,13 +19,13 @@ extension TextStyleExtensions on String {
   );
 
   Text get s16w400 => _getStyledText(
-    TTextTheme.darkTextTheme.bodyMedium,
-    TTextTheme.lightTextTheme.bodyMedium,
+    TTextTheme.darkTextTheme.bodyLarge,
+    TTextTheme.lightTextTheme.bodyLarge,
   );
 
-  Text get s13w400 => _getStyledText(
-    TTextTheme.darkTextTheme.headlineSmall,
-    TTextTheme.lightTextTheme.headlineSmall,
+  Text get s17w400 => _getStyledText(
+    TTextTheme.darkTextTheme.headlineSmall?.copyWith(fontSize: 17),
+    TTextTheme.lightTextTheme.headlineSmall?.copyWith(fontSize: 17),
   );
 
   Text get s17w700 => _getStyledText(
