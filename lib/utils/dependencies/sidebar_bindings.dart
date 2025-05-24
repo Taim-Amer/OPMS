@@ -12,9 +12,10 @@ import 'package:opms/features/admin/departments/controller/departments_controlle
 import 'package:opms/features/admin/projects/controller/projects_controller.dart';
 
 class SidebarBindings extends Bindings{
+
   @override
   void dependencies() {
-    Get.put<RolesController>(RolesController());
+    Get.lazyPut<RolesController>(() => RolesController(), fenix: true);
     Get.lazyPut<OutcomesController>(() => OutcomesController(), fenix: true);
     Get.lazyPut<OutputsController>(() => OutputsController(), fenix: true);
     Get.lazyPut<IndicatorsController>(() => IndicatorsController(), fenix: true);

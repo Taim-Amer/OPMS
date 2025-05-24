@@ -9,6 +9,7 @@ import 'package:opms/features/admin/outcomes/views/layouts/outcome_layout.dart';
 import 'package:opms/features/admin/outputs/views/layouts/outputs_layout.dart';
 import 'package:opms/features/admin/projects/view/layouts/projects_layout.dart';
 import 'package:opms/features/admin/sidebar/views/layouts/sidebar_menu.dart';
+import 'package:opms/utils/constants/keys.dart';
 import 'package:opms/utils/dependencies/activities_bindings.dart';
 import 'package:opms/utils/dependencies/budget_bindings.dart';
 import 'package:opms/utils/dependencies/indicators_bindings.dart';
@@ -16,6 +17,7 @@ import 'package:opms/utils/dependencies/login_bindings.dart';
 import 'package:opms/utils/dependencies/outcome_bindings.dart';
 import 'package:opms/utils/dependencies/outputs_bindings.dart';
 import 'package:opms/utils/dependencies/sidebar_bindings.dart';
+import 'package:opms/utils/helpers/cache_helper.dart';
 
 class AppRoutes {
   static const kLogin = '/kLogin';
@@ -91,5 +93,12 @@ class AppRoutes {
   static void back() {
     Get.find<BreadcrumbController>().titles.removeLast();
     Get.back();
+  }
+
+  static String getInitialRoute(){
+    if(CacheHelper.getData(key: Keys.token) == null){
+      return AppRoutes.kLogin;
+    }
+    return AppRoutes.kSidebar;
   }
 }

@@ -9,18 +9,6 @@ import 'package:opms/features/admin/budget/views/widgets/salaries_list.dart';
 class BudgetController extends GetxController{
   int selectedChip = 0;
 
-  List<GetxController> controllers = [
-    ReliefAssistanceController(),
-    ReliefAssistanceController(),
-    ReliefAssistanceController(),
-    ReliefAssistanceController(),
-    ReliefAssistanceController(),
-    ReliefAssistanceController(),
-    ReliefAssistanceController(),
-    // ReliefAssistanceController(),
-    // ReliefAssistanceController(),
-  ];
-
   List<String> titles = [
     'Relief Assistance',
     'Salary',

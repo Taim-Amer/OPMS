@@ -32,7 +32,7 @@ class OPMSSystem extends StatelessWidget {
             themeMode: controller.themeMode.value,
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
-            initialRoute: AppRoutes.kLogin,
+            initialRoute: AppRoutes.getInitialRoute(),
             getPages: AppRoutes.routes,
             translations: AppTranslations(),
             locale: const Locale('en'),
