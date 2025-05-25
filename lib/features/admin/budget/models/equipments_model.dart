@@ -1,6 +1,8 @@
+import 'package:skeletonizer/skeletonizer.dart';
+
 class EquipmentsModel {
   bool? status;
-  List<Data>? data;
+  List<Equipment>? data;
   String? message;
 
   EquipmentsModel({this.status, this.data, this.message});
@@ -8,16 +10,27 @@ class EquipmentsModel {
   EquipmentsModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <Equipment>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Equipment.fromJson(v));
       });
     }
     message = json['message'];
   }
+
+  static EquipmentsModel get skeleton {
+    return EquipmentsModel(
+      data: List.generate(20, (_) => Equipment(
+      type: BoneMock.name,
+      equipmentCost: BoneMock.name,
+      equipmentDescription: BoneMock.name,
+      date: BoneMock.name,
+    )),
+    );
+  }
 }
 
-class Data {
+class Equipment {
   int? id;
   String? type;
   String? equipmentDescription;
@@ -26,7 +39,7 @@ class Data {
   String? createdAt;
   String? updatedAt;
 
-  Data(
+  Equipment(
       {this.id,
         this.type,
         this.equipmentDescription,
@@ -35,7 +48,7 @@ class Data {
         this.createdAt,
         this.updatedAt});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Equipment.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     type = json['type'];
     equipmentDescription = json['equipment_description'];

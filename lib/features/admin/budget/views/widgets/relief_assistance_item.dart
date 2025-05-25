@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
 import 'package:opms/common/widgets/custom_shapes/containers/rounded_container.dart';
+import 'package:opms/common/widgets/dialogs/insert_dialog.dart';
 import 'package:opms/common/widgets/handlers/text_widget.dart';
+import 'package:opms/features/admin/budget/controller/relief_assistance_controller.dart';
 import 'package:opms/features/admin/budget/models/relief_assistance_model.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/sizes.dart';
 
-class ReliefAssistanceItem extends StatelessWidget {
+class ReliefAssistanceItem extends GetView<ReliefAssistanceController> {
   final ReliefAssistance reliefAssistance;
 
   const ReliefAssistanceItem({
@@ -67,12 +70,6 @@ class ReliefAssistanceItem extends StatelessWidget {
                       color: Colors.blueGrey,
                     ),
                   ],
-                ),
-                SizedBox(height: 6.h),
-                TextWidget(
-                  text: 'ID: ${reliefAssistance.id ?? 'N/A'}'.s14w400,
-                  fontSize: 12,
-                  color: dark ? TColors.light : TColors.dark,
                 ),
               ],
             ),

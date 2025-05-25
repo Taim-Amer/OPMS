@@ -13,15 +13,17 @@ class SalariesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SalariesController>(
-      builder: (controller) => Skeletonizer(
-        enabled: controller.getSalariesStatus == RequestState.loading,
-        child: TGridLayout(
-          // animationType: AnimationType.slide,
-          crossCount: HelperFunctions.isTabletScreen(context) || HelperFunctions.isMobileScreen(context) ? 1 : 3,
-          mainAxisExtent: 150,
-          // animationType: AnimationType.scale,
-          itemCount: controller.salariesModel.data?.length ?? 0,
-          itemBuilder: (context, index) => SalaryItem(salary: controller.salariesModel.data![index]),
+      builder: (controller) => TGridLayout(
+        // animationType: AnimationType.slide,
+        crossCount: HelperFunctions.isTabletScreen(context) || HelperFunctions.isMobileScreen(context) ? 1 : 3,
+        mainAxisExtent: 150,
+        animationType: AnimationType.scale,
+        itemCount: controller.salariesModel.data?.length ?? 0,
+        itemBuilder: (context, index) => Skeletonizer(
+          enabled: controller.getSalariesStatus == RequestState.loading,
+          child: SalaryItem(
+            salary: controller.salariesModel.data![index],
+          ),
         ),
       ),
     );

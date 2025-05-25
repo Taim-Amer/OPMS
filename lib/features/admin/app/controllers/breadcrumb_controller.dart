@@ -4,7 +4,6 @@ import 'package:opms/utils/router/app_router.dart';
 class BreadcrumbController extends GetxController {
   final RxList<String> titles = <String>[].obs;
 
-  // دالة مساعدة لإضافة عناوين حسب المسار
   void addTitleForRoute(String routeName) {
     final title = _getTitleForRoute(routeName);
     if (title != null) titles.add(title);
@@ -38,25 +37,21 @@ class BreadcrumbController extends GetxController {
     addTitle(title);
   }
 
-  // الانتقال مع إضافة عنوان (بدون إدارة التنقل)
   void addTitle(String title) {
     titles.add(title);
   }
 
-  // إزالة العنوان  (بدون إدارة التنقل)
   void removeTitle() {
     if (titles.isNotEmpty) {
       titles.removeLast();
     }
   }
 
-  // الانتقال مع إضافة عنوان وإدارة التنقل
   void navigateTo(String routeName, String pageTitle) {
     titles.add(pageTitle);
     Get.toNamed(routeName);
   }
 
-  // إعادة تعيين العناوين
   void resetTitles() {
     titles.clear();
   }

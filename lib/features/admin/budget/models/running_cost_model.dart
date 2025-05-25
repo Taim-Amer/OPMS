@@ -20,7 +20,7 @@ class RunningCostModel {
 
   static RunningCostModel get skeleton{
     return RunningCostModel(
-      data: List.generate(12, (_) => RunningCost(
+      data: List.generate(20, (_) => RunningCost(
         date: BoneMock.name,
         unitCost: BoneMock.name,
         expenseType: BoneMock.name,

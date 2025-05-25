@@ -20,7 +20,7 @@ class SalariesModel {
 
   static SalariesModel get skeleton{
     return SalariesModel(
-      data: List.generate(12, (_) => Salary(
+      data: List.generate(20, (_) => Salary(
         date: BoneMock.name,
         type: BoneMock.name,
         costOfLivingAllowance: 0,

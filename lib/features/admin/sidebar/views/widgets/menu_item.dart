@@ -23,6 +23,7 @@ class MenuItem extends GetView<SidebarController> {
     return InkWell(
       mouseCursor: clickableSidebar ? SystemMouseCursors.click : SystemMouseCursors.forbidden,
       onTap: clickableSidebar ? () {
+        Get.find<BreadcrumbController>().resetTitles();
         Get.find<BreadcrumbController>().setTitle(title: controller.titles[index]);
         controller.changeActiveItem(index);
         controller.onTap[index]();

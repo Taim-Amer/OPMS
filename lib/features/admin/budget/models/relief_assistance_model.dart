@@ -20,7 +20,7 @@ class ReliefAssistanceModel {
 
   static ReliefAssistanceModel get skeleton{
     return ReliefAssistanceModel(
-      data: List.generate(12, (_) => ReliefAssistance(
+      data: List.generate(20, (_) => ReliefAssistance(
         description: BoneMock.name,
         type: BoneMock.name,
         date: BoneMock.name,

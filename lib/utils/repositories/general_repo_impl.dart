@@ -1,9 +1,12 @@
 import 'package:get/get.dart';
 import 'package:opms/features/admin/activities/models/activities_model.dart';
 import 'package:opms/features/admin/auth/models/login_model.dart';
+import 'package:opms/features/admin/budget/models/equipments_model.dart';
+import 'package:opms/features/admin/budget/models/field_visit_model.dart';
 import 'package:opms/features/admin/budget/models/relief_assistance_model.dart';
 import 'package:opms/features/admin/budget/models/running_cost_model.dart';
 import 'package:opms/features/admin/budget/models/salaries_model.dart';
+import 'package:opms/features/admin/budget/models/training_description_model.dart';
 import 'package:opms/features/admin/departments/models/departments_model.dart';
 import 'package:opms/features/admin/indicators/models/indicators_model.dart';
 import 'package:opms/features/admin/outcomes/models/outcomes_model.dart';
@@ -432,6 +435,30 @@ class GeneralRepoImpl implements GeneralRepo {
     return await _apiService.getData(
       endPoint: ApiConstants.runningCost,
       fromJson: RunningCostModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<TrainingDescriptionModel>> getTrainingDescription() async{
+    return await _apiService.getData(
+      endPoint: ApiConstants.trainingDescriptions,
+      fromJson: TrainingDescriptionModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<EquipmentsModel>> getEquipments() async{
+    return await _apiService.getData(
+      endPoint: ApiConstants.equipments,
+      fromJson: EquipmentsModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<FieldVisitModel>> getFieldVisit() async{
+    return await _apiService.getData(
+      endPoint: ApiConstants.fieldVisits,
+      fromJson: FieldVisitModel.fromJson,
     );
   }
 }

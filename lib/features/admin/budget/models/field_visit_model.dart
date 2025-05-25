@@ -1,6 +1,8 @@
+import 'package:skeletonizer/skeletonizer.dart';
+
 class FieldVisitModel {
   bool? status;
-  List<Data>? data;
+  List<FieldVisit>? data;
   String? message;
 
   FieldVisitModel({this.status, this.data, this.message});
@@ -8,16 +10,25 @@ class FieldVisitModel {
   FieldVisitModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <FieldVisit>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(FieldVisit.fromJson(v));
       });
     }
     message = json['message'];
   }
+
+  static FieldVisitModel get skeleton{
+    return FieldVisitModel(
+      data: List.generate(20, (_) => FieldVisit(
+        date: BoneMock.name,
+        description: BoneMock.name,
+      ))
+    );
+  }
 }
 
-class Data {
+class FieldVisit {
   int? id;
   String? unitType;
   String? description;
@@ -26,7 +37,7 @@ class Data {
   String? createdAt;
   String? updatedAt;
 
-  Data(
+  FieldVisit(
       {this.id,
         this.unitType,
         this.description,
@@ -35,7 +46,7 @@ class Data {
         this.createdAt,
         this.updatedAt});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  FieldVisit.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     unitType = json['unit_type'];
     description = json['description'];

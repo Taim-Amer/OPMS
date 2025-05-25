@@ -22,8 +22,10 @@ class BudgetOptionsList extends GetView<BudgetController> {
           cursor: SystemMouseCursors.click,
           child: GestureDetector(
             onTap: () {
+              Get.find<BreadcrumbController>().resetTitles();
               controller.changeSelectedChip(value: index);
-              Get.find<BreadcrumbController>().setTitle(title: controller.titles[index]);
+              Get.find<BreadcrumbController>().addTitle('Budget');
+              Get.find<BreadcrumbController>().addTitle(controller.titles[index]);
             },
             child: IntrinsicWidth(
               child: TRoundedContainer(
