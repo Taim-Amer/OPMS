@@ -26,10 +26,21 @@ class SalaryItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          TextWidget(
-            text: (salary.type ?? 'Unknown Type').s16w700,
-            fontSize: 18,
-            color: dark ? TColors.light : TColors.dark,
+          Row(
+            children: [
+              TextWidget(
+                text: (salary.type ?? 'Unknown Type').s16w700,
+                fontSize: 18,
+                color: dark ? TColors.light : TColors.dark,
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.edit,
+                  color: Colors.blueAccent,
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 8.h),
 

@@ -404,25 +404,6 @@ class GeneralRepoImpl implements GeneralRepo {
   }
 
   @override
-  Future<DataState<MessageModel>> insertReliefAssistance({
-    required String type,
-    required String description,
-    required String unitCost,
-    required String date,
-  }) async {
-    return await _apiService.postData(
-      endPoint: ApiConstants.reliefAssistance,
-      data: {
-        'type': type,
-        'description': description,
-        'unit_cost': unitCost,
-        'date': date
-      },
-      fromJson: MessageModel.fromJson,
-    );
-  }
-
-  @override
   Future<DataState<SalariesModel>> getSalaries() async {
     return await _apiService.getData(
       endPoint: ApiConstants.salaries,
@@ -460,5 +441,171 @@ class GeneralRepoImpl implements GeneralRepo {
       endPoint: ApiConstants.fieldVisits,
       fromJson: FieldVisitModel.fromJson,
     );
+  }
+
+  @override
+  Future<DataState<MessageModel>> insertReliefAssistance({
+    required String type,
+    required String description,
+    required String unitCost,
+    required String date,
+  }) async {
+    return await _apiService.postData(
+      endPoint: ApiConstants.reliefAssistance,
+      data: {
+        'type': type,
+        'description': description,
+        'unit_cost': unitCost,
+        'date': date
+      },
+      fromJson: MessageModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<MessageModel>> insertSalary({
+    required String type,
+    required String positions,
+    required String salary,
+    required String costOfLivingAllowance,
+    required String date,
+  }) async{
+    return await _apiService.postData(
+      endPoint: ApiConstants.salaries,
+      data: {
+        'type' : type,
+        'positions' : positions,
+        'salary' : salary,
+        'cost_of_living_allowance' : costOfLivingAllowance,
+        'date' : date,
+      },
+      fromJson: MessageModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<MessageModel>> insertEquipments({
+    required String type,
+    required String description,
+    required String cost,
+    required String date,
+  }) async{
+    return await _apiService.postData(
+      endPoint: ApiConstants.equipments,
+      data: {
+        'type' : type,
+        'equipment_cost' : cost,
+        'equipment_description' : description,
+        'date' : date,
+      },
+      fromJson: MessageModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<MessageModel>> insertFieldVisit({
+    required String unitType,
+    required String description,
+    required String unitPrice,
+    required String date,
+  }) async{
+    return await _apiService.postData(
+      endPoint: ApiConstants.fieldVisits,
+      data: {
+        'unit_price' : unitPrice,
+        'unit_type' : unitType,
+        'description' : description,
+        'date' : date,
+      },
+      fromJson: MessageModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<MessageModel>> insertRunningCost({
+    required String expenseType,
+    required String unitType,
+    required String unitCost,
+    required String date,
+  }) async{
+    return await _apiService.postData(
+      endPoint: ApiConstants.runningCost,
+      data: {
+        'unit_cost' : unitCost,
+        'unit_type' : unitType,
+        'expense_type' : expenseType,
+        'date' : date,
+      },
+      fromJson: MessageModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<MessageModel>> insertTrainingDescription({required String name}) async{
+    return await _apiService.postData(
+      endPoint: ApiConstants.trainingDescriptions,
+      data: {
+        'name' : name,
+      },
+      fromJson: MessageModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<MessageModel>> updateEquipments({
+    required int id,
+    required String type,
+    required String description,
+    required String cost,
+    required String date,
+  }) {
+    // TODO: implement updateEquipments
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<DataState<MessageModel>> updateFieldVisit({
+    required int id,
+    required String unitType,
+    required String description,
+    required String unitPrice,
+    required String date,
+  }) {
+    // TODO: implement updateFieldVisit
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<DataState<MessageModel>> updateRunningCost({
+    required int id,
+    required String expenseType,
+    required String unitType,
+    required String unitCost,
+    required String date,
+  }) {
+    // TODO: implement updateRunningCost
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<DataState<MessageModel>> updateSalary({
+    required int id,
+    required String type,
+    required String positions,
+    required String salary,
+    required String costOfLivingAllowance,
+    required String date,
+  }) {
+    // TODO: implement updateSalary
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<DataState<MessageModel>> updateTrainingDescription({
+    required int id,
+    required String name,
+  }) {
+    // TODO: implement updateTrainingDescription
+    throw UnimplementedError();
   }
 }

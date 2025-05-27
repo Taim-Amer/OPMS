@@ -25,10 +25,21 @@ class RunningCostItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextWidget(
-            text: (runningCost.expenseType ?? 'Unknown').s16w700,
-            fontSize: 18,
-            color: dark ? TColors.light : TColors.dark,
+          Row(
+            children: [
+              TextWidget(
+                text: (runningCost.expenseType ?? 'Unknown').s16w700,
+                fontSize: 18,
+                color: dark ? TColors.light : TColors.dark,
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.edit,
+                  color: Colors.blueAccent,
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 8.h),
           Row(

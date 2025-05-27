@@ -51,70 +51,68 @@ class _CustomInsertContainerState extends State<CustomInsertContainer> {
     final dark = Theme.of(context).brightness == Brightness.dark;
     return Material(
       type: MaterialType.transparency,
-      child: SingleChildScrollView(
-        child: TRoundedContainer(
-          backgroundColor: dark ? TColors.dark : TColors.lightGrey,
-          height: !HelperFunctions.isMobileScreen(context) ? 650.h : null,
-          width: 400.w,
-          padding: EdgeInsets.all(Sizes.secondaryPaddingSpace.w),
-          child: Form(
-            key: widget.formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TRoundedImage(
-                  imageUrl: ImagesAssets.add,
-                  useHero: false,
-                  width: 100.h,
-                  height: 100.h,
-                  backgroundColor: Colors.transparent,
-                  borderRadius: 0,
-                ),
-                Sizes.spaceBtwSections.verticalSpace,
-                widget.title.s17w700,
-                Sizes.spaceBtwSections.verticalSpace,
+      child: TRoundedContainer(
+        backgroundColor: dark ? TColors.dark : TColors.lightGrey,
+        height: !HelperFunctions.isMobileScreen(context) ? 650.h : null,
+        width: 400.w,
+        padding: EdgeInsets.all(Sizes.secondaryPaddingSpace.w),
+        child: Form(
+          key: widget.formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TRoundedImage(
+                imageUrl: ImagesAssets.add,
+                useHero: false,
+                width: 100.h,
+                height: 100.h,
+                backgroundColor: Colors.transparent,
+                borderRadius: 0,
+              ),
+              Sizes.spaceBtwSections.verticalSpace,
+              widget.title.s17w700,
+              Sizes.spaceBtwSections.verticalSpace,
 
-                MouseRegion(
+              MouseRegion(
+                cursor: widget.enableInsert
+                    ? SystemMouseCursors.click
+                    : SystemMouseCursors.forbidden,
+                child: IgnorePointer(
+                  ignoring: !widget.enableInsert,
+                  child: Column(
+                    children: List.generate(widget.fields.length, (index) {
+                      final field = index == 0
+                          ? Focus(
+                        focusNode: _focusNode,
+                        child: widget.fields[index],
+                      )
+                          : widget.fields[index];
+                      return Column(
+                        children: [
+                          field,
+                          if (index != widget.fields.length - 1)
+                            Sizes.spaceBtwItems.verticalSpace,
+                        ],
+                      );
+                    }),
+                  ),
+                ),
+              ),
+
+              Sizes.spaceBtwItems.verticalSpace,
+              SizedBox(
+                width: double.infinity,
+                child: CustomButton(
+                  title: 'Insert',
                   cursor: widget.enableInsert
                       ? SystemMouseCursors.click
                       : SystemMouseCursors.forbidden,
-                  child: IgnorePointer(
-                    ignoring: !widget.enableInsert,
-                    child: Column(
-                      children: List.generate(widget.fields.length, (index) {
-                        final field = index == 0
-                            ? Focus(
-                          focusNode: _focusNode,
-                          child: widget.fields[index],
-                        )
-                            : widget.fields[index];
-                        return Column(
-                          children: [
-                            field,
-                            if (index != widget.fields.length - 1)
-                              Sizes.spaceBtwItems.verticalSpace,
-                          ],
-                        );
-                      }),
-                    ),
-                  ),
+                  isLoading: widget.isLoading,
+                  isColorsToggled: !widget.enableInsert,
+                  onTap: widget.enableInsert ? widget.onSubmit : () {},
                 ),
-
-                Sizes.spaceBtwItems.verticalSpace,
-                SizedBox(
-                  width: double.infinity,
-                  child: CustomButton(
-                    title: 'Insert',
-                    cursor: widget.enableInsert
-                        ? SystemMouseCursors.click
-                        : SystemMouseCursors.forbidden,
-                    isLoading: widget.isLoading,
-                    isColorsToggled: !widget.enableInsert,
-                    onTap: widget.enableInsert ? widget.onSubmit : () {},
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

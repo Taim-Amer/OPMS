@@ -143,7 +143,7 @@ abstract class GeneralRepo {
     required List<int> unitsIDs,
   });
 
-  //Budget
+  // Budget
   Future<DataState<ReliefAssistanceModel>> getReliefAssistance();
   Future<DataState<MessageModel>> insertReliefAssistance({
     required String type,
@@ -151,7 +151,6 @@ abstract class GeneralRepo {
     required String unitCost,
     required String date,
   });
-
   Future<DataState<MessageModel>> updateReliefAssistance({
     required int id,
     required String type,
@@ -161,8 +160,74 @@ abstract class GeneralRepo {
   });
 
   Future<DataState<SalariesModel>> getSalaries();
+  Future<DataState<MessageModel>> insertSalary({
+    required String type,
+    required String positions,
+    required String salary,
+    required String costOfLivingAllowance,
+    required String date,
+  });
+  Future<DataState<MessageModel>> updateSalary({
+    required int id,
+    required String type,
+    required String positions,
+    required String salary,
+    required String costOfLivingAllowance,
+    required String date,
+  });
+
   Future<DataState<RunningCostModel>> getRunningCost();
+  Future<DataState<MessageModel>> insertRunningCost({
+    required String expenseType,
+    required String unitType,
+    required String unitCost,
+    required String date,
+  });
+  Future<DataState<MessageModel>> updateRunningCost({
+    required int id,
+    required String expenseType,
+    required String unitType,
+    required String unitCost,
+    required String date,
+  });
+
   Future<DataState<TrainingDescriptionModel>> getTrainingDescription();
+  Future<DataState<MessageModel>> insertTrainingDescription({
+    required String name,
+  });
+  Future<DataState<MessageModel>> updateTrainingDescription({
+    required int id,
+    required String name,
+  });
+
   Future<DataState<EquipmentsModel>> getEquipments();
+  Future<DataState<MessageModel>> insertEquipments({
+    required String type,
+    required String description,
+    required String cost,
+    required String date,
+  });
+  Future<DataState<MessageModel>> updateEquipments({
+    required int id,
+    required String type,
+    required String description,
+    required String cost,
+    required String date,
+  });
+
   Future<DataState<FieldVisitModel>> getFieldVisit();
+  Future<DataState<MessageModel>> insertFieldVisit({
+    required String unitType,
+    required String description,
+    required String unitPrice,
+    required String date,
+  });
+  Future<DataState<MessageModel>> updateFieldVisit({
+    required int id,
+    required String unitType,
+    required String description,
+    required String unitPrice,
+    required String date,
+  });
+
 }

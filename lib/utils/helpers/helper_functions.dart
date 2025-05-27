@@ -91,4 +91,12 @@ class HelperFunctions {
       throw "Could not launch $url";
     }
   }
+
+  static List<T> search<T>(List<T> list, String query,
+      {required List<String> Function(T item) searchFields,}) {
+    final lowerQuery = query.toLowerCase();
+    return list.where((item) {
+      return searchFields(item).any((field) => field.toLowerCase().contains(lowerQuery));
+    }).toList();
+  }
 }

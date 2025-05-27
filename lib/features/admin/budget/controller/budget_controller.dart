@@ -4,6 +4,12 @@ import 'package:opms/features/admin/budget/controller/relief_assistance_controll
 import 'package:opms/features/admin/budget/controller/salary_controller.dart';
 import 'package:opms/features/admin/budget/views/widgets/equipments_list.dart';
 import 'package:opms/features/admin/budget/views/widgets/field_visit_list.dart';
+import 'package:opms/features/admin/budget/views/widgets/insert_equipments_container.dart';
+import 'package:opms/features/admin/budget/views/widgets/insert_field_visit_container.dart';
+import 'package:opms/features/admin/budget/views/widgets/insert_relief_container.dart';
+import 'package:opms/features/admin/budget/views/widgets/insert_running_cost_container.dart';
+import 'package:opms/features/admin/budget/views/widgets/insert_salary_container.dart';
+import 'package:opms/features/admin/budget/views/widgets/insert_training_description_container.dart';
 import 'package:opms/features/admin/budget/views/widgets/relief_assistance_list.dart';
 import 'package:opms/features/admin/budget/views/widgets/running_cost_list.dart';
 import 'package:opms/features/admin/budget/views/widgets/salaries_list.dart';
@@ -21,6 +27,18 @@ class BudgetController extends GetxController{
     'Field Visit',
     'Equipments',
     'Training Description',
+    // 'Training Cost',
+  ];
+
+  List<Widget> insertContainer = [
+    const InsertReliefContainer(),
+    const InsertSalaryContainer(),
+    const InsertTrainingDescriptionContainer(),
+    // 'Training Sub Description',
+    const InsertRunningCostContainer(),
+    const InsertFieldVisitContainer(),
+    const InsertEquipmentContainer(),
+    const InsertTrainingDescriptionContainer(),
     // 'Training Cost',
   ];
 

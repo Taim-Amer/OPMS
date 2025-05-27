@@ -40,10 +40,21 @@ class ReliefAssistanceItem extends GetView<ReliefAssistanceController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextWidget(
-                  text: (reliefAssistance.type ?? 'Unknown Type').s16w700,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
+                Row(
+                  children: [
+                    TextWidget(
+                      text: (reliefAssistance.type ?? 'Unknown Type').s16w700,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.edit,
+                        color: Colors.blueAccent,
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 6.h),
                 TextWidget(

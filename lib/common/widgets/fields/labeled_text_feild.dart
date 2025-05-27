@@ -12,7 +12,7 @@ class LabeledTextFeild extends StatefulWidget {
     super.key,
     required this.label,
     this.hint = '',
-    required this.controller,
+    this.controller,
     this.isPassword = false,
     this.isNumber = false,
     this.textAlign = TextAlign.start,
@@ -31,7 +31,8 @@ class LabeledTextFeild extends StatefulWidget {
     this.onFieldSubmitted,
     this.prefix,
     this.fillColor,
-    this.showLabel = false
+    this.showLabel = false,
+    this.onChanged
   });
 
   final Widget? prefix;
@@ -43,7 +44,7 @@ class LabeledTextFeild extends StatefulWidget {
   final TextAlign textAlign;
   final TextDirection? textDirection;
   final bool isCentered;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final Color? primaryColor;
   final Widget? suffixIcon;
   final String? textNextToLabel;
@@ -56,6 +57,7 @@ class LabeledTextFeild extends StatefulWidget {
   final Function(String)? onFieldSubmitted;
   final Color? fillColor;
   final bool? showLabel;
+  final Function(String)? onChanged;
 
   @override
   State<LabeledTextFeild> createState() => _LabeledTextFeildState();
@@ -96,6 +98,7 @@ class _LabeledTextFeildState extends State<LabeledTextFeild> {
           ),
           child: TextFormField(
             controller: widget.controller,
+            onChanged: widget.onChanged,
             enableInteractiveSelection: false,
             cursorColor: TColors.primary,
             style: Theme.of(context)

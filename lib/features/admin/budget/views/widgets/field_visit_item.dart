@@ -25,10 +25,21 @@ class FieldVisitItem extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TextWidget(
-            text: (fieldVisit.unitType ?? 'Field Visit').s16w700,
-            fontSize: 18,
-            color: dark ? TColors.light : TColors.dark,
+          Row(
+            children: [
+              TextWidget(
+                text: (fieldVisit.unitType ?? 'Field Visit').s16w700,
+                fontSize: 18,
+                color: dark ? TColors.light : TColors.dark,
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.edit,
+                  color: Colors.blueAccent,
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 12.h),
           Row(
@@ -55,18 +66,6 @@ class FieldVisitItem extends StatelessWidget {
                 text: 'Unit Price: ${fieldVisit.unitPrice ?? '0'}'.s14w700,
                 fontSize: 14,
                 color: Colors.green,
-              ),
-            ],
-          ),
-          SizedBox(height: 8.h),
-          Row(
-            children: [
-              const Icon(Icons.date_range_outlined, size: 18, color: Colors.orange),
-              SizedBox(width: 6.w),
-              TextWidget(
-                text: 'Date: ${fieldVisit.date ?? 'N/A'}'.s14w400,
-                fontSize: 14,
-                color: Colors.orange,
               ),
             ],
           ),
