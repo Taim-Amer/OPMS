@@ -15,14 +15,21 @@ class SalaryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final redColor = Colors.red.shade700;
+    final backgroundColor = isDark
+        ? const Color(0xFF1E1E1E) // لون داكن ناعم في الوضع المظلم
+        : const Color(0xFFF5F5F5); // لون فاتح ناعم في الوضع الفاتح
+
+    final borderColor = isDark ? Colors.grey.shade800 : Colors.grey.shade300;
 
     return TRoundedContainer(
       showBorder: true,
       radius: 12.r,
-      borderColor: dark ? TColors.darkBorder : TColors.lightBorder,
+      borderColor: borderColor,
       padding: const EdgeInsets.all(Sizes.defaultSpace),
-      backgroundColor: dark ? TColors.dark : TColors.grey,
+      backgroundColor: backgroundColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -32,7 +39,6 @@ class SalaryItem extends StatelessWidget {
               TextWidget(
                 text: (salary.type ?? 'Unknown Type').s16w700,
                 fontSize: 18,
-                color: dark ? TColors.light : TColors.dark,
               ),
               IconButton(
                 onPressed: onTap,
@@ -44,47 +50,43 @@ class SalaryItem extends StatelessWidget {
             ],
           ),
           SizedBox(height: 8.h),
-
           Row(
             children: [
-              const Icon(Icons.work_outline, size: 18, color: TColors.primary),
+              const Icon(Icons.work_outline, size: 18),
               SizedBox(width: 6.w),
               Expanded(
                 child: TextWidget(
                   text: (salary.positions ?? 'No positions').s14w400,
                 ),
               ),
-              const Icon(Icons.date_range, size: 18, color: Colors.blueGrey),
+              const Icon(Icons.date_range, size: 18),
               SizedBox(width: 6.w),
               TextWidget(
                 text: (salary.date ?? 'N/A').s12w400,
                 fontSize: 13,
-                color: Colors.blueGrey,
               ),
             ],
           ),
-
           SizedBox(height: 6.h),
           Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 children: [
-                  const Icon(Icons.monetization_on_outlined, size: 18, color: Colors.green),
+                  Icon(Icons.monetization_on_outlined, size: 18, color: redColor),
                   SizedBox(width: 6.w),
                   TextWidget(
                     text: 'Salary: ${salary.salary ?? 0}'.s14w700,
-                    color: Colors.green,
+                    color: redColor,
                   ),
                 ],
               ),
               Row(
                 children: [
-                  const Icon(Icons.attach_money_outlined, size: 18, color: Colors.orange),
+                  const Icon(Icons.attach_money_outlined, size: 18),
                   SizedBox(width: 6.w),
                   TextWidget(
                     text: 'Allowance: ${salary.costOfLivingAllowance ?? 0}'.s14w400,
-                    color: Colors.orange,
                   ),
                 ],
               )

@@ -14,26 +14,33 @@ class ReliefAssistanceItem extends GetView<ReliefAssistanceController> {
   final VoidCallback onTap;
 
   const ReliefAssistanceItem({
-    super.key, required this.reliefAssistance,
+    super.key,
+    required this.reliefAssistance,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final dark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final redColor = Colors.red.shade700;
+    final backgroundColor = isDark
+        ? const Color(0xFF1E1E1E) // خلفية داكنة ناعمة
+        : const Color(0xFFF5F5F5); // خلفية فاتحة هادئة
+
+    final borderColor = isDark ? Colors.grey.shade800 : Colors.grey.shade300;
 
     return TRoundedContainer(
       showBorder: true,
       radius: 12.r,
-      borderColor: dark ? TColors.darkBorder : TColors.lightBorder,
+      borderColor: borderColor,
       padding: const EdgeInsets.all(Sizes.defaultSpace),
-      backgroundColor: dark ? TColors.dark : TColors.grey,
+      backgroundColor: backgroundColor,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Icon(
             Icons.volunteer_activism,
-            color: TColors.primary,
             size: 32,
           ),
           SizedBox(width: 16.w),
@@ -61,25 +68,26 @@ class ReliefAssistanceItem extends GetView<ReliefAssistanceController> {
                 TextWidget(
                   text: (reliefAssistance.description ?? 'No description provided.').s14w700,
                   fontSize: 14,
-                  color: dark ? TColors.light : TColors.dark,
                 ),
                 SizedBox(height: 10.h),
                 Row(
                   children: [
-                    const Icon(Icons.attach_money, size: 18, color: Colors.green),
+                    Icon(Icons.attach_money, size: 18, color: redColor),
                     SizedBox(width: 4.w),
                     TextWidget(
-                      text: (reliefAssistance.unitCost != null ? '${reliefAssistance.unitCost}' : 'N/A').s14w400,
+                      text: (reliefAssistance.unitCost != null
+                          ? '${reliefAssistance.unitCost}'
+                          : 'N/A')
+                          .s14w400,
                       fontSize: 14,
-                      color: Colors.green,
+                      color: redColor,
                     ),
                     const Spacer(),
-                    const Icon(Icons.date_range, size: 18, color: Colors.blueGrey),
+                    const Icon(Icons.date_range, size: 18),
                     SizedBox(width: 4.w),
                     TextWidget(
                       text: (reliefAssistance.date ?? 'No date').s14w400,
                       fontSize: 14,
-                      color: Colors.blueGrey,
                     ),
                   ],
                 ),

@@ -8,7 +8,11 @@ import 'package:opms/utils/constants/sizes.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
 
 class FieldVisitItem extends StatelessWidget {
-  const FieldVisitItem({super.key, required this.fieldVisit, required this.onTap});
+  const FieldVisitItem({
+    super.key,
+    required this.fieldVisit,
+    required this.onTap,
+  });
 
   final FieldVisit fieldVisit;
   final VoidCallback onTap;
@@ -17,12 +21,19 @@ class FieldVisitItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = Theme.of(context).brightness == Brightness.dark;
 
+    final backgroundColor = dark
+        ? const Color(0xFF1E1E1E)
+        : const Color(0xFFF5F5F5);
+
+    final borderColor = dark ? Colors.grey.shade800 : Colors.grey.shade300;
+    final redColor = Colors.red.shade700;
+
     return TRoundedContainer(
       showBorder: true,
       radius: 12.r,
-      borderColor: dark ? TColors.darkBorder : TColors.lightBorder,
+      borderColor: borderColor,
       padding: const EdgeInsets.all(Sizes.defaultSpace),
-      backgroundColor: dark ? TColors.dark : TColors.grey,
+      backgroundColor: backgroundColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,7 +42,6 @@ class FieldVisitItem extends StatelessWidget {
               TextWidget(
                 text: (fieldVisit.unitType ?? 'Field Visit').s16w700,
                 fontSize: 18,
-                color: dark ? TColors.light : TColors.dark,
               ),
               IconButton(
                 onPressed: onTap,
@@ -46,7 +56,7 @@ class FieldVisitItem extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(Icons.description_outlined, size: 18, color: Colors.blue),
+              const Icon(Icons.description_outlined, size: 18),
               SizedBox(width: 6.w),
               Expanded(
                 child: TextWidget(
@@ -61,12 +71,12 @@ class FieldVisitItem extends StatelessWidget {
           SizedBox(height: 8.h),
           Row(
             children: [
-              const Icon(Icons.monetization_on_outlined, size: 18, color: Colors.green),
+              Icon(Icons.monetization_on_outlined, size: 18, color: redColor),
               SizedBox(width: 6.w),
               TextWidget(
                 text: 'Unit Price: ${fieldVisit.unitPrice ?? '0'}'.s14w700,
                 fontSize: 14,
-                color: Colors.green,
+                color: redColor,
               ),
             ],
           ),
@@ -75,3 +85,4 @@ class FieldVisitItem extends StatelessWidget {
     );
   }
 }
+

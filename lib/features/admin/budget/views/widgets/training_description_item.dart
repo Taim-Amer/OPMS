@@ -8,7 +8,11 @@ import 'package:opms/utils/constants/sizes.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
 
 class TrainingDescriptionItem extends StatelessWidget {
-  const TrainingDescriptionItem({super.key, required this.trainingDescription, required this.onTap});
+  const TrainingDescriptionItem({
+    super.key,
+    required this.trainingDescription,
+    required this.onTap,
+  });
 
   final TrainingDescription trainingDescription;
   final VoidCallback onTap;
@@ -17,20 +21,28 @@ class TrainingDescriptionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = Theme.of(context).brightness == Brightness.dark;
 
+    final backgroundColor = dark
+        ? const Color(0xFF1E1E1E)
+        : const Color(0xFFF5F5F5);
+
+    final borderColor = dark ? Colors.grey.shade800 : Colors.grey.shade300;
+
     return TRoundedContainer(
       showBorder: true,
       radius: 12.r,
-      borderColor: dark ? TColors.darkBorder : TColors.lightBorder,
+      borderColor: borderColor,
       padding: const EdgeInsets.all(Sizes.defaultSpace),
-      backgroundColor: dark ? TColors.dark : TColors.grey,
+      backgroundColor: backgroundColor,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TextWidget(
-            text: (trainingDescription.name ?? 'Training Name').s16w700,
-            fontSize: 18,
-            color: dark ? TColors.light : TColors.dark,
+          Expanded(
+            child: TextWidget(
+              text: (trainingDescription.name ?? 'Training Name').s16w700,
+              fontSize: 18,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           IconButton(
             onPressed: onTap,
@@ -38,9 +50,10 @@ class TrainingDescriptionItem extends StatelessWidget {
               Icons.edit,
               color: Colors.blueAccent,
             ),
-          )
+          ),
         ],
       ),
     );
   }
 }
+
