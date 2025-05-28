@@ -8,9 +8,10 @@ import 'package:opms/utils/constants/sizes.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
 
 class EquipmentItem extends StatelessWidget {
-  const EquipmentItem({super.key, required this.equipment});
+  const EquipmentItem({super.key, required this.equipment, required this.onEditTap});
 
   final Equipment equipment;
+  final VoidCallback onEditTap;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class EquipmentItem extends StatelessWidget {
                 color: dark ? TColors.light : TColors.dark,
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: onEditTap,
                 icon: const Icon(
                   Icons.edit,
                   color: Colors.blueAccent,

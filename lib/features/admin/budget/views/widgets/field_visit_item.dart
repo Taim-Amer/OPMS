@@ -8,9 +8,10 @@ import 'package:opms/utils/constants/sizes.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
 
 class FieldVisitItem extends StatelessWidget {
-  const FieldVisitItem({super.key, required this.fieldVisit});
+  const FieldVisitItem({super.key, required this.fieldVisit, required this.onTap});
 
   final FieldVisit fieldVisit;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class FieldVisitItem extends StatelessWidget {
                 color: dark ? TColors.light : TColors.dark,
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: onTap,
                 icon: const Icon(
                   Icons.edit,
                   color: Colors.blueAccent,

@@ -106,6 +106,7 @@ class EquipmentsController extends GetxController{
       updateEquipmentDescriptionController.clear();
       updateEquipmentCostController.clear();
       updateEquipmentDateController.clear();
+      getEquipments();
     } else if (response is DataFailed) {
       updateEquipmentsRequestStatus.value = RequestState.error;
       showSnackBar(response.error!.data.toString(), AlertState.error);

@@ -105,6 +105,7 @@ class FieldVisitController extends GetxController{
       updateFieldVisitDescriptionController.clear();
       updateFieldVisitUnitPriceController.clear();
       updateFieldVisitDateController.clear();
+      getFieldVisit();
     } else if (response is DataFailed) {
       updateFieldVisitRequestStatus.value = RequestState.error;
       showSnackBar(response.error!.data.toString(), AlertState.error);

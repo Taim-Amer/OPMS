@@ -8,9 +8,10 @@ import 'package:opms/utils/constants/sizes.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
 
 class RunningCostItem extends StatelessWidget {
-  const RunningCostItem({super.key, required this.runningCost});
+  const RunningCostItem({super.key, required this.runningCost, required this.onTap});
 
   final RunningCost runningCost;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class RunningCostItem extends StatelessWidget {
                 color: dark ? TColors.light : TColors.dark,
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: onTap,
                 icon: const Icon(
                   Icons.edit,
                   color: Colors.blueAccent,

@@ -106,6 +106,7 @@ class RunningCostController extends GetxController{
       updateUnitTypeController.clear();
       updateUnitCostController.clear();
       updateDateController.clear();
+      getRunningCost();
     } else if (response is DataFailed) {
       updateRunningCostRequestStatus.value = RequestState.error;
       showSnackBar(response.error!.data.toString(), AlertState.error);

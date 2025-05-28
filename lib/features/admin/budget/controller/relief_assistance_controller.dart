@@ -31,6 +31,7 @@ class ReliefAssistanceController extends GetxController{
   final descriptionController = TextEditingController();
 
   var formKey = GlobalKey<FormState>();
+  var updateFormKey = GlobalKey<FormState>();
 
   ReliefAssistanceModel reliefAssistanceModel = ReliefAssistanceModel.skeleton;
 
@@ -76,6 +77,7 @@ class ReliefAssistanceController extends GetxController{
   }
 
   Future<void> updateReliefAssistance({required int id}) async {
+    if (!updateFormKey.currentState!.validate()) return;
     updateReliefAssistanceRequestStatus = RequestState.loading.obs;
     final response = await _globalRepo.updateReliefAssistance(
       id: id,
@@ -95,6 +97,7 @@ class ReliefAssistanceController extends GetxController{
       updateTypeController.clear();
       updateUnitController.clear();
       updateDescriptionController.clear();
+      getReliefAssistance();
     } else if (response is DataFailed) {
       updateReliefAssistanceRequestStatus = RequestState.error.obs;
       showSnackBar(response.error!.data.toString(), AlertState.error);

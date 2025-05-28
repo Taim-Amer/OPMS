@@ -111,6 +111,7 @@ class SalariesController extends GetxController{
       updateSalaryController.clear();
       updateCostOfLivingController.clear();
       updateDateController.clear();
+      getSalaries();
     } else if (response is DataFailed) {
       updateSalaryRequestStatus.value = RequestState.error;
       showSnackBar(response.error!.data.toString(), AlertState.error);

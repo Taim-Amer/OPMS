@@ -11,9 +11,11 @@ import 'package:opms/utils/constants/sizes.dart';
 
 class ReliefAssistanceItem extends GetView<ReliefAssistanceController> {
   final ReliefAssistance reliefAssistance;
+  final VoidCallback onTap;
 
   const ReliefAssistanceItem({
     super.key, required this.reliefAssistance,
+    required this.onTap,
   });
 
   @override
@@ -47,7 +49,7 @@ class ReliefAssistanceItem extends GetView<ReliefAssistanceController> {
                       fontWeight: FontWeight.w500,
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: onTap,
                       icon: const Icon(
                         Icons.edit,
                         color: Colors.blueAccent,

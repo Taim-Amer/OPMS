@@ -8,9 +8,10 @@ import 'package:opms/utils/constants/sizes.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
 
 class SalaryItem extends StatelessWidget {
-  const SalaryItem({super.key, required this.salary});
+  const SalaryItem({super.key, required this.salary, required this.onTap});
 
   final Salary salary;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class SalaryItem extends StatelessWidget {
                 color: dark ? TColors.light : TColors.dark,
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: onTap,
                 icon: const Icon(
                   Icons.edit,
                   color: Colors.blueAccent,

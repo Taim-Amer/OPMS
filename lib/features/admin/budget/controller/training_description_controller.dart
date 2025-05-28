@@ -87,6 +87,7 @@ class TrainingDescriptionController extends GetxController{
 
       // Clear field
       updateTrainingNameController.clear();
+      getTrainingDescription();
     } else if (response is DataFailed) {
       updateTrainingDescriptionRequestStatus.value = RequestState.error;
       showSnackBar(response.error!.data.toString(), AlertState.error);
