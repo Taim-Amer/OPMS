@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:opms/common/widgets/alerts/snackbar.dart';
 import 'package:opms/features/admin/budget/models/field_visit_model.dart';
-import 'package:opms/features/admin/budget/models/salaries_model.dart';
 import 'package:opms/utils/api/data_state.dart';
 import 'package:opms/utils/constants/enums.dart';
 import 'package:opms/utils/helpers/helper_functions.dart';

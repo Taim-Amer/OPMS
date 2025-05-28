@@ -558,9 +558,17 @@ class GeneralRepoImpl implements GeneralRepo {
     required String description,
     required String cost,
     required String date,
-  }) {
-    // TODO: implement updateEquipments
-    throw UnimplementedError();
+  }) async{
+    return await _apiService.putData(
+      endPoint: '${ApiConstants.equipments}/$id',
+      data: {
+        'type' : type,
+        'equipment_description' : description,
+        'equipment_cost' : cost,
+        'date' : date
+      },
+      fromJson: MessageModel.fromJson,
+    );
   }
 
   @override
@@ -570,9 +578,17 @@ class GeneralRepoImpl implements GeneralRepo {
     required String description,
     required String unitPrice,
     required String date,
-  }) {
-    // TODO: implement updateFieldVisit
-    throw UnimplementedError();
+  }) async{
+    return await _apiService.putData(
+      endPoint: '${ApiConstants.fieldVisits}/$id',
+      data: {
+        'unit_type' : unitType,
+        'description' : description,
+        'unit_price' : unitPrice,
+        'date' : date
+      },
+      fromJson: MessageModel.fromJson,
+    );
   }
 
   @override
@@ -582,9 +598,17 @@ class GeneralRepoImpl implements GeneralRepo {
     required String unitType,
     required String unitCost,
     required String date,
-  }) {
-    // TODO: implement updateRunningCost
-    throw UnimplementedError();
+  }) async{
+    return await _apiService.putData(
+      endPoint: '${ApiConstants.runningCost}/$id',
+      data: {
+        'unit_type' : unitType,
+        'expense_type' : expenseType,
+        'unit_cost' : unitCost,
+        'date' : date
+      },
+      fromJson: MessageModel.fromJson,
+    );
   }
 
   @override
@@ -595,17 +619,31 @@ class GeneralRepoImpl implements GeneralRepo {
     required String salary,
     required String costOfLivingAllowance,
     required String date,
-  }) {
-    // TODO: implement updateSalary
-    throw UnimplementedError();
+  }) async{
+    return await _apiService.putData(
+      endPoint: '${ApiConstants.salaries}/$id',
+      data: {
+        'type' : type,
+        'positions' : positions,
+        'salary' : salary,
+        'cost_of_living_allowance' : costOfLivingAllowance,
+        'date' : date
+      },
+      fromJson: MessageModel.fromJson,
+    );
   }
 
   @override
   Future<DataState<MessageModel>> updateTrainingDescription({
     required int id,
     required String name,
-  }) {
-    // TODO: implement updateTrainingDescription
-    throw UnimplementedError();
+  }) async{
+    return await _apiService.putData(
+      endPoint: '${ApiConstants.trainingDescriptions}/$id',
+      data: {
+        'name' : name,
+      },
+      fromJson: MessageModel.fromJson,
+    );
   }
 }

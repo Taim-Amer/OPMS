@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:opms/common/widgets/fields/labeled_text_feild.dart';
 import 'package:opms/common/widgets/layouts/lists/grid_layout.dart';
 import 'package:opms/features/admin/budget/controller/equipments_controller.dart';

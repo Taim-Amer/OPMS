@@ -6,7 +6,6 @@ import 'package:opms/features/admin/budget/models/training_description_model.dar
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/sizes.dart';
 import 'package:opms/common/extensions/text_extensions.dart';
-import 'package:opms/utils/helpers/formatter.dart';
 
 class TrainingDescriptionItem extends StatelessWidget {
   const TrainingDescriptionItem({super.key, required this.trainingDescription});
