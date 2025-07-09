@@ -43,30 +43,29 @@ class RolesDesktopScreen extends StatelessWidget {
             Sizes.spaceBtwSections.verticalSpace,
             Expanded(
               child: GetBuilder<RolesController>(
-                builder: (controller) => Skeletonizer(
-                  enabled: controller.getRolesState == RequestState.loading,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: HelperFunctions.isTabletScreen(context) ? 2 : 3,
-                        child: TGridLayout(
-                            itemCount: controller.rolesModel.data?.length ?? 0,
-                            // shrink: true,
-                            crossCount: HelperFunctions.isTabletScreen(context) ? 1 : 3,
-                            itemBuilder: (context, index) => RoleItem(rolesModel: controller.rolesModel.data![index],),
-                            mainAxisExtent: 150.h,
-                            animationType: AnimationType.slide,
-                            // separatorBuilder: (context, _) => Sizes.spaceBtwItems.verticalSpace,
-                          ),
-                      ),
-                      Sizes.spaceBtwSections.horizontalSpace,
-                      Expanded(
-                        flex: HelperFunctions.isTabletScreen(context) ? 2 : 1,
-                        child: const InsertRoleContainer(),
-                      )
-                    ],
-                  ),
+                builder: (controller) => Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      flex: HelperFunctions.isTabletScreen(context) ? 2 : 3,
+                      child: TGridLayout(
+                          itemCount: controller.rolesModel.data?.length ?? 0,
+                          // shrink: true,
+                          crossCount: HelperFunctions.isTabletScreen(context) ? 1 : 3,
+                          itemBuilder: (context, index) => Skeletonizer(
+                              enabled: controller.getRolesState == RequestState.loading,
+                              child: RoleItem(rolesModel: controller.rolesModel.data![index],)),
+                          mainAxisExtent: 150.h,
+                          animationType: AnimationType.slide,
+                          // separatorBuilder: (context, _) => Sizes.spaceBtwItems.verticalSpace,
+                        ),
+                    ),
+                    Sizes.spaceBtwSections.horizontalSpace,
+                    Expanded(
+                      flex: HelperFunctions.isTabletScreen(context) ? 2 : 1,
+                      child: const InsertRoleContainer(),
+                    )
+                  ],
                 ),
               ),
             ),

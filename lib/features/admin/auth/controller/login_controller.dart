@@ -5,6 +5,7 @@ import 'package:opms/utils/api/data_state.dart';
 import 'package:opms/utils/constants/enums.dart';
 import 'package:opms/utils/constants/keys.dart';
 import 'package:opms/utils/helpers/cache_helper.dart';
+import 'package:opms/utils/helpers/logger.dart';
 import 'package:opms/utils/repositories/general_repo.dart';
 import 'package:opms/utils/repositories/general_repo_impl.dart';
 import 'package:opms/utils/router/app_router.dart';
@@ -25,14 +26,15 @@ class LoginController extends GetxController {
       email: emailController.text.toString(),
       password: passwordController.text.toString(),
     );
-    if (dataState is DataSuccess) {
+    if (dataState is DataSuccess){
       loginState = RequestState.success;
       emailController.clear();
       passwordController.clear();
-      CacheHelper.saveData(
-          key: Keys.token, value: dataState.data!.data!.accessToken);
-      showSnackBar(dataState.data!.message!, AlertState.success);
+      await CacheHelper.saveData(key: Keys.token, value: dataState.data!.data!.accessToken);
+      await CacheHelper.saveData(key: Keys.role, value: dataState.data!.data!.roleName);
+      LoggerHelper.info(CacheHelper.getData(key: Keys.role));
       Get.offAllNamed(AppRoutes.kSidebar);
+      showSnackBar(dataState.data!.message!, AlertState.success);
       update();
     } else if (dataState is DataFailed) {
       loginState = RequestState.error;

@@ -15,11 +15,13 @@ class LoginModel {
 class Data {
   String? accessToken;
   int? expiresIn;
+  String? roleName;
 
-  Data({this.accessToken, this.expiresIn});
+  Data({this.accessToken, this.expiresIn, this.roleName});
 
   Data.fromJson(Map<String, dynamic> json) {
     accessToken = json['access_token'];
+    roleName = json['role_name'];
     expiresIn = json['expires_in'];
   }
 }

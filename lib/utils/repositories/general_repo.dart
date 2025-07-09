@@ -7,16 +7,49 @@ import 'package:opms/features/admin/budget/models/running_cost_model.dart';
 import 'package:opms/features/admin/budget/models/salaries_model.dart';
 import 'package:opms/features/admin/budget/models/training_description_model.dart';
 import 'package:opms/features/admin/departments/models/departments_model.dart';
+import 'package:opms/features/admin/factors/models/factors_model.dart';
 import 'package:opms/features/admin/indicators/models/indicators_model.dart';
 import 'package:opms/features/admin/outcomes/models/outcomes_model.dart';
 import 'package:opms/features/admin/outputs/models/outputs_model.dart';
 import 'package:opms/features/admin/roles/models/roles_model.dart';
 import 'package:opms/features/admin/projects/models/all_projects_model.dart';
 import 'package:opms/features/admin/users/models/users_model.dart';
+import 'package:opms/features/coordinator/districts/model/districts_model.dart';
+import 'package:opms/features/coordinator/home/model/home_model.dart';
+import 'package:opms/features/coordinator/risk_assessments/models/risk_model.dart';
 import 'package:opms/utils/api/data_state.dart';
 import 'package:opms/utils/models/message_model.dart';
 
+import '../../features/coordinator/governorates/models/governorate_model.dart';
+
 abstract class GeneralRepo {
+  Future<DataState<GovernorateModel>> getGovernorates();
+  Future<DataState<RiskModel>> getRisk();
+  Future<DataState<MessageModel>> insertRisk({
+    required int factorID,
+    required int districtID,
+    required String quarter,
+    required String year,
+    required int heavy,
+  });
+
+  Future<DataState<DistrictsModel>> getDistricts({
+    int? governorateID,
+    required bool paginate,
+    required int perPage,
+    required int page,
+  });
+
+  Future<DataState<HomeModel>> getHome({
+    // int? governorateID,
+    String? quarter,
+    String? year,
+    required bool paginate,
+    required int perPage,
+    required int page,
+  });
+  // Future<DataState<DistrictsModel>> getSubDistricts({int? governorateID});
+
   //Auth
   Future<DataState<LoginModel>> login({
     required String email,
@@ -25,7 +58,7 @@ abstract class GeneralRepo {
   Future<DataState<MessageModel>> logout();
 
   //Users
-  Future<DataState<UsersModel>> getUsers(String? registeredBy);
+  Future<DataState<UsersModel>> getUsers();
   Future<DataState<MessageModel>> insertUser({
     required String name,
     required String email,
@@ -38,7 +71,7 @@ abstract class GeneralRepo {
     required String email,
     required String password,
     required String passwordConfirm,
-    required String method,
+    // required String method,
   });
 
   //Departments
@@ -51,6 +84,16 @@ abstract class GeneralRepo {
     required int departmentID,
     String? name,
     String? code,
+  });
+
+  //Factors
+  Future<DataState<FactorsModel>> getFactors();
+  Future<DataState<MessageModel>> insertFactor({
+    required String title,
+  });
+  Future<DataState<MessageModel>> updateFactor({
+    required int factorID,
+    required String title,
   });
 
   //Units

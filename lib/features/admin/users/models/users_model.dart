@@ -1,3 +1,5 @@
+import 'package:skeletonizer/skeletonizer.dart';
+
 class UsersModel {
   bool? status;
   List<Data>? data;
@@ -15,6 +17,15 @@ class UsersModel {
     }
     message = json['message'];
   }
+
+  static UsersModel get skeleton{
+    return UsersModel(
+        data: List.generate(12, (_) => Data(
+          name: BoneMock.fullName,
+          email: BoneMock.fullName,
+        ))
+    );
+  }
 }
 
 class Data {
@@ -22,7 +33,8 @@ class Data {
   String? name;
   String? email;
   String? emailVerifiedAt;
-  RegisteredBy? registeredBy;
+  String? fcmToken;
+  int? registeredBy;
   String? createdAt;
   String? updatedAt;
 
@@ -31,6 +43,7 @@ class Data {
         this.name,
         this.email,
         this.emailVerifiedAt,
+        this.fcmToken,
         this.registeredBy,
         this.createdAt,
         this.updatedAt});
@@ -40,37 +53,7 @@ class Data {
     name = json['name'];
     email = json['email'];
     emailVerifiedAt = json['email_verified_at'];
-    registeredBy = json['registered_by'] != null
-        ? RegisteredBy.fromJson(json['registered_by'])
-        : null;
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-  }
-}
-
-class RegisteredBy {
-  int? id;
-  String? name;
-  String? email;
-  String? emailVerifiedAt;
-  String? registeredBy;
-  String? createdAt;
-  String? updatedAt;
-
-  RegisteredBy(
-      {this.id,
-        this.name,
-        this.email,
-        this.emailVerifiedAt,
-        this.registeredBy,
-        this.createdAt,
-        this.updatedAt});
-
-  RegisteredBy.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    email = json['email'];
-    emailVerifiedAt = json['email_verified_at'];
+    fcmToken = json['fcm_token'];
     registeredBy = json['registered_by'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];

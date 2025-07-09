@@ -27,6 +27,8 @@ class BreadcrumbController extends GetxController {
         return 'Indicators';
       case AppRoutes.kActivities:
         return 'Activities';
+      case AppRoutes.kDistrict:
+        return 'Districts';
       default:
         return null;
     }

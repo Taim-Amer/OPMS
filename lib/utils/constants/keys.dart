@@ -5,4 +5,5 @@ class Keys {
   static const String language = 'language';
   static const String fcmToken = 'fcm_token';
   static const String theme = "themeMode";
+  static const String role = "role";
 }

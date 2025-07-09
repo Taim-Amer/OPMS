@@ -56,4 +56,3 @@ class TrainingDescriptionItem extends StatelessWidget {
     );
   }
 }
-

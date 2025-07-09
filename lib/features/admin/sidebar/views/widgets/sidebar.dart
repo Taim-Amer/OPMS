@@ -28,61 +28,64 @@ class TSidebar extends GetView<SidebarController> {
         ),
         child: Padding(
           padding: const EdgeInsets.all(Sizes.defaultSpace),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Sizes.spaceBtwSections.verticalSpace,
-                  Center(
-                    child: TRoundedImage(
-                      imageUrl: dark ? ImagesAssets.darkLogo : ImagesAssets.lightLogo,
-                      useHero: false,
-                      width: 190,
-                      height: 190,
-                      backgroundColor: Colors.transparent,
-                    ),
-                  ),
-                  Sizes.spaceBtwSections.verticalSpace,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      'MENU'.s12w400,
-                      Sizes.spaceBtwSections.verticalSpace,
-                      TListView(
-                        itemCount: 8,
-                        animationType: AnimationType.slide,
-                        shrink: true,
-                        itemBuilder: (context, index) => MenuItem(index: index, clickableSidebar: clickableSidebar),
-                        separatorBuilder: (context, _) => Sizes.spaceBtwItems.verticalSpace,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Sizes.spaceBtwSections.verticalSpace,
+                    Center(
+                      child: TRoundedImage(
+                        imageUrl: dark ? ImagesAssets.darkLogo : ImagesAssets.lightLogo,
+                        useHero: false,
+                        width: 190,
+                        height: 190,
+                        backgroundColor: Colors.transparent,
                       ),
-                    ],
-                  ),
-                ],
-              ),
-              clickableSidebar ? SizedBox(
-                width: double.infinity,
-                child: OutlinedButton(
-                  onPressed: () => controller.logout(),
-                  style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: clickableSidebar ? TColors.primary : TColors.darkerGrey),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)
-                      )
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(Sizes.sm),
-                    child: TextWidget(
-                      text: 'Logout'.s14w700,
-                      fontWeight: FontWeight.w700,
-                      color: TColors.primary,
+                    ),
+                    Sizes.spaceBtwSections.verticalSpace,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        'MENU'.s12w400,
+                        Sizes.spaceBtwSections.verticalSpace,
+                        TListView(
+                          itemCount: controller.menuItemCount,
+                          animationType: AnimationType.slide,
+                          shrink: true,
+                          itemBuilder: (context, index) => MenuItem(index: index, clickableSidebar: clickableSidebar),
+                          separatorBuilder: (context, _) => Sizes.spaceBtwItems.verticalSpace,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Sizes.spaceBtwItems.verticalSpace,
+                clickableSidebar ? SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton(
+                    onPressed: () => controller.logout(),
+                    style: OutlinedButton.styleFrom(
+                        side: BorderSide(color: clickableSidebar ? TColors.primary : TColors.darkerGrey),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)
+                        )
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(Sizes.sm),
+                      child: TextWidget(
+                        text: 'Logout'.s14w700,
+                        fontWeight: FontWeight.w700,
+                        color: TColors.primary,
+                      ),
                     ),
                   ),
-                ),
-              ) : const SizedBox(),
-            ],
+                ) : const SizedBox(),
+              ],
+            ),
           ),
         ),
       ),

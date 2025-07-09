@@ -9,9 +9,12 @@ import 'package:opms/features/admin/outcomes/views/layouts/outcome_layout.dart';
 import 'package:opms/features/admin/outputs/views/layouts/outputs_layout.dart';
 import 'package:opms/features/admin/projects/view/layouts/projects_layout.dart';
 import 'package:opms/features/admin/sidebar/views/layouts/sidebar_menu.dart';
+import 'package:opms/features/coordinator/districts/views/layouts/districts_layout.dart';
 import 'package:opms/utils/constants/keys.dart';
 import 'package:opms/utils/dependencies/activities_bindings.dart';
 import 'package:opms/utils/dependencies/budget_bindings.dart';
+import 'package:opms/utils/dependencies/departments_bindings.dart';
+import 'package:opms/utils/dependencies/districts_bindings.dart';
 import 'package:opms/utils/dependencies/indicators_bindings.dart';
 import 'package:opms/utils/dependencies/login_bindings.dart';
 import 'package:opms/utils/dependencies/outcome_bindings.dart';
@@ -31,6 +34,7 @@ class AppRoutes {
   static const kDepartments = '/kDepartments';
   static const kProjects = '/kProjects';
   static const kBudget = '/kBudget';
+  static const kDistrict = '/kDistrict';
 
   static List<GetPage> routes = [
     GetPage(
@@ -41,7 +45,7 @@ class AppRoutes {
     GetPage(
         name: kDepartments,
           page: () => const DepartmentLayout(),
-        // binding: Departments(),
+        binding: DepartmentsBindings(),
         transition: Transition.noTransition),
     GetPage(
         name: kProjects,
@@ -77,6 +81,11 @@ class AppRoutes {
         name: kBudget,
         page: () => const BudgetLayout(),
         binding: BudgetBindings(),
+        transition: Transition.noTransition),
+    GetPage(
+        name: kDistrict,
+        page: () => const DistrictsLayout(fromAnother: true,),
+        binding: DistrictsBindings(),
         transition: Transition.noTransition),
   ];
 

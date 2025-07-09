@@ -8,17 +8,22 @@ import 'package:opms/features/admin/budget/models/running_cost_model.dart';
 import 'package:opms/features/admin/budget/models/salaries_model.dart';
 import 'package:opms/features/admin/budget/models/training_description_model.dart';
 import 'package:opms/features/admin/departments/models/departments_model.dart';
+import 'package:opms/features/admin/factors/models/factors_model.dart';
 import 'package:opms/features/admin/indicators/models/indicators_model.dart';
 import 'package:opms/features/admin/outcomes/models/outcomes_model.dart';
 import 'package:opms/features/admin/outputs/models/outputs_model.dart';
 import 'package:opms/features/admin/projects/models/all_projects_model.dart';
 import 'package:opms/features/admin/roles/models/roles_model.dart';
 import 'package:opms/features/admin/users/models/users_model.dart';
+import 'package:opms/features/coordinator/districts/model/districts_model.dart';
+import 'package:opms/features/coordinator/home/model/home_model.dart';
+import 'package:opms/features/coordinator/risk_assessments/models/risk_model.dart';
 import 'package:opms/utils/api/api_service.dart';
 import 'package:opms/utils/api/data_state.dart';
 import 'package:opms/utils/constants/api_constants.dart';
 import 'package:opms/utils/models/message_model.dart';
 import 'package:opms/utils/repositories/general_repo.dart';
+import '../../features/coordinator/governorates/models/governorate_model.dart';
 
 class GeneralRepoImpl implements GeneralRepo {
   final _apiService = Get.find<ApiService>();
@@ -31,6 +36,12 @@ class GeneralRepoImpl implements GeneralRepo {
       required List<int> unitsIDs}) async {
     return await _apiService.postData(
       endPoint: ApiConstants.userRole,
+      data: {
+        "user_id": userID,
+        "role_id": roleID,
+        "department_ids": departmentIDs,
+        "unit_ids": unitsIDs
+      },
       fromJson: MessageModel.fromJson,
     );
   }
@@ -119,10 +130,10 @@ class GeneralRepoImpl implements GeneralRepo {
   }
 
   @override
-  Future<DataState<UsersModel>> getUsers(String? registeredBy) async {
+  Future<DataState<UsersModel>> getUsers() async {
     return await _apiService.getData(
       endPoint: ApiConstants.users,
-      queryParameters: {'with': registeredBy},
+      // queryParameters: {'with': registeredBy},
       fromJson: UsersModel.fromJson,
     );
   }
@@ -349,9 +360,9 @@ class GeneralRepoImpl implements GeneralRepo {
       required String email,
       required String password,
       required String passwordConfirm,
-      required String method}) async {
+      }) async {
     return await _apiService.putData(
-      endPoint: '${ApiConstants.departments}/$userID',
+      endPoint: '${ApiConstants.users}/$userID',
       data: {
         'name': name,
         'email': email,
@@ -644,6 +655,113 @@ class GeneralRepoImpl implements GeneralRepo {
         'name' : name,
       },
       fromJson: MessageModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<FactorsModel>> getFactors() async{
+    return await _apiService.getData(
+      endPoint: ApiConstants.factors,
+      fromJson: FactorsModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<MessageModel>> insertFactor({required String title}) async{
+    return await _apiService.postData(
+      endPoint: ApiConstants.factors,
+      data: {
+        'title' : title
+      },
+      fromJson: MessageModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<MessageModel>> updateFactor({required String title, required int factorID}) async{
+    return await _apiService.putData(
+      endPoint: '${ApiConstants.factors}/$factorID',
+      data: {
+        'name' : title
+      },
+      fromJson: MessageModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<GovernorateModel>> getGovernorates() async{
+    return await _apiService.getData(
+      endPoint: 'governorates',
+      fromJson: GovernorateModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<DistrictsModel>> getDistricts({
+    int? governorateID,
+    required bool paginate,
+    required int perPage,
+    required int page,
+  }) async{
+    return await _apiService.getData(
+      endPoint: 'districts',
+      queryParameters: {
+        "paginate": paginate,
+        "per_page": perPage,
+        "page": page,
+        if(governorateID != null)'governorate_id' : governorateID
+      },
+      fromJson: DistrictsModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<RiskModel>> getRisk() async{
+    return await _apiService.getData(
+      endPoint: 'risk_assessments?with=factor,district',
+      fromJson: RiskModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<MessageModel>> insertRisk({
+    required int factorID,
+    required int districtID,
+    required String quarter,
+    required String year,
+    required int heavy,
+  }) async{
+    return await _apiService.postData(
+      endPoint: 'risk_assessments',
+      data: {
+        'year' : year,
+        'quarter' : quarter,
+        'factor_id' : factorID,
+        'district_id' : districtID,
+        'heavy' : heavy
+      },
+      fromJson: MessageModel.fromJson,
+    );
+  }
+
+  @override
+  Future<DataState<HomeModel>> getHome({
+    String? quarter,
+    String? year,
+    required bool paginate,
+    required int perPage,
+    required int page,
+  }) async{
+    return await _apiService.getData(
+      endPoint: 'risk_assessments/district/map',
+      queryParameters: {
+        'year' : year,
+        'quarter' : quarter,
+        "paginate": paginate,
+        "per_page": perPage,
+        "page": page,
+      },
+      fromJson: HomeModel.fromJson,
     );
   }
 }

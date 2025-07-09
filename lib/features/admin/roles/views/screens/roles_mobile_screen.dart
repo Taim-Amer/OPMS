@@ -43,16 +43,15 @@ class RolesMobileScreen extends StatelessWidget {
             Sizes.spaceBtwSections.verticalSpace,
             Expanded(
               child: GetBuilder<RolesController>(
-                builder: (controller) => Skeletonizer(
-                  enabled: controller.getRolesState == RequestState.loading,
-                  child: TGridLayout(
-                    itemCount: controller.rolesModel.data?.length ?? 0,
-                    crossCount: 1,
-                    // isNeverScroll: true,
-                    itemBuilder: (context, index) => RoleItem(rolesModel: controller.rolesModel.data![index],),
-                    mainAxisExtent: 150.h,
-                    animationType: AnimationType.slide,
-                  ),
+                builder: (controller) => TGridLayout(
+                  itemCount: controller.rolesModel.data?.length ?? 0,
+                  crossCount: 1,
+                  // isNeverScroll: true,
+                  itemBuilder: (context, index) => Skeletonizer(
+                      enabled: controller.getRolesState == RequestState.loading,
+                      child: RoleItem(rolesModel: controller.rolesModel.data![index],)),
+                  mainAxisExtent: 150.h,
+                  animationType: AnimationType.slide,
                 ),
               ),
             ),

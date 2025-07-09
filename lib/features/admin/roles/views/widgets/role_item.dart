@@ -19,60 +19,100 @@ class RoleItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dark = context.isDarkMode;
+
     return TRoundedContainer(
-      // height: 70.h,
       showBorder: true,
-      radius: 6,
-      borderColor: dark ? TColors.grey.withOpacity(.3) : TColors.grey,
+      radius: 12.r,
+      borderColor: dark ? TColors.grey.withOpacity(0.2) : TColors.grey,
       padding: const EdgeInsets.all(Sizes.defaultSpace),
-      backgroundColor: Colors.transparent,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      backgroundColor: dark ? TColors.darkerGrey : Colors.white,
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Iconsax.security, size: 30, color: TColors.primaryBlue,),
-                  4.horizontalSpace,
-                  TextWidget(
-                    text: rolesModel.name?.s16w700 ?? const Text(''),
-                    fontWeight: FontWeight.w700,
-                    softWrap: true,
-                  ),
-                ],
-              ),
-              IconButton(
-                onPressed: () => Get.dialog(
-                  UpdateRoleDialog(roleID: rolesModel.id!,),
-                  useSafeArea: true,
+          // Role Icon
+          CircleAvatar(
+            radius: 24.r,
+            backgroundColor: TColors.primaryBlue.withOpacity(0.1),
+            child: const Icon(
+              Iconsax.security,
+              size: 22,
+              color: TColors.primaryBlue,
+            ),
+          ),
+          12.horizontalSpace,
+
+          // Role Details
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// Role name + Edit button
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Text(
+                        rolesModel.name ?? '',
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w700,
+                          color: TColors.primaryBlue,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () => Get.dialog(
+                        UpdateRoleDialog(roleID: rolesModel.id!),
+                        useSafeArea: true,
+                      ),
+                      icon: const Icon(
+                        Icons.edit,
+                        size: 20,
+                        color: TColors.primaryBlue,
+                      ),
+                    ),
+                  ],
                 ),
-                icon: const Icon(Icons.edit, size: 20, color: TColors.primaryBlue,),
-              )
-            ],
+
+                6.verticalSpace,
+
+                // Guard name
+                // if (rolesModel.guardName != null)
+                //   Text(
+                //     rolesModel.guardName!,
+                //     style: TextStyle(
+                //       fontSize: 13.sp,
+                //       fontWeight: FontWeight.w500,
+                //       color: Colors.grey,
+                //     ),
+                //   ),
+                //
+                // 4.verticalSpace,
+
+                // Created date
+                Text(
+                  'Created: ${Formatter.formatDate(rolesModel.createdAt)}',
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    color: Colors.grey,
+                  ),
+                ),
+
+                // Updated date
+                Text(
+                  'Updated: ${Formatter.formatDate(rolesModel.updatedAt)}',
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
           ),
-          Sizes.sm.verticalSpace,
-          TextWidget(
-            text: rolesModel.guardName?.s14w700 ?? const Text(''),
-            fontSize: 13,
-            softWrap: true,
-          ),
-          TextWidget(
-            text: 'Created : ${Formatter.formatDate(rolesModel.createdAt)}'.s17w700,
-            fontSize: 13,
-            softWrap: true,
-          ),
-          Sizes.sm.verticalSpace,
-          TextWidget(
-            text: 'Updated : ${Formatter.formatDate(rolesModel.updatedAt)}'.s17w700,
-            fontSize: 13,
-            softWrap: true,
-          )
         ],
       ),
     );
   }
 }
+

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:opms/common/extensions/text_extensions.dart';
 import 'package:opms/common/widgets/custom_shapes/containers/rounded_container.dart';
+import 'package:opms/common/widgets/handlers/text_widget.dart';
 import 'package:opms/common/widgets/layouts/templates/site_template.dart';
 import 'package:opms/features/admin/budget/controller/budget_controller.dart';
 import 'package:opms/features/admin/budget/views/widgets/budget_options_list.dart';
@@ -27,12 +29,12 @@ class BudgetDesktopScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // TextWidget(
-              //   text: 'Budget'.s17w700,
-              //   fontWeight: FontWeight.w700,
-              //   fontSize: 24,
-              // ),
-              // Sizes.spaceBtwSections.verticalSpace,
+              TextWidget(
+                text: 'Budget'.s17w700,
+                fontWeight: FontWeight.w700,
+                fontSize: 24,
+              ),
+              Sizes.spaceBtwSections.verticalSpace,
               Expanded(
                 child: GetBuilder<BudgetController>(
                   builder: (controller) => Row(
