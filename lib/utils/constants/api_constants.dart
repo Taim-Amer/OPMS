@@ -1,7 +1,8 @@
 class ApiConstants {
   ApiConstants._();
 
-  static const String serverUrl = "https://operational-plan-management-system-for-sarc.tahamove.com";
+  static const String serverUrl =
+      "https://operational-plan-management-system-for-sarc.tahamove.com";
   static const String imagesUrl = "$serverUrl/storage";
   static const String baseUrl = "$serverUrl/api/";
 
@@ -28,4 +29,9 @@ class ApiConstants {
   static const String trainingSubDescriptions = 'training_sub_descriptions';
   static const String trainings = 'trainings';
   static const String trainingCosts = 'training_costs';
+
+  // planner api's
+  static const String plannerActivities = "activities";
+  static const String reservedActivities = "reserved_activities";
+  static const String planImplement = "plan_implementations";
 }

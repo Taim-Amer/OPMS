@@ -243,10 +243,13 @@ class ApiService {
       } else if (response.statusCode == HttpStatus.badRequest) {
         if (response.data['message'] == "Unauthenticated.") {
           CacheHelper.removeData(key: Keys.token);
-          Get.offAllNamed(AppRoutes.kLogin);
+          // Navigator.of(context).pushNamedAndRemoveUntil(
+          //   AppRoutes.kLogin,
+          //   (route) => false,
+          // );
         }
 
-        return DataFailed( Response(
+        return DataFailed(Response(
           data: response.data['message'] ?? 'Unknown error',
           statusCode: response.statusCode,
           requestOptions: response.requestOptions,

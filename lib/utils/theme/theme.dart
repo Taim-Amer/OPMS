@@ -20,7 +20,7 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     primaryColorLight: TColors.buttonPrimary,
     useMaterial3: true,
-    fontFamily: 'Poppins',
+    fontFamily: 'Cairo',
     brightness: Brightness.light,
     primaryColor: TColors.primary,
     textTheme: TTextTheme.lightTextTheme,
@@ -44,7 +44,7 @@ class AppTheme {
   static ThemeData darkTheme = ThemeData(
     primaryColorDark: TColors.buttonPrimary,
     useMaterial3: true,
-    fontFamily: 'Poppins',
+    fontFamily: 'Cairo',
     brightness: Brightness.dark,
     primaryColor: TColors.primary,
     textTheme: TTextTheme.darkTextTheme,

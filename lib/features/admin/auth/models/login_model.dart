@@ -1,25 +1,37 @@
+// lib/features/auth/models/login_model.dart
 class LoginModel {
-  bool? status;
-  Data? data;
-  String? message;
+  final bool status;
+  final _Data data;
+  final String message;
 
-  LoginModel({this.status, this.data, this.message});
+  LoginModel({required this.status, required this.data, required this.message});
 
-  LoginModel.fromJson(Map<String, dynamic> json) {
-    status = json['status'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
-    message = json['message'];
+  factory LoginModel.fromJson(Map<String, dynamic> json) {
+    return LoginModel(
+      status : json['status']  as bool,
+      data   : _Data.fromJson(json['data'] as Map<String, dynamic>),
+      message: json['message'] as String,
+    );
   }
 }
 
-class Data {
-  String? accessToken;
-  int? expiresIn;
+/// Internal data object carries token, expiry *and* role.
+class _Data {
+  final String accessToken;
+  final int? expiresIn;
+  final String roleName;
 
-  Data({this.accessToken, this.expiresIn});
+  _Data({
+    required this.accessToken,
+    this.expiresIn,
+    required this.roleName,
+  });
 
-  Data.fromJson(Map<String, dynamic> json) {
-    accessToken = json['access_token'];
-    expiresIn = json['expires_in'];
+  factory _Data.fromJson(Map<String, dynamic> json) {
+    return _Data(
+      accessToken: json['access_token'] as String,
+      expiresIn  : json['expires_in']   as int?,
+      roleName   : json['role_name']    as String, // ← parse role
+    );
   }
 }

@@ -52,7 +52,7 @@ class TPaginatedDataTable extends StatelessWidget {
         height: tableHeight,
         child: Theme(
           data: Theme.of(context).copyWith(
-            cardTheme: CardTheme(color: dark ? TColors.dark: TColors.white, elevation: 0),
+            cardTheme: CardThemeData(color: dark ? TColors.dark: TColors.white, elevation: 0),
           ),
           child: PaginatedDataTable2(
             columnSpacing: 16,

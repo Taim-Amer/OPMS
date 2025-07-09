@@ -25,7 +25,8 @@ class ThemeIcon extends StatelessWidget {
           // width: 28.w,
           // height: 28.h,
           radius: 100.r,
-          onPressed: () => controller.updateThemeMode(dark ? ThemeMode.light : ThemeMode.dark),
+          onPressed: () => controller
+              .updateThemeMode(dark ? ThemeMode.light : ThemeMode.dark),
         ),
       ),
     );

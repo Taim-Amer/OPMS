@@ -32,12 +32,13 @@ class TextWidget extends StatelessWidget {
         color: color,
         fontSize: fontSize,
         fontWeight: fontWeight,
+        fontFamily: 'Cairo'
       ),
       textAlign: textAlign ?? text.textAlign,
       textDirection: textDirection ?? text.textDirection,
       maxLines: maxLines ?? text.maxLines,
       overflow: overflow ?? text.overflow,
-      softWrap: softWrap ?? text.softWrap,
+      softWrap: softWrap ?? text.softWrap, 
     );
   }
 }

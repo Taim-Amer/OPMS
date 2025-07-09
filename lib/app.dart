@@ -1,4 +1,5 @@
 import 'package:opms/features/admin/settings/controllers/theme_controller.dart';
+import 'package:opms/features/planner/planner_home/controller/planner_bread_crumb_controler.dart';
 import 'package:opms/utils/constants/keys.dart';
 import 'package:opms/utils/dependencies/global_bindings.dart';
 import 'package:opms/utils/helpers/cache_helper.dart';
@@ -9,7 +10,6 @@ import 'package:opms/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 
 class OPMSSystem extends StatelessWidget {
   const OPMSSystem({super.key});
@@ -22,8 +22,10 @@ class OPMSSystem extends StatelessWidget {
     // LoggerHelper.info(CacheHelper.getData(key: Keys.token));
 
     return ScreenUtilInit(
-      designSize: Size(HelperFunctions.screenWidth(context), HelperFunctions.screenHeight(context)),
-      builder: (_, child){
+      designSize: const Size(1440, 1024),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, child) {
         int language = CacheHelper.getData(key: Keys.language) ?? 1;
         return Obx(() {
           final controller = Get.put<ThemeController>(ThemeController());
@@ -39,6 +41,8 @@ class OPMSSystem extends StatelessWidget {
             // locale: language == 'en' ? const Locale('en') : const Locale('ar'),
             fallbackLocale: const Locale('en'),
             initialBinding: GlobalBindings(),
+         
+
             // home: Container(color: TColors.redColor,),
           );
         });

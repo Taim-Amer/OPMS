@@ -31,7 +31,7 @@ class AppRoutes {
   static const kDepartments = '/kDepartments';
   static const kProjects = '/kProjects';
   static const kBudget = '/kBudget';
-
+  
   static List<GetPage> routes = [
     GetPage(
         name: kLogin,
@@ -40,7 +40,7 @@ class AppRoutes {
         transition: Transition.noTransition),
     GetPage(
         name: kDepartments,
-          page: () => const DepartmentLayout(),
+        page: () => const DepartmentLayout(),
         // binding: Departments(),
         transition: Transition.noTransition),
     GetPage(
@@ -77,7 +77,7 @@ class AppRoutes {
         name: kBudget,
         page: () => const BudgetLayout(),
         binding: BudgetBindings(),
-        transition: Transition.noTransition),
+        transition: Transition.noTransition), 
   ];
 
   static Future<T?>? toNamed<T>(String routeName, {dynamic arguments}) {

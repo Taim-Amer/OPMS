@@ -12,6 +12,7 @@ class ImagesAssets {
   static const String add = '$_imagePath/addIcn.png';
   static const String edit = '$_imagePath/icons8-edit-text-file-50.png';
   static const String empty = '$_imagePath/icons8-empty-box-50.png';
+  static const String profilePlaceHolder =  '$_imagePath/profilePlaceHolder.jpg';
 }
 
 class JsonAssets {

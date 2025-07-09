@@ -16,7 +16,7 @@ class TElevatedButtonTheme {
         fontSize: 16,
         color: Colors.white,
         fontWeight: FontWeight.w600,
-        fontFamily: 'Almarai',
+        fontFamily: 'Cairo',
       ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
@@ -36,7 +36,7 @@ class TElevatedButtonTheme {
         fontSize: 16,
         color: Colors.white,
         fontWeight: FontWeight.w600,
-        fontFamily: 'Almarai',
+        fontFamily: 'Cairo',
       ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
