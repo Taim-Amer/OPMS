@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:opms/features/planner/planner_home/view/widgets/planner_side_bar.dart';
-import 'package:opms/features/planner/planner_home/view/widgets/planner_top_bar.dart';
+import 'package:opms/common/widgets/appbar/app_top_bar.dart';
 import 'package:opms/common/widgets/layouts/rounded_section_container.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/sizes.dart';
@@ -34,7 +34,7 @@ class PlannerShell extends StatelessWidget {
       body: Column(
         children: [
           // top bar is always shown
-          const PlannerTopBar(),
+          const AppTopBar(),
 
           Expanded(
             child: Row(

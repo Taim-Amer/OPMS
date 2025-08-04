@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:opms/features/planner/plan_implementation/model/months_model.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/sizes.dart';
 import 'package:opms/utils/helpers/helper_functions.dart';
+import 'package:shimmer/shimmer.dart'; // ← new
 
 class MonthsSelector extends StatelessWidget {
   final List<MonthModel> allMonths;
@@ -31,19 +31,65 @@ class MonthsSelector extends StatelessWidget {
     final theme = Theme.of(context);
     final isDark = theme.brightness == Brightness.dark;
     final isMobile = MediaQuery.of(context).size.width < Sizes.tabletScreenSize;
-    ;
 
+    // number of columns: 2 on mobile, 3 on desktop
+    final crossAxisCount = isMobile ? 2 : 3;
+
+    // ─── 1) SHIMMER PLACEHOLDER GRID ────────────────────────
     if (loading) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Months',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          const SizedBox(height: 14),
+          // build a skeleton grid of placeholders
+          Shimmer.fromColors(
+            baseColor: isDark ? Colors.grey.shade800 : Colors.grey.shade300,
+            highlightColor: isDark ? Colors.grey.shade700 : Colors.grey.shade100,
+            child: GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: crossAxisCount * 2, // two rows of placeholders
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
+                mainAxisSpacing: 10.w,
+                crossAxisSpacing: 12.w,
+                childAspectRatio: 2.3.w,
+              ),
+              itemBuilder: (_, __) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: isDark ? Colors.grey.shade900 : Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      );
+    }
+
+    // ─── 2) ERROR / EMPTY STATE ────────────────────────────
+    // If we've finished loading but received no months, let user retry:
+    if (!loading && allMonths.isEmpty) {
       return ElevatedButton.icon(
         icon: const Icon(Icons.download_rounded),
         label: const Text('Load Months'),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: TColors.buttonPrimary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
         onPressed: fetchMonths,
       );
     }
 
-    // Responsive grid for months (3 columns desktop, 2 on mobile)
-    final crossAxisCount = isMobile ? 2 : 3;
-
+    // ─── 3) NORMAL GRID ────────────────────────────────────
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -58,9 +104,9 @@ class MonthsSelector extends StatelessWidget {
           itemCount: allMonths.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: crossAxisCount,
-            mainAxisSpacing: 10.w,
-            crossAxisSpacing: 12.w,
-            childAspectRatio: 2.3.w,
+            mainAxisSpacing: HelperFunctions.isMobileScreen(context)? 10: 10.w,
+            crossAxisSpacing: HelperFunctions.isMobileScreen(context)? 12: 12.w,
+            childAspectRatio:HelperFunctions.isMobileScreen(context)?2.3: 2.3.w,
           ),
           itemBuilder: (ctx, i) {
             final month = allMonths[i];

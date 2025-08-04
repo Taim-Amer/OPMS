@@ -1,6 +1,7 @@
 // lib/features/planner/plan_implementation/view/widgets/fields_section.dart
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:opms/features/planner/plan_implementation/controller/plan_implementation_conrtoller.dart';
 import 'package:opms/utils/constants/colors.dart';
 
@@ -138,6 +139,7 @@ class _PlanValueText extends StatelessWidget {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
+      width: 400.w,
       padding: const EdgeInsets.symmetric(vertical: 11, horizontal: 14),
       decoration: BoxDecoration(
         color: isDark ? TColors.crese900.withOpacity(0.19) : TColors.crese50,

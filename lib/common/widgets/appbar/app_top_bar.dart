@@ -6,16 +6,16 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:opms/common/extensions/text_extensions2.dart';
 import 'package:opms/common/widgets/custom_shapes/containers/rounded_container.dart';
-import 'package:opms/features/planner/planner_home/controller/planner_bread_crumb_controler.dart';
+import 'package:opms/utils/dependencies/bread_crumb_controler.dart';
 import 'package:opms/features/planner/planner_home/view/widgets/info_item.dart';
 import 'package:opms/utils/constants/assets.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/sizes.dart';
 import 'package:opms/utils/helpers/helper_functions.dart';
-import 'package:opms/utils/router/planner_router.dart';
+import 'package:opms/utils/router/app_routes.dart';
 
-class PlannerTopBar extends StatelessWidget implements PreferredSizeWidget {
-  const PlannerTopBar({super.key});
+class AppTopBar extends StatelessWidget implements PreferredSizeWidget {
+  const AppTopBar({super.key});
 
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight.h);
@@ -26,7 +26,7 @@ class PlannerTopBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final dark = Theme.of(context).brightness == Brightness.dark;
     final year = DateTime.now().year + 1;
-    final bc = Get.find<PlannerBreadcrumbController>();
+    final bc = Get.find<BreadcrumbController>();
 
     // Update the breadcrumb controller once after build
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -68,13 +68,20 @@ class PlannerTopBar extends StatelessWidget implements PreferredSizeWidget {
 
       // ─── Desktop / Wide ──────────────────────
 
-      // friendly titles for your base routes
+      // friendly titles for both planner and manager routes
       const routeTitles = {
-        PlannerRouter.active: 'Active Activities',
-        PlannerRouter.available: 'Available Activities',
-        PlannerRouter.tree: 'Tree',
-        PlannerRouter.archive: 'Archived Activities',
-        PlannerRouter.notifications: 'Notifications',
+        // Planner
+        AppRoutesNew.active: 'Planner Home',
+        AppRoutesNew.available: 'Available Activities',
+        AppRoutesNew.tree: 'Tree',
+        AppRoutesNew.archive: 'Archived Activities',
+        AppRoutesNew.notifications: 'Notifications',
+        // Manager
+        AppRoutesNew.managerActive: 'Manager Home',
+        AppRoutesNew.managerusers: 'Users',
+        AppRoutesNew.managertree: 'Tree',
+        AppRoutesNew.managerarchive: 'Archived Items',
+        AppRoutesNew.managernotifications: 'Notifications',
       };
 
       return TRoundedContainer(
@@ -109,23 +116,27 @@ class PlannerTopBar extends StatelessWidget implements PreferredSizeWidget {
                   return Row(
                     children: List.generate(crumbs.length * 2 - 1, (i) {
                       if (i.isOdd) {
-                        // separator arrow
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: 4.w),
-                          child: Image.asset(
-                            "assets/images/next.png",
-                            height: 20.w,
-                          ),
+                          child: HelperFunctions.isDarkMode(context)
+                              ? Image.asset(
+                                  "assets/images/light_arrow.png",
+                                  height: 20.w,
+                                )
+                              : Image.asset(
+                                  "assets/images/next.png",
+                                  height: 20.w,
+                                ),
                         );
                       }
                       final idx = i ~/ 2;
                       final item = crumbs[idx];
                       final isLast = idx == crumbs.length - 1;
 
-                      // compute friendly label (including details)
                       final displayTitle = routeTitles[item.route] ??
-                          (item.route
-                                  .startsWith('${PlannerRouter.base}/activity/')
+                          (item.route.startsWith(
+                                  '${AppRoutesNew.plannerBase}/activity/') || item.route.startsWith(
+                                  '${AppRoutesNew.managerBase}/activity/')
                               ? 'Plan Activity Details'
                               : item.title);
 
@@ -144,7 +155,6 @@ class PlannerTopBar extends StatelessWidget implements PreferredSizeWidget {
                       );
 
                       if (isLast) {
-                        // last crumb: no tap
                         return text;
                       } else {
                         return InkWell(

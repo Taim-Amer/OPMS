@@ -1,5 +1,5 @@
 import 'package:opms/features/admin/settings/controllers/theme_controller.dart';
-import 'package:opms/features/planner/planner_home/controller/planner_bread_crumb_controler.dart';
+import 'package:opms/utils/dependencies/bread_crumb_controler.dart';
 import 'package:opms/utils/constants/keys.dart';
 import 'package:opms/utils/dependencies/global_bindings.dart';
 import 'package:opms/utils/helpers/cache_helper.dart';
@@ -41,9 +41,6 @@ class OPMSSystem extends StatelessWidget {
             // locale: language == 'en' ? const Locale('en') : const Locale('ar'),
             fallbackLocale: const Locale('en'),
             initialBinding: GlobalBindings(),
-         
-
-            // home: Container(color: TColors.redColor,),
           );
         });
       },

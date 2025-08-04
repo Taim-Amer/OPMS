@@ -14,7 +14,7 @@ import 'package:opms/utils/constants/assets.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/sizes.dart';
 import 'package:opms/utils/helpers/helper_functions.dart';
-import 'package:opms/utils/router/planner_router.dart';
+import 'package:opms/utils/router/app_routes.dart';
 
 class _SectionEntry {
   final IconData icon;
@@ -42,12 +42,11 @@ class _PlannerSidebarState extends State<PlannerSidebar> {
     final currentlySelected = ctrl.selectedIndex.value == idx;
 
     // detect if we’re on a details URL: /planner/activity/:id
-    final currentPath = GoRouter.of(context)
-        .routeInformationProvider
-        .value
-        .uri
-        .path;
-    final onDetails = currentPath.startsWith('${PlannerRouter.base}/activity/') || currentPath.startsWith('${PlannerRouter.base}/plan-implementation/');
+    final currentPath =
+        GoRouter.of(context).routeInformationProvider.value.uri.path;
+    final onDetails = currentPath
+            .startsWith('${AppRoutesNew.plannerBase}/activity/') ||
+        currentPath.startsWith('$AppRoutesNew.plannerBase}/plan-implementation/');
 
     if (!isMobile && currentlySelected) {
       // if on details and tapping the "Active" item again, only toggle collapse
@@ -364,23 +363,22 @@ class PlannerSidebarItem extends StatelessWidget {
               children: [
                 Container(
                   width: HelperFunctions.isMobileScreen(context) ? 70.w : 20.w,
-                  height:
-                    HelperFunctions.isMobileScreen(context) ? 70.w : 20.w,
+                  height: HelperFunctions.isMobileScreen(context) ? 70.w : 20.w,
                   decoration:
-                    BoxDecoration(color: iconBg, shape: BoxShape.circle),
+                      BoxDecoration(color: iconBg, shape: BoxShape.circle),
                   alignment: Alignment.center,
                   child: Icon(icon,
                       color: fgColor,
                       size: HelperFunctions.isMobileScreen(context)
-                        ? 40.w
-                        : 15.w),
+                          ? 40.w
+                          : 15.w),
                 ),
                 SizedBox(width: Sizes.md.w),
                 Expanded(
                   child: TextWidget(
                     text: HelperFunctions.isMobileScreen(context)
-                      ? label.s12w700(context)
-                      : label.s14w700(context),
+                        ? label.s12w700(context)
+                        : label.s14w700(context),
                     color: fgColor,
                   ),
                 ),
@@ -415,7 +413,7 @@ void _showSettings(BuildContext context, bool isMobile) {
       title: const Text('Logout',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500)),
       onTap: () {
-        Get.back();
+        GoRouter.of(context).pop();
         plannerCtrl.logout();
       },
     ),
@@ -439,7 +437,7 @@ void _showSettings(BuildContext context, bool isMobile) {
         titlePadding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 0),
         contentPadding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
         shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.r)),
         title: const Text('Settings',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
         content: body,

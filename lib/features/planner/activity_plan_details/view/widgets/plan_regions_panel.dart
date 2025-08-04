@@ -7,7 +7,7 @@ import 'package:opms/features/planner/activity_plan_details/view/widgets/regions
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/constants/enums.dart';
 import 'package:opms/utils/helpers/helper_functions.dart';
-import 'package:opms/utils/router/planner_router.dart';
+import 'package:opms/utils/router/app_routes.dart';
 import 'package:shimmer/shimmer.dart';
 
 class PlanRegionsPanel extends StatelessWidget {
@@ -22,7 +22,7 @@ class PlanRegionsPanel extends StatelessWidget {
         Get.put(ActivityPlanDetailsController(), tag: "$planActivityId");
 
     return Container(
-      margin: EdgeInsets.only(right: 14.w, top: 10.h),
+      margin: EdgeInsets.only(right: 14.w, top: 37.h),
       width: 380.w,
       padding: EdgeInsets.all(24.w),
       decoration: BoxDecoration(
@@ -49,7 +49,7 @@ class PlanRegionsPanel extends StatelessWidget {
         if (state == RequestState.loading) {
           return _PlanRegionsShimmer();
         }
-        if (state == RequestState.error || validRegions.isEmpty) {
+        if (state == RequestState.error) {
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 32.h),
             child: Center(
@@ -155,7 +155,7 @@ class _DiscoverRegionsButton extends StatelessWidget {
       ),
       icon: Icon(Icons.add_location_alt_rounded, size: 17.sp),
       label: Text(
-        'Discover New Regions',
+        'Choose Region',
         style: TextStyle(
             color: HelperFunctions.isDarkMode(context)
                 ? Colors.white
@@ -163,9 +163,7 @@ class _DiscoverRegionsButton extends StatelessWidget {
       ),
       onPressed: () async {
         final result = await showRegionSelectorDialog(context, activityPlanID);
-        if (result != null) {
-          // result['id'], result['type'], result['name']
-        }
+        if (result != null) {}
       },
     );
   }
@@ -240,8 +238,12 @@ class _RegionTile extends StatelessWidget {
                 ),
                 onPressed: () {
                   try {
+                    final isEditable = Get.find<ActivityPlanDetailsController>(
+                            tag: "$planActivityID")
+                        .isPlanEditable
+                        .value;
                     context.goNamed(
-                      PlannerRouter.namePlanImplementation,
+                      AppRoutesNew.namePlanImplementation,
                       pathParameters: {
                         'planActivityId':
                             Get.find<ActivityPlanDetailsController>(
@@ -250,11 +252,12 @@ class _RegionTile extends StatelessWidget {
                                 .toString(),
                         'regionType': regionType, // e.g., 'District'
                         'regionId': regionID.toString(),
-                        'isEditable': Get.find<ActivityPlanDetailsController>(
-                                tag: "$planActivityID")
-                            .isPlanEditable
-                            .value
-                            .toString(), // 'true' or 'false'
+                      },
+                      queryParameters: {
+                        'regionName': regionName, // no need to encode
+                      },
+                      extra: {
+                        'isEditable': isEditable,
                       },
                     );
                   } catch (e) {

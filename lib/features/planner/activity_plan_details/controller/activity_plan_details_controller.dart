@@ -1,6 +1,9 @@
 // lib/features/planner/activity_plan_details/controller/activity_plan_details_controller.dart
 
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer' as developer; // for professional debug logging
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:opms/features/planner/activity_plan_details/model/admin_four_model.dart';
 import 'package:opms/features/planner/activity_plan_details/model/distric_model.dart';
@@ -12,6 +15,7 @@ import 'package:opms/utils/constants/api_constants.dart';
 import 'package:opms/utils/constants/enums.dart';
 import 'package:opms/features/planner/activity_plan_details/model/activity_plan_details_model.dart';
 import 'package:opms/features/planner/activity_plan_details/model/plan_regions_model.dart';
+import 'package:opms/utils/models/message_model.dart';
 
 class ActivityPlanDetailsController extends GetxController {
   final ApiService _api = Get.find();
@@ -49,6 +53,55 @@ class ActivityPlanDetailsController extends GetxController {
       fetchPlanRegions(), // Fetch plan regions in parallel
     ]);
   }
+
+  final savingToManager = false.obs;
+
+  // lib/features/planner/activity_plan_details/controller/activity_plan_details_controller.dart
+
+Future<bool> updateplan({
+  int? years,
+  String? comment,
+  required int isMovedToNext,
+  required BuildContext context,
+}) async {
+  try {
+    savingToManager.value = true;
+    update();
+
+    final resp = await _api.putData<MessageModel>(
+      endPoint: years != null
+          ? 'plan_activities/$planActivityId'
+              '?number_of_years_to_implementation=$years'
+              '&is_moved_to_next=$isMovedToNext'
+              '&comment=$comment'
+          : 'plan_activities/$planActivityId'
+              '?is_moved_to_next=$isMovedToNext'
+              '&comment=$comment',
+      fromJson: (json) => MessageModel.fromJson(json),
+    );
+
+    savingToManager.value = false;
+    update();
+
+    if (resp is DataSuccess<MessageModel> && resp.data!.status == true) {
+      // re-fetch details so the UI updates
+      await _fetchDetails();
+      return true;
+    } else {
+      return false;
+    }
+  } catch (e, st) {
+    savingToManager.value = false;
+    update();
+    developer.log(
+      '[ActivityPlanDetailsController] updateplan error',
+      error: e,
+      stackTrace: st,
+    );
+    return false;
+  }
+}
+
 
   Future<void> _fetchDetails() async {
     if (planActivityId == 0) return;

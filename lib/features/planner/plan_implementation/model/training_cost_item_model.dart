@@ -2,12 +2,13 @@ class TrainingCostItem {
   final int id;
   final int trainingId;
   final int subDescriptionId;
+  final int descriptionId;
   final String descriptionName;
   final String subDescriptionName;
   final String unitName;
   final bool isPriceByPlanner;
-  final String? currency;      // e.g. "USD"
-  final int? price;            // rounded from the API’s string
+  final String? currency;
+  final int? price;
   final int numberOfUnits;
   final int numberOfDays;
   final String? remarks;
@@ -15,6 +16,7 @@ class TrainingCostItem {
   TrainingCostItem({
     required this.id,
     required this.trainingId,
+    required this.descriptionId,
     required this.subDescriptionId,
     required this.descriptionName,
     required this.subDescriptionName,
@@ -33,6 +35,7 @@ class TrainingCostItem {
       trainingId: j['training_id'] as int,
       subDescriptionId: j['training_sub_description_id'] as int,
       descriptionName: j['Description'] as String,
+      descriptionId: j['training_description_id'] as int,
       subDescriptionName: j['Sub Description'] as String,
       unitName: j['Unit Name'] as String,
       isPriceByPlanner: (j['is_price_by_planner'] as int) == 1,
@@ -45,20 +48,25 @@ class TrainingCostItem {
       remarks: j['remarks'] as String?,
     );
   }
-
-  /// Serializes back to the draft JSON expected by your backend
   Map<String, dynamic> toDraftJson() => {
+        'training_description_id': descriptionId,
         'training_sub_description_id': subDescriptionId,
         'number_of_units': numberOfUnits,
-        if (isPriceByPlanner) 'currency': currency,
-        if (isPriceByPlanner) 'price': price,
+        // always send currency_id and price, defaulting to empty/zero
+        'currency_id': 1,
+        'price': price ?? 0,
         'number_of_days': numberOfDays,
         'remarks': remarks,
       };
 
-  /// Allows updating individual fields immutably
+  /// Now accepts descriptionName, subDescriptionName, unitName, etc.
   TrainingCostItem copyWith({
+    int? descriptionId,
     int? subDescriptionId,
+    String? descriptionName,
+    String? subDescriptionName,
+    String? unitName,
+    bool? isPriceByPlanner,
     String? currency,
     int? price,
     int? numberOfUnits,
@@ -68,11 +76,12 @@ class TrainingCostItem {
     return TrainingCostItem(
       id: id,
       trainingId: trainingId,
+      descriptionId: descriptionId ?? this.descriptionId,
       subDescriptionId: subDescriptionId ?? this.subDescriptionId,
-      descriptionName: descriptionName,
-      subDescriptionName: subDescriptionName,
-      unitName: unitName,
-      isPriceByPlanner: isPriceByPlanner,
+      descriptionName: descriptionName ?? this.descriptionName,
+      subDescriptionName: subDescriptionName ?? this.subDescriptionName,
+      unitName: unitName ?? this.unitName,
+      isPriceByPlanner: isPriceByPlanner ?? this.isPriceByPlanner,
       currency: currency ?? this.currency,
       price: price ?? this.price,
       numberOfUnits: numberOfUnits ?? this.numberOfUnits,

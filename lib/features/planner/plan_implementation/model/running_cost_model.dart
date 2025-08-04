@@ -80,8 +80,7 @@ class RunningCostItem {
   }
 
   Map<String, dynamic> toDraftJson() => {
-      
-        'running_cost_id': id, // ← the selected option id
+        'running_cost_id': runningCostId,
         'facility_type_id': facilityTypeId,
         'Facility Name in English': facilityNameEn,
         'Facility Name in Arabic': facilityNameAr,

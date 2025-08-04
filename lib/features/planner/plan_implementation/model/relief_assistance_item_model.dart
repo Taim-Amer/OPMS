@@ -72,7 +72,7 @@ class ReliefAssistanceItem {
 
   /// Shape expected by saveDraft()
   Map<String, dynamic> toDraftJson() => {
-        'relief_id': id,
+        'relief_id': reliefId,
         'facility_type_id': facilityTypeId,
         'Facility Name in English': facilityNameEn,
         'Facility Name in Arabic': facilityNameAr,

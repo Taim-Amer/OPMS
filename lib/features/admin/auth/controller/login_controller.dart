@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:opms/common/widgets/alerts/snackbar.dart';
 import 'package:opms/features/planner/planner_app.dart';
-import 'package:opms/features/planner/planner_home/controller/planner_bread_crumb_controler.dart';
+import 'package:opms/utils/dependencies/bread_crumb_controler.dart';
 import 'package:opms/utils/api/data_state.dart';
 import 'package:opms/utils/constants/enums.dart';
 import 'package:opms/utils/constants/keys.dart';
@@ -52,9 +52,9 @@ class LoginController extends GetxController {
 
       // 5️⃣ Navigate based on role
       //    program_user → Planner home; others → Admin sidebar
-      if (role == 'program_user') {
+      if (role == 'program_user' || role == 'manager') {
         // Clear any existing planner breadcrumb state
-        Get.delete<PlannerBreadcrumbController>(force: true);
+        Get.delete<BreadcrumbController>(force: true);
         // Launch the GoRouter-powered PlannerApp
         Get.offAll(() => const PlannerApp());
       } else {

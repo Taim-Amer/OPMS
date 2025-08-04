@@ -75,7 +75,7 @@ class ActivityPlanData {
         programUserStatus: json['program_user_status'] as String?,
         managerStatus: json['manager_status'] as String?,
         directorStatus: json['director_status'] as String?,
-        statusBy: json['status_by'] as String?,
+        statusBy: json['status_by']?.toString(),
         comment: json['comment'] as String?,
         createdBy: json['created_by'] != null
             ? User.fromJson(json['created_by'] as Map<String, dynamic>)

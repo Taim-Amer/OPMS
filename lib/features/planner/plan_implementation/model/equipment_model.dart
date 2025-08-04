@@ -71,7 +71,7 @@ class EquipmentItem {
   }
 
   Map<String, dynamic> toDraftJson() => {
-        'equipment_id': id,
+        'equipment_id': equipmentId,
         'facility_type_id': facilityTypeId,
         'Facility Name in English': facilityNameEn,
         'Facility Name in Arabic': facilityNameAr,

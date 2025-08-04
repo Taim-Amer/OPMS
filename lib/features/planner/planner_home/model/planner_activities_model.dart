@@ -67,7 +67,8 @@ class PlannerActivitiesModel {
             json['number_of_years_to_implementation'] as int?,
         projectImplementationStatus:
             json['project_implementation_status'] as String?,
-        statusBy: json['status_by'] as String? ?? '',
+        statusBy:
+            json['status_by']?.toString(),
         comment: json['comment'] as String? ?? '',
         createdBy: json['created_by'] as int?,
         createdAt: _tryParse(json['created_at'] as String?),

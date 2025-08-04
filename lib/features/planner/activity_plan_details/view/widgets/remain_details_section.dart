@@ -84,35 +84,36 @@ class PlanDetailsSection extends StatelessWidget {
                       ),
                     ),
                   ],
-          ),
-          SizedBox(height: 20.h),
-          Row(
-            children: [
-              CircleAvatar(
-                radius: 15.w,
-                backgroundColor: TColors.crese500,
-                child: Text(
-                  userName[0].toUpperCase(),
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white),
-                ),
-              ),
-              SizedBox(width: 9.w),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    userName,
-                    style: TextStyle(
-                      fontSize: 14.5.sp,
-                      fontWeight: FontWeight.w700,
-                      color: isDark ? TColors.white : TColors.textPrimary,
-                    ),
+            ),
+            SizedBox(height: 20.h),
+            Divider(
+              height: 26.h,
+              thickness: 1,
+              color: isDark ? TColors.darkContainer : TColors.borderPrimary,
+            ),
+          if (data.createdBy != null)
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 15.w,
+                  backgroundColor: TColors.cresePrimarySwatch,
+                  child: Text(
+                    (data.createdBy?.name ?? 'U')[0].toUpperCase(),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, color: TColors.white),
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+                SizedBox(width: 8.w),
+                Text(
+                  "By ${data.createdBy?.name}",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: isDark ? TColors.darkGrey : TColors.textSecondary,
+                    fontSize: 13.sp,
+                  ),
+                ),
+              ],
+            ),
         ],
       ),
     );

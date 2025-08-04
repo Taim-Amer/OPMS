@@ -11,6 +11,8 @@ class RunningCostsTable extends StatefulWidget {
   final List<RunningCostItem> items;
   final bool isEditable;
   final void Function(int, RunningCostItem) onEdit;
+  final void Function(RunningCostItem) onAdd;
+  final void Function(int) onDelete;
   final List<FacilityTypeModel> facilityTypes;
   final bool facilityTypesLoading;
   final List<RunningCostOptionModel> costOptions;
@@ -21,6 +23,8 @@ class RunningCostsTable extends StatefulWidget {
     required this.items,
     required this.isEditable,
     required this.onEdit,
+    required this.onAdd,
+    required this.onDelete,
     required this.facilityTypes,
     required this.facilityTypesLoading,
     required this.costOptions,
@@ -43,7 +47,65 @@ class _RunningCostsTableState extends State<RunningCostsTable> {
   @override
   void didUpdateWidget(covariant RunningCostsTable old) {
     super.didUpdateWidget(old);
-    _items = List.from(widget.items);
+    if (widget.items.isNotEmpty) {
+      _items = List.from(widget.items);
+    }
+  }
+
+  /// Blank row template
+  RunningCostItem _newRow() {
+    return RunningCostItem(
+      id: 0,
+      planImplementationId: 0,
+      runningCostId: 0,
+      facilityTypeId: 0,
+      facilityNameEn: '',
+      facilityNameAr: '',
+      description: '',
+      numberOfUnitsEveryMonth: 0,
+      frequencyNumberOfMonths: 1,
+      remarks: '',
+      runningCost: RunningCostOptionModel(
+        id: 0,
+        expenseType: '',
+        unitType: '',
+        unitCost: 0,
+        date: '',
+      ),
+      facilityType: FacilityTypeModel(id: 0, name: ""),
+    );
+  }
+
+  void _addRow() {
+    final row = _newRow();
+    setState(() => _items.add(row));
+    widget.onAdd(row);
+  }
+
+  void _deleteRow(int idx) {
+    final rowNum = idx + 1;
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text('Delete Running Cost Row #$rowNum?'),
+        content: const Text('This action cannot be undone.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
+            onPressed: () {
+              Navigator.of(ctx).pop();
+              setState(() => _items.removeAt(idx));
+              widget.onDelete(idx);
+            },
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
   }
 
   void _update(int i, RunningCostItem e) {
@@ -57,258 +119,313 @@ class _RunningCostsTableState extends State<RunningCostsTable> {
 
   @override
   Widget build(BuildContext context) {
-    return DataEntryTable<RunningCostItem>(
-      items: _items,
-      emptyMessage: 'No running costs found.',
-      columns: [
-        // 1. Facility Type
-        DataColumnConfig<RunningCostItem>(
-          label: 'Facility Type',
-          fixedWidth: 150,
-          cellBuilder: (e, i) {
-            final name = widget.facilityTypes
-                    .firstWhereOrNull((ft) => ft.id == e.facilityTypeId)
-                    ?.name ??
-                '';
-            return DataCell(
-              widget.facilityTypesLoading
-                  ? const CircularProgressIndicator()
-                  : Tooltip(
-                      message: name,
-                      child: DropdownButtonFormField<int>(
-                        value: e.facilityTypeId,
-                        items: widget.facilityTypes
-                            .map((ft) => DropdownMenuItem(
-                                  value: ft.id,
-                                  child: Text(ft.name),
-                                ))
-                            .toList(),
-                        onChanged: widget.isEditable
-                            ? (id) => _update(
-                                i, e.copyWith(facilityTypeId: id))
-                            : null,
-                      ),
-                    ),
-            );
-          },
-        ),
-
-        // 2. Facility Name (EN)
-        DataColumnConfig<RunningCostItem>(
-          label: 'Facility Name (EN)',
-          cellBuilder: (e, i) => DataCell(
-            Tooltip(
-              message: e.facilityNameEn,
-              child: widget.isEditable
-                  ? TextFormField(
-                      initialValue: e.facilityNameEn,
-                      decoration:
-                          const InputDecoration(border: InputBorder.none),
-                      onChanged: (t) =>
-                          _update(i, e.copyWith(facilityNameEn: t)),
-                    )
-                  : Text(e.facilityNameEn),
-            ),
+    // Create button when empty & editable
+    if (_items.isEmpty && widget.isEditable) {
+      return Center(
+        child: ElevatedButton.icon(
+          icon: const Icon(Icons.table_rows),
+          label: const Text('Create Running Costs Table'),
+          onPressed: _addRow,
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           ),
         ),
+      );
+    }
 
-        // 3. Facility Name (AR)
-        DataColumnConfig<RunningCostItem>(
-          label: 'Facility Name (AR)',
-          cellBuilder: (e, i) => DataCell(
-            Tooltip(
-              message: e.facilityNameAr,
-              child: widget.isEditable
-                  ? TextFormField(
-                      initialValue: e.facilityNameAr,
-                      decoration:
-                          const InputDecoration(border: InputBorder.none),
-                      onChanged: (t) =>
-                          _update(i, e.copyWith(facilityNameAr: t)),
-                    )
-                  : Text(e.facilityNameAr),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        DataEntryTable<RunningCostItem>(
+          items: _items,
+          emptyMessage: (_items.isEmpty && !widget.isEditable)
+              ? 'No running costs found.'
+              : '',
+          headingHeight: 44,
+          rowHeight: 54,
+          maxHeightFactor: 0.6,
+          columns: [
+            // 1. Facility Type
+            DataColumnConfig<RunningCostItem>(
+              label: 'Facility Type',
+              fixedWidth: 150,
+              cellBuilder: (e, i) {
+                return DataCell(
+                  widget.facilityTypesLoading
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator())
+                      : Tooltip(
+                          message: widget.facilityTypes
+                                  .firstWhereOrNull(
+                                      (ft) => ft.id == e.facilityTypeId)
+                                  ?.name ??
+                              '',
+                          child: DropdownButtonFormField<int>(
+                            value:
+                                e.facilityTypeId == 0 ? null : e.facilityTypeId,
+                            items: widget.facilityTypes
+                                .map((ft) => DropdownMenuItem(
+                                      value: ft.id,
+                                      child: Text(ft.name),
+                                    ))
+                                .toList(),
+                            onChanged: widget.isEditable
+                                ? (id) => id != null
+                                    ? _update(i, e.copyWith(facilityTypeId: id))
+                                    : null
+                                : null,
+                          ),
+                        ),
+                );
+              },
             ),
-          ),
-        ),
 
-        // 4. Expense Type
-        DataColumnConfig<RunningCostItem>(
-          label: 'Expense Type',
-          fixedWidth: 180,
-          cellBuilder: (e, i) {
-            final opt = widget.costOptions
-                .firstWhereOrNull((opt) => opt.id == e.runningCostId);
-            return DataCell(
-              widget.costOptionsLoading
-                  ? const CircularProgressIndicator()
-                  : Tooltip(
-                      message: opt?.expenseType ?? '',
-                      child: DropdownButtonFormField<RunningCostOptionModel>(
-                        value: opt,
-                        items: widget.costOptions
-                            .map((opt) => DropdownMenuItem(
-                                  value: opt,
-                                  child: Text(opt.expenseType),
-                                ))
-                            .toList(),
-                        onChanged: widget.isEditable
-                            ? (sel) {
-                                if (sel != null) {
-                                  _update(
+            // 2. Facility Name (EN)
+            DataColumnConfig<RunningCostItem>(
+              label: 'Facility Name (EN)',
+              cellBuilder: (e, i) => DataCell(
+                Tooltip(
+                  message: e.facilityNameEn,
+                  child: widget.isEditable
+                      ? TextFormField(
+                          initialValue: e.facilityNameEn,
+                          decoration:
+                              const InputDecoration(border: InputBorder.none),
+                          onChanged: (t) =>
+                              _update(i, e.copyWith(facilityNameEn: t)),
+                        )
+                      : Text(e.facilityNameEn),
+                ),
+              ),
+            ),
+
+            // 3. Facility Name (AR)
+            DataColumnConfig<RunningCostItem>(
+              label: 'Facility Name (AR)',
+              cellBuilder: (e, i) => DataCell(
+                Tooltip(
+                  message: e.facilityNameAr,
+                  child: widget.isEditable
+                      ? TextFormField(
+                          initialValue: e.facilityNameAr,
+                          decoration:
+                              const InputDecoration(border: InputBorder.none),
+                          onChanged: (t) =>
+                              _update(i, e.copyWith(facilityNameAr: t)),
+                        )
+                      : Text(e.facilityNameAr),
+                ),
+              ),
+            ),
+
+            // 4. Expense Type
+            DataColumnConfig<RunningCostItem>(
+              label: 'Expense Type',
+              fixedWidth: 180,
+              cellBuilder: (e, i) => DataCell(
+                widget.costOptionsLoading
+                    ? const SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator())
+                    : Tooltip(
+                        message: widget.costOptions
+                                .firstWhereOrNull(
+                                    (opt) => opt.id == e.runningCostId)
+                                ?.expenseType ??
+                            '',
+                        child: DropdownButtonFormField<RunningCostOptionModel>(
+                          value: widget.costOptions.firstWhereOrNull(
+                              (opt) => opt.id == e.runningCostId),
+                          items: widget.costOptions
+                              .map((opt) => DropdownMenuItem(
+                                    value: opt,
+                                    child: Text(opt.expenseType),
+                                  ))
+                              .toList(),
+                          onChanged: widget.isEditable
+                              ? (sel) {
+                                  if (sel != null) {
+                                    _update(
                                       i,
                                       e.copyWith(
                                         runningCostId: sel.id,
                                         runningCost: sel,
-                                        // if you want to reset description on type-change:
-                                        // description: sel.expenseType,
-                                      ));
+                                      ),
+                                    );
+                                  }
                                 }
-                              }
-                            : null,
-                      ),
-                    ),
-            );
-          },
-        ),
-
-        // 5. Expense Description (now editable + validated)
-        DataColumnConfig<RunningCostItem>(
-          label: 'Expense Description',
-          cellBuilder: (e, i) {
-            final isEmpty = e.description.trim().isEmpty;
-            return DataCell(
-              Tooltip(
-                message: e.description,
-                child: widget.isEditable
-                    ? TextFormField(
-                        initialValue: e.description,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Describe expense',
-                          errorText: isEmpty ? 'Required' : null,
+                              : null,
                         ),
-                        onChanged: (t) =>
-                            _update(i, e.copyWith(description: t)),
+                      ),
+              ),
+            ),
+
+            // 5. Expense Description
+            DataColumnConfig<RunningCostItem>(
+              label: 'Expense Description',
+              cellBuilder: (e, i) => DataCell(
+                Tooltip(
+                  message: e.description,
+                  child: widget.isEditable
+                      ? TextFormField(
+                          initialValue: e.description,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                          ),
+                          onChanged: (t) =>
+                              _update(i, e.copyWith(description: t)),
+                        )
+                      : Text(e.description),
+                ),
+              ),
+            ),
+
+            // 6. Unit Type
+            DataColumnConfig<RunningCostItem>(
+              label: 'Unit Type',
+              cellBuilder: (e, i) => DataCell(
+                Tooltip(
+                  message: e.runningCost.unitType,
+                  child: Text(e.runningCost.unitType),
+                ),
+              ),
+            ),
+
+            // 7. No. of Units
+            DataColumnConfig<RunningCostItem>(
+              label: 'No. of Units',
+              fixedWidth: 100,
+              cellBuilder: (e, i) => DataCell(
+                Tooltip(
+                  message: e.numberOfUnitsEveryMonth.toString(),
+                  child: widget.isEditable
+                      ? TextFormField(
+                          initialValue: e.numberOfUnitsEveryMonth.toString(),
+                          keyboardType: TextInputType.number,
+                          decoration:
+                              const InputDecoration(border: InputBorder.none),
+                          onChanged: (t) {
+                            final v = int.tryParse(t) ?? 0;
+                            _update(i, e.copyWith(numberOfUnitsEveryMonth: v));
+                          },
+                        )
+                      : Text('${e.numberOfUnitsEveryMonth}'),
+                ),
+              ),
+            ),
+
+            // 8. Unit Cost
+            DataColumnConfig<RunningCostItem>(
+              label: 'Unit Cost',
+              fixedWidth: 120,
+              cellBuilder: (e, i) {
+                final cost = _fmt(e.runningCost.unitCost);
+                return DataCell(Text(cost));
+              },
+            ),
+
+            // 9. Monthly Cost
+            DataColumnConfig<RunningCostItem>(
+              label: 'Monthly Cost',
+              fixedWidth: 130,
+              cellBuilder: (e, i) {
+                final unitCost = e.runningCost.unitCost;
+                final units = e.numberOfUnitsEveryMonth;
+                final monthly = unitCost * units;
+                return DataCell(
+                  Tooltip(
+                    padding: const EdgeInsets.all(8),
+                    message: [
+                      'Monthly Cost = Unit Cost × No. of Units',
+                      '             = ${_fmt(unitCost)} × $units',
+                      '             = ${_fmt(monthly)}',
+                    ].join('\n'),
+                    child: Text(_fmt(monthly)),
+                  ),
+                );
+              },
+            ),
+
+            // 10. Frequency
+            DataColumnConfig<RunningCostItem>(
+              label: 'Frequency (Mo.)',
+              fixedWidth: 140,
+              cellBuilder: (e, i) => DataCell(
+                Text('${e.frequencyNumberOfMonths}'),
+              ),
+            ),
+
+            // 11. Total
+            DataColumnConfig<RunningCostItem>(
+              label: 'Total',
+              fixedWidth: 130,
+              cellBuilder: (e, i) {
+                final unitCost = e.runningCost.unitCost;
+                final units = e.numberOfUnitsEveryMonth;
+                final monthly = unitCost * units;
+                final total = monthly * e.frequencyNumberOfMonths;
+                return DataCell(
+                  Tooltip(
+                    padding: const EdgeInsets.all(8),
+                    message: [
+                      'Total = Monthly Cost × Frequency',
+                      '      = ${_fmt(monthly)} × ${e.frequencyNumberOfMonths}',
+                      '      = ${_fmt(total)}',
+                    ].join('\n'),
+                    child: Text(_fmt(total)),
+                  ),
+                );
+              },
+            ),
+
+            // 12. Remarks
+            DataColumnConfig<RunningCostItem>(
+              label: 'Remarks',
+              fixedWidth: 200,
+              cellBuilder: (e, i) => DataCell(
+                widget.isEditable
+                    ? TextFormField(
+                        initialValue: e.remarks,
+                        decoration:
+                            const InputDecoration(border: InputBorder.none),
+                        onChanged: (t) => _update(i, e.copyWith(remarks: t)),
                       )
-                    : Text(e.description),
+                    : Text(e.remarks ?? ''),
               ),
-            );
-          },
-        ),
-
-        // 6. Unit Type
-        DataColumnConfig<RunningCostItem>(
-          label: 'Unit Type',
-          cellBuilder: (e, i) => DataCell(
-            Tooltip(
-              message: e.runningCost.unitType,
-              child: Text(e.runningCost.unitType),
             ),
-          ),
-        ),
 
-        // 7. No. of Units
-        DataColumnConfig<RunningCostItem>(
-          label: 'No. of Units',
-          fixedWidth: 100,
-          cellBuilder: (e, i) => DataCell(
-            Tooltip(
-              message: e.numberOfUnitsEveryMonth.toString(),
-              child: widget.isEditable
-                  ? TextFormField(
-                      initialValue: e.numberOfUnitsEveryMonth.toString(),
-                      keyboardType: TextInputType.number,
-                      decoration:
-                          const InputDecoration(border: InputBorder.none),
-                      onChanged: (t) {
-                        final v = int.tryParse(t) ?? 0;
-                        _update(i, e.copyWith(numberOfUnitsEveryMonth: v));
-                      },
-                    )
-                  : Text('${e.numberOfUnitsEveryMonth}'),
-            ),
-          ),
-        ),
-
-        // 8. Unit Cost
-        DataColumnConfig<RunningCostItem>(
-          label: 'Unit Cost',
-          fixedWidth: 120,
-          cellBuilder: (e, i) {
-            final cost = _fmt(e.runningCost.unitCost);
-            return DataCell(
-              Tooltip(message: cost, child: Text(cost)),
-            );
-          },
-        ),
-
-        // 9. Monthly Cost = unitCost * noUnits
-        DataColumnConfig<RunningCostItem>(
-          label: 'Monthly Cost',
-          fixedWidth: 130,
-          cellBuilder: (e, i) {
-            final unitCost = e.runningCost.unitCost;
-            final units = e.numberOfUnitsEveryMonth;
-            final monthly = unitCost * units;
-            final mFmt = _fmt(monthly);
-            return DataCell(
-              Tooltip(
-                message:
-                    'Unit Cost (${_fmt(unitCost)}) × Units ($units) = $mFmt',
-                child: Text(mFmt),
+            // 13. Actions (Delete)
+            DataColumnConfig<RunningCostItem>(
+              label: 'Actions',
+              fixedWidth: 64,
+              cellBuilder: (_, i) => DataCell(
+                IconButton(
+                  icon: const Icon(Icons.delete_outline),
+                  color: Colors.redAccent,
+                  onPressed: widget.isEditable ? () => _deleteRow(i) : null,
+                  tooltip: 'Delete row',
+                ),
               ),
-            );
-          },
-        ),
-
-        // 10. Frequency (read-only)
-        DataColumnConfig<RunningCostItem>(
-          label: 'Frequency (No. of Month)',
-          fixedWidth: 140,
-          cellBuilder: (e, i) => DataCell(
-            Tooltip(
-              message: '${e.frequencyNumberOfMonths}',
-              child: Text('${e.frequencyNumberOfMonths}'),
             ),
-          ),
+          ],
         ),
 
-        // 11. Total = MonthlyCost × Frequency
-        DataColumnConfig<RunningCostItem>(
-          label: 'Total',
-          fixedWidth: 130,
-          cellBuilder: (e, i) {
-            final monthly = e.runningCost.unitCost * e.numberOfUnitsEveryMonth;
-            final total = monthly * e.frequencyNumberOfMonths;
-            final tFmt = _fmt(total);
-            return DataCell(
-              Tooltip(
-                message:
-                    'Monthly Cost (${_fmt(monthly)}) × Frequency (${e.frequencyNumberOfMonths}) = $tFmt',
-                child: Text(tFmt),
+        // Add Row button
+        if (widget.isEditable)
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                icon: const Icon(Icons.add),
+                label: const Text('Add Row'),
+                onPressed: _addRow,
               ),
-            );
-          },
-        ),
-
-        // 12. Remarks
-        DataColumnConfig<RunningCostItem>(
-          label: 'Remarks',
-          fixedWidth: 200,
-          cellBuilder: (e, i) => DataCell(
-            Tooltip(
-              message: e.remarks ?? '',
-              child: widget.isEditable
-                  ? TextFormField(
-                      initialValue: e.remarks,
-                      decoration:
-                          const InputDecoration(border: InputBorder.none),
-                      onChanged: (t) => _update(i, e.copyWith(remarks: t)),
-                    )
-                  : Text(e.remarks ?? ''),
             ),
           ),
-        ),
       ],
     );
   }

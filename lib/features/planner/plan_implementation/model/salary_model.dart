@@ -42,7 +42,7 @@ class SalaryItem {
   }
 
   Map<String, dynamic> toDraftJson() => {
-        "salary_id": id,
+        "salary_id": salaryId,
         "facility_type_id": facilityTypeId,
         "Facility Name in English": facilityNameEn,
         "Facility Name in Arabic": facilityNameAr,

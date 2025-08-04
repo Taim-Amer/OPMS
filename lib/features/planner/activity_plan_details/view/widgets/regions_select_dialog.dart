@@ -8,6 +8,7 @@ import 'package:opms/features/planner/activity_plan_details/model/governorate_mo
 import 'package:opms/features/planner/activity_plan_details/model/sub_distric_model.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/helpers/helper_functions.dart';
+import 'package:opms/utils/router/app_routes.dart';
 
 /// Shows the Region Selector Dialog and manages drilldown + confirmation
 Future<Map<String, dynamic>?> showRegionSelectorDialog(
@@ -45,28 +46,28 @@ Future<Map<String, dynamic>?> showRegionSelectorDialog(
     if (selectedAdminFor.value != null) {
       return {
         'id': selectedAdminFor.value!.id,
-        'type': 'admin_for',
+        'type': 'AdminFor',
         'name': selectedAdminFor.value!.name,
       };
     }
     if (selectedSubDistrict.value != null) {
       return {
         'id': selectedSubDistrict.value!.id,
-        'type': 'sub_district',
+        'type': 'SubDistrict',
         'name': selectedSubDistrict.value!.name,
       };
     }
     if (selectedDistrict.value != null) {
       return {
         'id': selectedDistrict.value!.id,
-        'type': 'district',
+        'type': 'District',
         'name': selectedDistrict.value!.name,
       };
     }
     if (selectedGovernorate.value != null) {
       return {
         'id': selectedGovernorate.value!.id,
-        'type': 'governorate',
+        'type': 'Governorate',
         'name': selectedGovernorate.value!.name,
       };
     }
@@ -197,6 +198,7 @@ Future<Map<String, dynamic>?> showRegionSelectorDialog(
                             badge: "Level 1",
                             icon: Icons.flag_rounded,
                           ),
+
                           // District
                           if (selectedGovernorate.value != null)
                             _RegionLevelSelector<District>(
@@ -217,6 +219,7 @@ Future<Map<String, dynamic>?> showRegionSelectorDialog(
                               badge: "Level 2",
                               icon: Icons.apartment_rounded,
                             ),
+
                           // Sub District
                           if (selectedDistrict.value != null)
                             _RegionLevelSelector<SubDistrict>(
@@ -238,6 +241,7 @@ Future<Map<String, dynamic>?> showRegionSelectorDialog(
                               badge: "Level 3",
                               icon: Icons.location_on_rounded,
                             ),
+
                           // Admin Four
                           if (selectedSubDistrict.value != null)
                             _RegionLevelSelector<AdminFor>(
@@ -257,7 +261,8 @@ Future<Map<String, dynamic>?> showRegionSelectorDialog(
                       ),
                     ),
                   ),
-                  // --- Floating Confirm Button
+
+                  // --- Floating Confirm Button ---
                   Positioned(
                     bottom: 0,
                     left: 0,
@@ -286,7 +291,7 @@ Future<Map<String, dynamic>?> showRegionSelectorDialog(
                             child: Text(
                               getConfirmedRegion() == null
                                   ? "No region selected"
-                                  : "Selected: ${(getConfirmedRegion()['name'])} (${getConfirmedRegion()['type'].toString().capitalizeFirst})",
+                                  : "Selected: ${(getConfirmedRegion()!['name'])} (${getConfirmedRegion()!['type'].toString().capitalizeFirst})",
                               style: const TextStyle(
                                 color: TColors.textSecondary,
                                 fontWeight: FontWeight.w600,
@@ -306,10 +311,44 @@ Future<Map<String, dynamic>?> showRegionSelectorDialog(
                                   horizontal: 22, vertical: 12),
                               elevation: 0,
                             ),
-                            label: const Text("Confirm"),
                             onPressed: getConfirmedRegion() != null
-                                ? () => Get.back(result: getConfirmedRegion())
+                                ? () {
+                                    final region = getConfirmedRegion()!;
+                                    final type = region['type'] as String;
+                                    final id = region['id'] as int;
+
+                                    // 1. Close the dialog
+                                    GoRouter.of(context).pop();
+                                    final isPlanEditabl =
+                                        Get.find<ActivityPlanDetailsController>(
+                                                tag: "$planActivityID")
+                                            .isPlanEditable
+                                            .value;
+
+                                    // 2. Then navigate using the original context
+
+                                    context.goNamed(
+                                     AppRoutesNew.namePlanImplementation,
+                                      pathParameters: {
+                                        'planActivityId': Get.find<
+                                                    ActivityPlanDetailsController>(
+                                                tag: "$planActivityID")
+                                            .planActivityId
+                                            .toString(),
+                                        'regionType': type,
+                                        'regionId': id.toString(),
+                                      },
+                                      queryParameters: {
+                                        'regionName':
+                                            region['name'], // no need to encode
+                                      },
+                                      extra: {
+                                        'isEditable': isPlanEditabl,
+                                      },
+                                    );
+                                  }
                                 : null,
+                            label: const Text("Confirm"),
                           ),
                         ],
                       ),
@@ -405,6 +444,7 @@ class _RegionLevelSelector<T> extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 9),
+
           // Option chips
           Wrap(
             spacing: 8,

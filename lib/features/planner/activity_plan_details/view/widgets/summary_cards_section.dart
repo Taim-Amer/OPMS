@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:opms/features/planner/activity_plan_details/controller/activity_plan_details_controller.dart';
 import 'package:opms/features/planner/activity_plan_details/model/activity_plan_details_model.dart';
 import 'package:opms/utils/constants/colors.dart';
 import 'package:opms/utils/helpers/helper_functions.dart';
 
 class SummaryCardsSection extends StatelessWidget {
   final ActivityPlanData data;
-  const SummaryCardsSection({super.key, required this.data});
+  final int activityID;
+  const SummaryCardsSection(
+      {super.key, required this.data, required this.activityID});
 
   String formatCost(String? value) {
     if (value == null) return '—';
@@ -41,7 +46,8 @@ class SummaryCardsSection extends StatelessWidget {
             Tooltip(
               message:
                   'Quick overview of project status, outputs, outcomes, cost, and timeline.',
-              child: Icon(Icons.info_outline_rounded, size: 18.sp, color: TColors.cresePrimarySwatch),
+              child: Icon(Icons.info_outline_rounded,
+                  size: 18.sp, color: TColors.cresePrimarySwatch),
             ),
           ],
         ),
@@ -56,7 +62,8 @@ class SummaryCardsSection extends StatelessWidget {
                   : "assets/images/status_light.png",
               mainText: data.projectImplementationStatus ?? '—',
               label: 'Project Status',
-              tooltip: 'Shows the current project status (e.g., planned, ongoing, completed).',
+              tooltip:
+                  'Shows the current project status (e.g., planned, ongoing, completed).',
               badge: (data.projectImplementationStatus == 'planned')
                   ? 'New'
                   : null,
@@ -86,7 +93,8 @@ class SummaryCardsSection extends StatelessWidget {
                   : "assets/images/cost_light.png",
               mainText: formatCost(data.totalCost),
               label: 'Total Cost',
-              tooltip: 'Total estimated cost for this plan, formatted with separators.',
+              tooltip:
+                  'Total estimated cost for this plan, formatted with separators.',
               onMenuTap: () {},
             ),
             _SummaryCard(
@@ -95,13 +103,204 @@ class SummaryCardsSection extends StatelessWidget {
                   '${data.yearOfImplementation ?? '—'} • ${data.numberOfYearsToImplementation ?? '—'} ${(data.numberOfYearsToImplementation ?? 0) > 1 ? 'years' : 'year'}',
               label: 'Timeline',
               tooltip: 'Year of start and duration of implementation.',
-              onMenuTap: () {},
+              onMenuTap: () => _showChangeTimelineDialog(
+                  context, activityID, data.numberOfYearsToImplementation ?? 1),
             ),
           ],
         ),
       ],
     );
   }
+}
+
+void _showChangeTimelineDialog(
+  BuildContext context,
+  int planActivityID,
+  int yearsImp,
+) {
+  final controller =
+      Get.find<ActivityPlanDetailsController>(tag: "$planActivityID");
+  int years = yearsImp;
+  String comment = '';
+
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (ctx) => StatefulBuilder(
+      builder: (ctx, setState) => Dialog(
+        insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 400),
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // ─── Header ───────────────────────────
+                Row(
+                  children: [
+                    const Icon(Icons.schedule,
+                        size: 28, color: Colors.blueAccent),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        'Adjust Implementation Duration',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineMedium!
+                            .copyWith(fontSize: 16),
+                      ),
+                    ),
+                    InkWell(
+                      borderRadius: BorderRadius.circular(4),
+                      onTap: () => Navigator.of(ctx).pop(),
+                      child: const Padding(
+                        padding: EdgeInsets.all(4),
+                        child: Icon(Icons.close, size: 20),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+
+                // ─── Current Value ────────────────────
+                Text(
+                  'Duration (years):',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                const SizedBox(height: 8),
+
+                // ─── Stepper Controls ──────────────────
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.remove_circle_outline),
+                      color: years > 1 ? TColors.cresecondary : Colors.grey,
+                      iconSize: 30,
+                      onPressed:
+                          years > 1 ? () => setState(() => years--) : null,
+                      tooltip: 'Decrease',
+                    ),
+                    const SizedBox(width: 16),
+                    Text(
+                      '$years',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    IconButton(
+                      icon: const Icon(Icons.add_circle_outline),
+                      color: years < 10 ? TColors.cresecondary : Colors.grey,
+                      iconSize: 30,
+                      onPressed:
+                          years < 10 ? () => setState(() => years++) : null,
+                      tooltip: 'Increase',
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 24),
+                const Divider(),
+                const SizedBox(height: 16),
+
+                // ─── Comment Field ────────────────────
+                TextField(
+                  onChanged: (v) => comment = v,
+                  decoration: InputDecoration(
+                    labelText: 'Comments (optional)',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    isDense: true,
+                  ),
+                  maxLines: 3,
+                ),
+
+                const SizedBox(height: 24),
+
+                // ─── Actions ──────────────────────────
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                        ),
+                        onPressed: () => Navigator.of(ctx).pop(),
+                        child: const Text('Cancel'),
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: TColors.cresecondary,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8)),
+                        ),
+                        onPressed: () async {
+                          GoRouter.of(context).pop();
+                          final success = await controller.updateplan(
+                            isMovedToNext: 0,
+                            context: context,
+                            years: years,
+                            comment: comment.isNotEmpty ? comment : null,
+                          );
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              behavior: SnackBarBehavior.floating,
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 24, vertical: 16),
+                              backgroundColor:
+                                  success ? Colors.green : Colors.orange,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              duration: const Duration(seconds: 4),
+                              content: Row(
+                                children: [
+                                  Icon(
+                                    success
+                                        ? Icons.check_circle_outline
+                                        : Icons.error_outline,
+                                    color: Colors.white,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Text(
+                                      success
+                                          ? "The number of years of implementation has been updated successfully."
+                                          : 'Failed to save update',
+                                      style: const TextStyle(
+                                          fontSize: 16, color: Colors.white),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 3),
+                          child: Text('Confirm'),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
 }
 
 class _SummaryCard extends StatelessWidget {
@@ -140,7 +339,9 @@ class _SummaryCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(22.r),
         boxShadow: [
           BoxShadow(
-            color: isDark ? Colors.black.withOpacity(0.09) : Colors.black.withOpacity(0.04),
+            color: isDark
+                ? Colors.black.withOpacity(0.09)
+                : Colors.black.withOpacity(0.04),
             blurRadius: 10,
             offset: Offset(0, 3),
           ),
@@ -159,7 +360,11 @@ class _SummaryCard extends StatelessWidget {
                   fit: BoxFit.contain,
                 )
               else
-                Icon(icon, size: 26.sp, color: HelperFunctions.isDarkMode(context)? TColors.white : TColors.black),
+                Icon(icon,
+                    size: 26.sp,
+                    color: HelperFunctions.isDarkMode(context)
+                        ? TColors.white
+                        : TColors.black),
               const Spacer(),
               if (badge != null)
                 Container(

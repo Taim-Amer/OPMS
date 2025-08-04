@@ -1,3 +1,5 @@
+// lib/features/planner/plan_implementation/model/training_item_model.dart
+
 import 'package:opms/features/planner/plan_implementation/model/training_cost_item_model.dart';
 
 class TrainingItem {
@@ -43,6 +45,8 @@ class TrainingItem {
   };
 
   TrainingItem copyWith({
+    String? trainingName,
+    String? trainingType,
     int? numberOfRequestedTrainings,
     int? targetedParticipants,
     int? numberOfTrainingDays,
@@ -50,8 +54,8 @@ class TrainingItem {
   }) {
     return TrainingItem(
       id: id,
-      trainingName: trainingName,
-      trainingType: trainingType,
+      trainingName: trainingName ?? this.trainingName,
+      trainingType: trainingType ?? this.trainingType,
       numberOfRequestedTrainings: numberOfRequestedTrainings ?? this.numberOfRequestedTrainings,
       targetedParticipants: targetedParticipants ?? this.targetedParticipants,
       numberOfTrainingDays: numberOfTrainingDays ?? this.numberOfTrainingDays,

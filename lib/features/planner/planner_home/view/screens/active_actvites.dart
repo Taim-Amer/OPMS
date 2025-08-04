@@ -5,9 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:opms/common/extensions/text_extensions2.dart';
-import 'package:opms/features/planner/activity_plan_details/controller/activity_plan_details_controller.dart';
 import 'package:opms/utils/helpers/helper_functions.dart';
-import 'package:opms/utils/router/planner_router.dart';
+import 'package:opms/utils/router/app_routes.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'package:opms/common/widgets/layouts/rounded_section_container.dart';
@@ -186,7 +185,7 @@ class ActiveActivitiesSection extends StatelessWidget {
                       size: isMobile ? 40.w : 20.w),
                   onPressed: () async {
                     context.goNamed(
-                      PlannerRouter.nameActivityDetails,
+                      AppRoutesNew.nameActivityDetails,
                       pathParameters: {'id': a.id.toString()},
                     );
                   },

@@ -53,6 +53,7 @@ class FieldVisitItem {
       };
 
   FieldVisitItem copyWith({
+    String? typeType,
     int? typeId,
     int? numOfUnitsPerYear,
     int? specificUnitDay,
@@ -63,7 +64,7 @@ class FieldVisitItem {
     return FieldVisitItem(
       id: id,
       planImplementationId: planImplementationId,
-      typeType: typeType,
+      typeType: typeType ?? this.typeType,
       typeId: typeId ?? this.typeId,
       numOfUnitsPerYear: numOfUnitsPerYear ?? this.numOfUnitsPerYear,
       specificUnitDay: specificUnitDay ?? this.specificUnitDay,

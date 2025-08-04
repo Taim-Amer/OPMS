@@ -13,17 +13,21 @@ class SalariesTable extends StatefulWidget {
   final void Function(int, SalaryItem) onEditSalary;
   final List<FacilityTypeModel> facilityTypes;
   final bool facilityTypesLoading;
+  final void Function(SalaryItem) onAddSalary;
+  final void Function(int index) onDeleteRow;
   final Future<List<SalaryOptionModel>> Function(String type)
       fetchSalaryOptions;
 
   const SalariesTable({
+    super.key,
     required this.salaries,
     required this.isEditable,
+    required this.onAddSalary,
     required this.onEditSalary,
     required this.facilityTypes,
+    required this.onDeleteRow,
     required this.facilityTypesLoading,
     required this.fetchSalaryOptions,
-    super.key,
   });
 
   @override
@@ -42,167 +46,262 @@ class _SalariesTableState extends State<SalariesTable> {
   @override
   void didUpdateWidget(covariant SalariesTable oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _items = List.from(widget.salaries);
+    // Only reset if the API has actually returned rows:
+    if (widget.salaries.isNotEmpty) {
+      _items = List.from(widget.salaries);
+    }
+    // Otherwise (empty incoming), keep any local _items you've added.
+  }
+
+  /// Creates a blank salary row for user input.
+  SalaryItem _newRow() {
+    return SalaryItem(
+      id: 0,
+      planImplementationId: 0,
+      salaryId: 0,
+      frequencyOfMonth: 1,
+      numberOfStaff: 0,
+      facilityTypeId: 0,
+      facilityNameEn: '',
+      facilityNameAr: '',
+      remarks: '',
+      salary: Salary(
+        id: 0,
+        type: '',
+        positions: '',
+        salary: 0,
+        costOfLivingAllowance: 0,
+        date: '',
+      ),
+      facilityType: FacilityType(id: 0, name: ''),
+    );
+  }
+
+  void _addRow() {
+    setState(() => _items.add(_newRow()));
+    final newRow = _newRow();
+    setState(() => _items.add(newRow));
+    // inform controller so model.salaries grows too
+    widget.onAddSalary(newRow);
+  }
+
+  void _updateItem(int index, SalaryItem updated) {
+    setState(() => _items[index] = updated);
+    widget.onEditSalary(index, updated);
+  }
+
+  Future<void> _confirmDelete(int index, SalaryItem item) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Delete Salary Row'),
+        content: Text('Are you sure you want to delete row id ${item.id}?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      setState(() => _items.removeAt(index));
+      widget.onDeleteRow(index);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return DataEntryTable<SalaryItem>(
-      items: _items,
-      emptyMessage: 'No salaries found.',
-      headingHeight: 44,
-      rowHeight: 54,
-      maxHeightFactor: 0.6,
-      columns: [
-        // Facility Type → inline dropdown
-        DataColumnConfig(
-            label: 'Facility Type',
-            fixedWidth: 150,
-            cellBuilder: (item, i) {
-              return DataCell(_buildFacilityTypeCell(item, i));
-            }),
-        // Facility Name EN
-        DataColumnConfig(
-            label: 'Facility Name in English',
-            cellBuilder: (item, i) {
-              return DataCell(_buildTextCell(
-                value: item.facilityNameEn,
-                tooltip: 'Facility Name EN: ${item.facilityNameEn}',
-                editable: widget.isEditable,
-                onChanged: (val) =>
-                    _updateItem(i, item.copyWith(facilityNameEn: val)),
-              ));
-            }),
-        // Facility Name AR
-        DataColumnConfig(
-            label: 'Facility Name in Arabic',
-            cellBuilder: (item, i) {
-              return DataCell(_buildTextCell(
-                value: item.facilityNameAr,
-                tooltip: 'Facility Name AR: ${item.facilityNameAr}',
-                editable: widget.isEditable,
-                onChanged: (val) =>
-                    _updateItem(i, item.copyWith(facilityNameAr: val)),
-              ));
-            }),
-        // Position → dropdown from API
-        DataColumnConfig(
-            label: 'Position',
-            cellBuilder: (item, i) {
-              return DataCell(_buildPositionCell(item, i));
-            }),
-        // Monthly Salary (readonly)
-        DataColumnConfig(
-            label: 'Monthly Salary',
-            fixedWidth: 110,
-            cellBuilder: (item, i) {
-              return DataCell(Tooltip(
-                  message:
-                      "Monthly salary changes according to the selected position",
-                  child: Text(_formatNumber(item.salary.salary))));
-            }),
-        // No. of Staff (editable int)
-        DataColumnConfig(
-            label: 'No. of Staff',
-            cellBuilder: (item, i) {
-              return DataCell(_buildIntCell(
-                value: item.numberOfStaff,
-                tooltip: 'No. of Staff: ${item.numberOfStaff}',
-                editable: widget.isEditable,
-                onChanged: (v) => _updateItem(
-                    i,
-                    item.copyWith(
-                      numberOfStaff: v <= 0 ? 0 : v,
-                    )),
-              ));
-            }),
-        // Frequency (readonly)
-        DataColumnConfig(
-            label: 'Frequency of Month',
-            fixedWidth: 120,
-            cellBuilder: (item, i) {
-              return DataCell(Tooltip(
-                  message: "Frequency of Months can not change it ",
-                  child: Text(item.frequencyOfMonth.toString())));
-            }),
-        // COLA (readonly)
-        DataColumnConfig(
-            label: 'Cost of Living Allowance',
-            fixedWidth: 150,
-            cellBuilder: (item, i) {
-              return DataCell(Tooltip(
-                  message: "changes according to the selected position",
-                  child:
-                      Text(_formatNumber(item.salary.costOfLivingAllowance))));
-            }),
-        // Total = (salary+cola)*freq*staff
-        DataColumnConfig(
-            label: 'Total',
-            fixedWidth: 110,
-            cellBuilder: (item, i) {
-              final s = item.salary.salary;
-              final c = item.salary.costOfLivingAllowance;
-              final f = item.frequencyOfMonth;
-              final st = item.numberOfStaff;
-              final total = (s + c) * f * st;
-              return DataCell(
-                Tooltip(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: HelperFunctions.isDarkMode(context)
-                        ? Colors.white
-                        : Colors.black,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  textStyle: Theme.of(context).tooltipTheme.textStyle,
-                  message: [
-                    'Total = (Monthly Salary + COLA) × Frequency × Staff',
-                    '      = (${_formatNumber(s)} + ${_formatNumber(c)}) × $f × $st',
-                    '      = ${_formatNumber(total)}',
-                  ].join('\n'),
-                  child: Text(_formatNumber(total),
-                      overflow: TextOverflow.ellipsis),
-                ),
-              );
-            }),
-        DataColumnConfig<SalaryItem>(
-          label: 'Remarks',
-          fixedWidth: 200,
-          cellBuilder: (item, i) {
-            return DataCell(
-              Tooltip(
-                message: 'Remarks: ${item.remarks}',
-                child: widget.isEditable
-                    ? TextFormField(
-                        initialValue: item.remarks,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          isDense: true,
-                          contentPadding:
-                              EdgeInsets.symmetric(vertical: 6, horizontal: 8),
-                        ),
-                        style: const TextStyle(fontSize: 14),
-                        // <— CHANGE HERE: use onChanged instead of onFieldSubmitted
-                        onChanged: (val) {
-                          _updateItem(i, item.copyWith(remarks: val));
-                        },
-                      )
-                    : Text(item.remarks),
-              ),
-            );
-          },
+    // If no rows yet and editable: show “Create” button instead of table
+    if (_items.isEmpty && widget.isEditable) {
+      return Center(
+        child: ElevatedButton.icon(
+          icon: const Icon(Icons.table_rows),
+          label: const Text('Create Salaries Table'),
+          onPressed: _addRow,
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          ),
         ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        DataEntryTable<SalaryItem>(
+            items: _items,
+            emptyMessage: (_items.isEmpty && !widget.isEditable)
+                ? 'No salaries found.'
+                : '',
+            headingHeight: 44,
+            rowHeight: 54,
+            maxHeightFactor: 0.6,
+            columns: [
+              DataColumnConfig<SalaryItem>(
+                label: 'Facility Type',
+                fixedWidth: 150,
+                cellBuilder: (item, i) =>
+                    DataCell(_buildFacilityTypeCell(item, i)),
+              ),
+              DataColumnConfig<SalaryItem>(
+                label: 'Facility Name in English',
+                cellBuilder: (item, i) => DataCell(_buildTextCell(
+                  value: item.facilityNameEn,
+                  tooltip: 'Facility Name EN: ${item.facilityNameEn}',
+                  editable: widget.isEditable,
+                  onChanged: (v) =>
+                      _updateItem(i, item.copyWith(facilityNameEn: v)),
+                )),
+              ),
+              DataColumnConfig<SalaryItem>(
+                label: 'Facility Name in Arabic',
+                cellBuilder: (item, i) => DataCell(_buildTextCell(
+                  value: item.facilityNameAr,
+                  tooltip: 'Facility Name AR: ${item.facilityNameAr}',
+                  editable: widget.isEditable,
+                  onChanged: (v) =>
+                      _updateItem(i, item.copyWith(facilityNameAr: v)),
+                )),
+              ),
+              DataColumnConfig<SalaryItem>(
+                label: 'Position',
+                cellBuilder: (item, i) => DataCell(_buildPositionCell(item, i)),
+              ),
+              DataColumnConfig<SalaryItem>(
+                label: 'Monthly Salary',
+                fixedWidth: 110,
+                cellBuilder: (item, i) => DataCell(
+                  Tooltip(
+                    message:
+                        "Monthly salary changes according to the selected position",
+                    child: Text(_formatNumber(item.salary.salary)),
+                  ),
+                ),
+              ),
+              DataColumnConfig<SalaryItem>(
+                label: 'No. of Staff',
+                cellBuilder: (item, i) => DataCell(_buildIntCell(
+                  value: item.numberOfStaff,
+                  tooltip: 'No. of Staff: ${item.numberOfStaff}',
+                  editable: widget.isEditable,
+                  onChanged: (v) => _updateItem(
+                    i,
+                    item.copyWith(numberOfStaff: v <= 0 ? 0 : v),
+                  ),
+                )),
+              ),
+              DataColumnConfig<SalaryItem>(
+                label: 'Frequency of Month',
+                fixedWidth: 120,
+                cellBuilder: (item, i) => DataCell(
+                  Tooltip(
+                    message: "Frequency of Months cannot be changed",
+                    child: Text(item.frequencyOfMonth.toString()),
+                  ),
+                ),
+              ),
+              DataColumnConfig<SalaryItem>(
+                label: 'Cost of Living Allowance',
+                fixedWidth: 150,
+                cellBuilder: (item, i) => DataCell(
+                  Tooltip(
+                    message: "Changes according to the selected position",
+                    child:
+                        Text(_formatNumber(item.salary.costOfLivingAllowance)),
+                  ),
+                ),
+              ),
+              DataColumnConfig<SalaryItem>(
+                label: 'Total',
+                fixedWidth: 110,
+                cellBuilder: (item, i) {
+                  final s = item.salary.salary;
+                  final c = item.salary.costOfLivingAllowance;
+                  final f = item.frequencyOfMonth;
+                  final st = item.numberOfStaff;
+                  final total = (s + c) * f * st;
+                  return DataCell(
+                    Tooltip(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? Colors.white
+                            : Colors.black,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      textStyle: Theme.of(context).tooltipTheme.textStyle,
+                      message: [
+                        'Total = (Monthly Salary + COLA) × Frequency × Staff',
+                        '      = (${_formatNumber(s)} + ${_formatNumber(c)}) × $f × $st',
+                        '      = ${_formatNumber(total)}',
+                      ].join('\n'),
+                      child: Text(
+                        _formatNumber(total),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              DataColumnConfig<SalaryItem>(
+                label: 'Remarks',
+                fixedWidth: 200,
+                cellBuilder: (item, i) => DataCell(
+                  Tooltip(
+                    message: 'Remarks: ${item.remarks}',
+                    child: widget.isEditable
+                        ? TextFormField(
+                            initialValue: item.remarks,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              isDense: true,
+                              contentPadding: EdgeInsets.symmetric(
+                                  vertical: 6, horizontal: 8),
+                            ),
+                            style: const TextStyle(fontSize: 14),
+                            onChanged: (v) =>
+                                _updateItem(i, item.copyWith(remarks: v)),
+                          )
+                        : Text(item.remarks),
+                  ),
+                ),
+              ),
+              DataColumnConfig<SalaryItem>(
+                label: 'Actions',
+                fixedWidth: 60,
+                cellBuilder: (item, i) => DataCell(
+                  IconButton(
+                    icon: const Icon(Icons.delete_outline,
+                        color: Colors.redAccent),
+                    tooltip: 'Delete row id ${item.id}',
+                    onPressed: widget.isEditable
+                        ? () => _confirmDelete(i, item)
+                        : null,
+                  ),
+                ),
+              ),
+            ]),
+        if (widget.isEditable)
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                icon: const Icon(Icons.add),
+                label: const Text('Add Row'),
+                onPressed: _addRow,
+              ),
+            ),
+          ),
       ],
     );
-  }
-
-  // Helpers to rebuild specific cells:
-
-  void _updateItem(int index, SalaryItem newItem) {
-    setState(() {
-      _items[index] = newItem;
-    });
-    widget.onEditSalary(index, newItem);
   }
 
   Widget _buildFacilityTypeCell(SalaryItem item, int i) {
@@ -214,17 +313,16 @@ class _SalariesTableState extends State<SalariesTable> {
       );
     }
     return Tooltip(
-      message: "select the facilty type from the list",
+      message: "Select facility type",
       child: DropdownButtonFormField<int>(
-        value: item.facilityTypeId,
-        items: widget.facilityTypes.map((ft) {
-          return DropdownMenuItem(value: ft.id, child: Text(ft.name));
-        }).toList(),
+        value: item.facilityTypeId == 0 ? null : item.facilityTypeId,
+        items: widget.facilityTypes
+            .map((ft) => DropdownMenuItem(value: ft.id, child: Text(ft.name)))
+            .toList(),
         onChanged: widget.isEditable
             ? (id) {
-                if (id != null) {
+                if (id != null)
                   _updateItem(i, item.copyWith(facilityTypeId: id));
-                }
               }
             : null,
         decoration: InputDecoration(
@@ -262,7 +360,7 @@ class _SalariesTableState extends State<SalariesTable> {
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 6, horizontal: 2),
               ),
-              onFieldSubmitted: onChanged,
+              onChanged: onChanged,
               style: const TextStyle(fontSize: 14),
             )
           : Text(value),
@@ -287,9 +385,8 @@ class _SalariesTableState extends State<SalariesTable> {
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 6, horizontal: 2),
               ),
-              onChanged: (val) {
-                final n =
-                    val.trim().isEmpty ? 0 : (int.tryParse(val.trim()) ?? 0);
+              onChanged: (v) {
+                final n = v.trim().isEmpty ? 0 : int.parse(v);
                 onChanged(n);
               },
               style: const TextStyle(fontSize: 14),
@@ -300,8 +397,7 @@ class _SalariesTableState extends State<SalariesTable> {
 
   Widget _buildPositionCell(SalaryItem item, int i) {
     return Tooltip(
-      message:
-          'Position: ${item.salary.positions} ,  select the position from the list',
+      message: 'Position: ${item.salary.positions} — select from the list',
       child: widget.isEditable
           ? _EditablePositionCell(
               currentSalary: item.salary,
@@ -309,11 +405,12 @@ class _SalariesTableState extends State<SalariesTable> {
               onChanged: (opt) {
                 if (opt != null) {
                   _updateItem(
-                      i,
-                      item.copyWith(
-                        salaryId: opt.id,
-                        salary: item.salary.copyWithFromOption(opt),
-                      ));
+                    i,
+                    item.copyWith(
+                      salaryId: opt.id,
+                      salary: item.salary.copyWithFromOption(opt),
+                    ),
+                  );
                 }
               },
             )
@@ -353,8 +450,16 @@ class _EditablePositionCellState extends State<_EditablePositionCell> {
   }
 
   Future<void> _fetchOptions() async {
+    // mark loading
+    if (!mounted) return;
     setState(() => _loading = true);
+
+    // fetch from API
     final opts = await widget.fetchOptions('Employee');
+
+    // bail out if this widget has been removed
+    if (!mounted) return;
+
     setState(() {
       _options = opts;
       _selected =
@@ -363,10 +468,6 @@ class _EditablePositionCellState extends State<_EditablePositionCell> {
       _loading = false;
     });
   }
-
-  String _formatNumber(num n) => n
-      .toString()
-      .replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (m) => ',');
 
   @override
   Widget build(BuildContext context) {
@@ -383,7 +484,6 @@ class _EditablePositionCellState extends State<_EditablePositionCell> {
       return const Text('-', style: TextStyle(color: Colors.grey));
     }
 
-    // ensure _selected remains valid
     final selected =
         _options.firstWhereOrNull((opt) => opt.id == _selected?.id) ??
             _options.first;
@@ -391,7 +491,6 @@ class _EditablePositionCellState extends State<_EditablePositionCell> {
     return DropdownButtonFormField<SalaryOptionModel>(
       value: selected,
       isExpanded: true,
-      // menu items: show two lines (position + salary/CO​LA)
       items: _options.map((opt) {
         return DropdownMenuItem<SalaryOptionModel>(
           value: opt,
@@ -404,23 +503,20 @@ class _EditablePositionCellState extends State<_EditablePositionCell> {
               Text(
                 '${_formatNumber(opt.salary)} salary • ${_formatNumber(opt.costOfLivingAllowance)} COLA',
                 style: TextStyle(
-                    color: HelperFunctions.isDarkMode(context)
-                        ? Colors.white
-                        : Colors.black),
+                  color: HelperFunctions.isDarkMode(context)
+                      ? Colors.white
+                      : Colors.black,
+                ),
               ),
             ],
           ),
         );
       }).toList(),
-
-      // selected view: only show the position text
-      selectedItemBuilder: (context) {
-        return _options.map((opt) {
-          return Text(opt.positions, style: theme.textTheme.bodyMedium);
-        }).toList();
-      },
-
+      selectedItemBuilder: (context) => _options
+          .map((opt) => Text(opt.positions, style: theme.textTheme.bodyMedium))
+          .toList(),
       onChanged: (opt) {
+        if (!mounted) return;
         setState(() => _selected = opt);
         widget.onChanged(opt);
       },
@@ -439,6 +535,10 @@ class _EditablePositionCellState extends State<_EditablePositionCell> {
       style: theme.textTheme.bodyMedium,
     );
   }
+
+  String _formatNumber(num n) => n
+      .toString()
+      .replaceAllMapped(RegExp(r'\B(?=(\d{3})+(?!\d))'), (m) => ',');
 }
 
 extension SalaryCopyFromOption on Salary {

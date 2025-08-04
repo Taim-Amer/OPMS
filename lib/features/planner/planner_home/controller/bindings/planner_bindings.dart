@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:opms/features/planner/planner_home/controller/planner_bread_crumb_controler.dart';
+import 'package:opms/utils/dependencies/bread_crumb_controler.dart';
 import '../planner_controller.dart';
 
 class PlannerBindings extends Bindings {
@@ -9,10 +9,9 @@ class PlannerBindings extends Bindings {
       () => PlannerController(),
       fenix: true,
     );
-    Get.lazyPut<PlannerBreadcrumbController>(
-      () => PlannerBreadcrumbController(),
+    Get.lazyPut<BreadcrumbController>(
+      () => BreadcrumbController(),
       fenix: true,
     );
-
   }
 }

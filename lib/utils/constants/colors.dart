@@ -36,6 +36,8 @@ class TColors {
 
   static const Color borderPrimary = Color(0xFFD9D9D9);
   static const Color borderSecondary = Color(0xFFE6E6E6);
+  static const Color cresecondary = Color(0xFF0A3D62);
+  static const Color creserror = Color(0xFFD32F2F);
 
   static const Color error = Color(0xFFD32F2F);
   static const Color success = Color(0xFF388E3C);
@@ -57,21 +59,21 @@ class TColors {
   static const MaterialColor cresePrimarySwatch = MaterialColor(
     0xFFE30613, // 500
     <int, Color>{
-      50: Color(0xFFFFE5E7),   // crese50
-      100: Color(0xFFFFCBCF),  // crese100
-      200: Color(0xFFFF979F),  // crese200
-      300: Color(0xFFFF636F),  // crese300
-      400: Color(0xFFE33A48),  // crese400
-      500: Color(0xFFE30613),  // crese500
-      600: Color(0xFFD00512),  // crese600
-      700: Color(0xFFB30411),  // crese700
-      800: Color(0xFF91030F),  // crese800
-      900: Color(0xFF6F020D),  // crese900
+      50: Color(0xFFFFE5E7), // crese50
+      100: Color(0xFFFFCBCF), // crese100
+      200: Color(0xFFFF979F), // crese200
+      300: Color(0xFFFF636F), // crese300
+      400: Color(0xFFE33A48), // crese400
+      500: Color(0xFFE30613), // crese500
+      600: Color(0xFFD00512), // crese600
+      700: Color(0xFFB30411), // crese700
+      800: Color(0xFF91030F), // crese800
+      900: Color(0xFF6F020D), // crese900
     },
   );
 
   // Individual crese shades
-  static final Color crese50  = cresePrimarySwatch[50]!;
+  static final Color crese50 = cresePrimarySwatch[50]!;
   static final Color crese100 = cresePrimarySwatch[100]!;
   static final Color crese200 = cresePrimarySwatch[200]!;
   static final Color crese300 = cresePrimarySwatch[300]!;
@@ -84,9 +86,9 @@ class TColors {
 
   // Helpers for light/dark variants
   static final Color creseLight = crese100;
-  static final Color creseDark  = crese700;
-  
+  static final Color creseDark = crese700;
+
   // Accent on crese backgrounds
   static const Color onCreseLight = Color(0xFF000000); // black on light red
-  static const Color onCreseDark  = Color(0xFFFFFFFF); // white on dark red
+  static const Color onCreseDark = Color(0xFFFFFFFF); // white on dark red
 }

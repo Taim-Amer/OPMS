@@ -15,7 +15,7 @@ import 'package:opms/utils/constants/enums.dart';
 import 'package:opms/utils/constants/sizes.dart';
 
 class ArchivedActivitiesSection extends StatelessWidget {
-  const ArchivedActivitiesSection({Key? key}) : super(key: key);
+  const ArchivedActivitiesSection({super.key});
 
   bool get _isMobile {
     final w = WidgetsBinding.instance.window.physicalSize.width /

@@ -1,7 +1,6 @@
 // lib/features/planner/planner_home/controller/planner_controller.dart
 
 import 'package:get/get.dart';
-import 'package:opms/common/widgets/alerts/snackbar.dart';
 import 'package:opms/features/planner/planner_home/model/planner_activities_model.dart';
 import 'package:opms/utils/api/api_service.dart';
 import 'package:opms/utils/api/data_state.dart';
@@ -10,7 +9,7 @@ import 'package:opms/utils/constants/enums.dart';
 import 'package:opms/utils/constants/keys.dart';
 import 'package:opms/utils/helpers/cache_helper.dart';
 import 'package:opms/utils/models/message_model.dart';
-import 'package:opms/utils/router/app_router.dart';
+import 'package:opms/utils/router/app_routes.dart';
 
 class PlannerController extends GetxController {
   static PlannerController get instance => Get.find();
@@ -63,10 +62,6 @@ class PlannerController extends GetxController {
 
   /// Logout state
   final logoutState = RequestState.begin.obs;
-
- 
-
-
 
   Future<void> _fetchArchived() async {
     archivedLoadState.value = RequestState.loading;
@@ -183,23 +178,27 @@ class PlannerController extends GetxController {
 
   Future<void> logout() async {
     logoutState.value = RequestState.loading;
+    update();
+
     try {
-      final result = await _api.getData<MessageModel>(
+      // Fire‐and‐forget: we don't care if this fails
+      await _api.getData<MessageModel>(
         endPoint: ApiConstants.logout,
         fromJson: MessageModel.fromJson,
       );
-      if (result is DataFailed) {
-        // showSnackBar(
-        //   result.error?.data?.toString() ?? 'Logout failed',
-        //   AlertState.warning,
-        // );
-      }
-    } catch (err) {
-      // showSnackBar('Logout error: ${err}', AlertState.error);
+    } catch (_) {
+      // ignore any errors when logging out
     } finally {
+      // 1) Clear cache
       CacheHelper.removeData(key: Keys.token);
-      Get.offAllNamed(AppRoutes.kLogin);
+      CacheHelper.removeData(key: Keys.roleName);
+
+      // 2) Reset our UI/loading state
       logoutState.value = RequestState.begin;
+      update();
+
+      // 3) Navigate to login, clearing history:
+     AppRoutesNew.router.go(AppRoutesNew.pathLogin);
     }
   }
 }
